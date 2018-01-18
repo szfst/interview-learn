@@ -52,7 +52,7 @@
 		- 2、重写findClass方法（不重写loadClass方法，调用父类的loadClass方法找不到类就可以调用子类的findClass了）
 ```java
 	
-    public class MyClassLoader extends ClassLoader {
+  public class MyClassLoader extends ClassLoader {
     private String path;//加载类的路径
     private String name;//类加载器名称
     public MyClassLoader(ClassLoader parent, String path, String name) {

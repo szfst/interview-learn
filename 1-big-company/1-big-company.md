@@ -1,97 +1,96 @@
-ÍøÒ³µØÖ·:http://blog.csdn.net/u011676417/article/details/69076759
-##### Ò»¡¢concurrent£º
-- 1¡¢volatile£º
-	- ±£Ö¤¿É¼ûÐÔ£¬½ûÖ¹Ö¸ÁîÖØÅÅÐò£¬**µ«ÊÇ²»ÄÜ±£Ö¤¿É¼ûÐÔ**
-- 2¡¢transient£º
-	- JavaµÄserializationÌá¹©ÁËÒ»ÖÖ³Ö¾Ã»¯¶ÔÏóÊµÀýµÄ»úÖÆ¡£µ±³Ö¾Ã»¯¶ÔÏóÊ±£¬¿ÉÄÜÓÐÒ»¸öÌØÊâµÄ¶ÔÏóÊý¾Ý³ÉÔ±£¬ÎÒÃÇ²»ÏëÓÃserialization»úÖÆÀ´±£´æËü¡£ÎªÁËÔÚÒ»¸öÌØ¶¨¶ÔÏóµÄÒ»¸öÓòÉÏ¹Ø±Õserialization£¬¿ÉÒÔÔÚÕâ¸öÓòÇ°¼ÓÉÏ¹Ø¼ü×Ötransient
-##### ¶þ¡¢javaÐéÄâ»ú£º
+ç½‘é¡µåœ°å€:http://blog.csdn.net/u011676417/article/details/69076759
+##### ä¸€ã€concurrentï¼?
+- 1ã€volatileï¼?
+	- ä¿è¯å¯è§æ€§ï¼Œç¦æ­¢æŒ‡ä»¤é‡æŽ’åºï¼Œ**ä½†æ˜¯ä¸èƒ½ä¿è¯å¯è§æ€?*
+- 2ã€transientï¼?
+	- Javaçš„serializationæä¾›äº†ä¸€ç§æŒä¹…åŒ–å¯¹è±¡å®žä¾‹çš„æœºåˆ¶ã€‚å½“æŒä¹…åŒ–å¯¹è±¡æ—¶ï¼Œå¯èƒ½æœ‰ä¸€ä¸ªç‰¹æ®Šçš„å¯¹è±¡æ•°æ®æˆå‘˜ï¼Œæˆ‘ä»¬ä¸æƒ³ç”¨serializationæœºåˆ¶æ¥ä¿å­˜å®ƒã€‚ä¸ºäº†åœ¨ä¸€ä¸ªç‰¹å®šå¯¹è±¡çš„ä¸€ä¸ªåŸŸä¸Šå…³é—­serializationï¼Œå¯ä»¥åœ¨è¿™ä¸ªåŸŸå‰åŠ ä¸Šå…³é”®å­—transient
+##### äºŒã€javaè™šæ‹Ÿæœºï¼š
 - GC
-	- ¶ÔÏóÊ²Ã´Ê±ºò»á±»GC:
-		- ÒýÓÃ¼ÆÊýËã·¨£º¸ø¶ÔÏóÌí¼ÓÒ»¸öÒýÓÃ¼ÆÊýÆ÷£¬Ã¿µ±ÓÐÒ»¸öµØ·½ÒýÓÃËüµÄÊ±ºò£¬¼ÆÊýÆ÷¾Í¼Ó1£¬µ±Ê§Ð§µÄÊ±ºò¾Í¼õ1£»ÈÎºÎÊ±¿Ì¼ÆÊýÆ÷Îª0µÄ¶ÔÏó¾ÍÊÇ²»¿ÉÄÜÔÙ±»Ê±ºòµÄ£»ÓÅµãÊÇ¼òµ¥£¬È±µã£ºobjA.instance=objB,objB.instance=objA,Êµ¼ÊÉÏÕâÁ½¸ö¶ÔÏó²»ÄÜÊ¹ÓÃÁË£¬µ«»¹ÊÇÏà»¥ÓÐÒýÓÃ£¬ÐéÄâ»ú²»ÄÜ»ØÊÕËüÃÇ£»ÐéÄâ»ú²»ÊÇÍ¨¹ýÒýÓÃ¼ÇÊý·¨ÅÐ¶Ï¶ÔÏó´æ»îµÄ£»
-		- ¿É´ïÐÔ·ÖÎöËã·¨
-			- »ù±¾Ë¼Â·£ºÍ¨¹ýÒ»ÏµÁÐ³ÆÎª¡°GC Roots"µÄ¶ÔÏó×÷ÎªÆðÊ¼µã£¬ÖØÕâÐ©½Úµã¿ªÊ¼ÏòÏÂËÑË÷£¬ËÑË÷Ëù×ß¹ýµÄÂ·¾¶³ÆÎªÒýÓÃÁ´(Refrence Chain),µ±Ò»¸ö¶ÔÏóµ½GC RootsÃ»ÓÐÈÎºÎÒýÓÃÁ´ÏàÁ¬£¨ÓÃÍ¼ÂÛµÄ»°À´Ëµ£¬¾ÍÊÇ´ÓGC Rootsµ½Õâ¸ö¶ÔÏó²»¿É´ï£©Ê±£¬ÔòÖ¤Ã÷Õâ¸ö¶ÔÏóÊÇ²»¿ÉÓÃµÄ¡£
-			- javaÓïÑÔÖÐ£º¿ÉÒÔ×÷ÎªGC RootsµÄ¶ÔÏó°üÀ¨ÒÔÏÂ¼¸ÖÖ£º
-				- ÐéÄâ»úÕ»£¨Õ»Ö¡ÖÐµÄ±¾µØ±äÁ¿±í£©ÖÐÒýÓÃµÄ¶ÔÏó
-				- ·½·¨È¥ÖÐÀà¾²Ì¬ÊôÐÔËùÒýÓÃµÄ¶ÔÏó
-				- ·½·¨ÇøÖÐ³£Á¿ÒýÓÃµÄ¶ÔÏó
-				- ±¾µØ·½·¨Õ»ÖÐJNI(¼´Ò»°ãËµµÄnative·½·¨)ÒýÓÃµÄ¶ÔÏó
-	    - ÒýÓÃ£º
-		    - Ç¿ÒýÓÃ£ºÖ»ÒªÇ¿ÒýÓÃ´æÔÚ£¬À¬»øÊÕ¼¯Æ÷ÓÀÔ¶²»»á»ØÊÕµô±»ÒýÓÃµÄ¶ÔÏó
-		    - ÈíÒýÓÃ£¨soft Reference£©£ºÔÚÏµÍ³½«Òª·¢ÉúÄÚ´æÒç³öÒì³£Ö®Ç°£¬½«»á°ÑÕâÐ©¶ÔÏóÁÐÈë»ØÊÕ·µ»ØÖ®ÖÐ½øÐÐµÚ¶þ´Î»ØÊÕ¡£Èç¹ûÕâ´Î»ØÊÕ»¹Ã»ÓÐ×ã¹»µÄÄÚ´æ£¬²Å»áÅ×³öÄÚ´æÒç³öÒì³£¡£jdk1.2ÒÔºó²ÅÓÐ¡£
-		    - ÈõÒýÓÃ£º±»ÈõÒýÓÃ¹ØÁªµÄ¶ÔÏóÖ»ÄÜÉú´æµ½ÏÂÒ»´ÎÀ¬»ø»ØÊÕ·¢ÉúÖ®Ç°£¬µ±À¬»øÊÕ¼¯Æ÷¹¤×÷Ê±£¬ÎÞÂÛµ±Ç°ÄÚ´æÊ±ºò×ã¹»£¬¶¼»á»ØÊÕÈõÒýÓÃ¡£jdk1.2ÒÔºó²ÅÓÐ¡£
-		    - ÐéÒýÓÃ£ºÒ»¸ö¶ÔÏóÊÇ·ñÓÐÐéÒýÓÃµÄ´æÔÚ£¬ÍêÈ«²»»á¶ÔÆäÉú²úÊ±¼ä¹¹³ÉÓ°Ïì£¬Ò²ÎÞ·¨Í¨¹ýÐéÒýÓÃÀ´È¡µÃÒ»¸ö¶ÔÏóÊµÀý¡£ÎªÒ»¸ö¶ÔÏóÉèÖÃÐéÒýÓÃµÄÎ¨Ò»Ä¿µÄ¾ÍÊÇÄÜ¹»ÔÚÕâ¸ö¶ÔÏó±»»ØÊÕÊ±ÊÕµ½Ò»¸öÍ¨Öª¡£  jdk1.2ÒÔºó²ÅÓÐ¡£
-		- Ã»ÓÐ±»±ê¼ÇµÄ¶ÔÏó£¬Ò²²»»áÁ¢¿Ì±»»ØÊÕ£¬Èç¹ûÓÐfinalize()·½·¨£¬ÏµÍ³»á½«Ëü¼ÓÈëµ½F-queueÖÐ£¬ÔÚfinalize·½·¨µ÷ÓÃµÄÊ±ºòËû¿ÉÒÔÈÃ±ðµÄÒýÓÃÔÙÖ¸ÏòËü£¬ÕâÑù¾Í²»»á±»»ØÊÕ£¬µ«ÊÇfinalize()·½·¨Ö»±»ÏµÍ³Ö´ÐÐÒ»´Î£¬ÔÙ´ÎÃ»ÓÐÒýÓÃ²»»á±»µ÷ÓÃÁË
-	- GCËã·¨£º
-		-  ±ê¼ÇÇåÀí£¨Mark-Sweep£©
-			-  Ê×ÏÈ±ê¼Ç³öËùÓÐÐèÒª»ØÊÕµÄ¶ÔÏó£¬ÔÚ±ê¼ÇÍê³ÉºóÍ³Ò»»ØÊÕËùÓÐ±»±ê¼ÇµÄ¶ÔÏó£¬ÊÇÒ»ÖÖ»ù´¡µÄ»ØÊÕËã·¨£¬ÒòÎªºóÐøµÄ»ØÊÕËã·¨¶¼ÊÇ»ùÓÚ´ËËã·¨µÄ²»×ã¶ø¸Ä½øµÃµ½µÄ
-			-  ²»×ã£º1¡¢Ð§ÂÊ²»¸ß£¬±ê¼ÇºÍÇå³ýÁ½¸ö¹ý³ÌµÄÐ§ÂÊ¶¼²»¸ß£»2¡¢¿Õ¼ä²»Á¬Ðø£¬¿Õ¼äËéÆ¬Ì«¶àºó£¬ÔÚ³ÌÐòÔËÐÐ¹ý³ÌÖÐÐèÒª·ÖÅä½Ï´óµÄ¶ÔÏóÊ±£¬ÎÞ·¨ÕÒµ½×ã¹»µÄ¶îÁ¬ÐøÄÚ´æ¶ø²»µÃ²»ÌáÇ°´¥·¢ÁíÒ»´Î»ØÊÕ¡£
-		-  ¸´ÖÆËã·¨£¨Copying£©
-			-  ·½Ê½£º½«ÄÚ´æ°´ÕÕÈÝÁ¿»®·ÖÎª´óÐ¡ÏàµÈµÄÁ½¿î£¬Ã¿´ÎÖ»Ê¹ÓÃÆäÖÐµÄÒ»¿é¡£µ±ÕâÒ»¿éµÄÄÚ´æÓÃÍêÁË£¬¾Í½«»¹´æ»îµÄ¶ÔÏó¸´ÖÆµ½ÁíÒ»¿éÉÏÃæ£¬È»ºóÔÙ°ÑÒÑÊ¹ÓÃ¹ýµÄÄÚ´æ¿Õ¼äÒ»´ÎÐÔÇåÀíµô¡£
-			-  ÓÅµã£ºÃ¿´Î¶Ô°ë¸öÄÚ´æ»ØÊÕ£¬ÄÚ´æ·ÖÅäµÄÊ±ºòÒ²²»ÓÃ¿¼ÂÇÄÚ´æËéÆ¬µÄÇé¿ö£»ÊµÏÖ¼òµ¥£»
-			-  È±µã£º½«ÄÚ´æËõÐ¡ÎªÔ­À´µÄÒ»°ë£¬ÔÚ¶ÔÏó´æ»îÂÊ½Ï¸ßµÄÇé¿öÏÂÒª½øÐÐºÜ¶à¸´ÖÆÐ§ÂÊµÍÏÂ
-			-  ÏÖÔÚµÄÉÌÒµÐéÄâ»ú¶¼Ê¹ÓÃÕâÖÖ»ØÊÕËã·¨**»ØÊÕÐÂÉú´ú**£¬ÊÊºÏÐÂÉú´ú£¬Á½¸ösurvivor·Ö±ðÕ¼ÄÚ´æ10%£¬edenÕ¼ÓÃ80%µÄÄÚ´æ£¬µ±´æ»îµÄ¶ÔÏó³¬¹ý10%£¬¿ÉÒÔÓÃÀÏÄêµ£±££¨handle promotion£©
-		-  ±ê¼Ç-ÕûÀíËã·¨£¨Mark-Compact£©
-			-  ·½Ê½£ºÔÚ±ê¼Ç-Çå³ýËã·¨µÄºóÃæÊ¹ÓÃÔÚ¶Ô¶ÔÏó½øÐÐÕûÀí
-			-  ÊÊºÏÀÏÄê´ú
-		- ·Ö´úÊÕ¼¯Ëã·¨
-			- ¸ù¾Ý¶ÔÏó´æ»îÖÜÆÚµÄ²»Í¬½«ÄÚ´æ»®·ÖÎª¼¸¿é¡£Ò»°ëÊÇ°Ñjava¶Ñ·ÖÎªÐÂÉú´úºÍÀÏÄê´ú£¬ÕâÑù¾Í¿ÉÒÔ¸ù¾Ý¸÷¸öÄê´úµÄÌØµã²ÉÓÃ×îºÏÊÊµÄËã·¨¡£ÔÚÐÂÉú´úÖÐ£¬ Ã¿´ÎÀ¬»ø»ØÊÕ¶¼»áÓÐ´óÁ¿¶ÔÏóËÀÈ¥£¬Ö»ÓÐÉÙÁ¿»î×Å£¬¾ÍÓÃ¸´ÖÆËã·¨£¬Ö»ÐèÒª¸¶³öÉÙÁ¿´æ»î¶ÔÏóµÄ¸´ÖÆ³É±¾¾Í¿ÉÒÔÍê³ÉÊÕ¼¯¡£¶øÀÏÄê´úÖÐÒòÎª¶ÔÏóµÄ´æ»îÂÊ¸ß¡¢Ã»ÓÐ¶þÍâµÄ¿Õ¼ä¶ÔËû½øÐÐ·ÖÅäµ£±££¬¾Í±ØÐëÊ¹ÓÃ¡°±ê¼Ç-ÇåÀí¡±»òÕß¡°±ê¼Ç-ÕûÀí¡±Ëã·¨À´½øÐÐ»ØÊÕ¡£ 
-- Àà¼ÓÔØ»úÖÆ
-	- Àà¼ÓÔØÆ÷ÓÐÄÄÐ©£º 
-		- Çý¶¯Àà¼ÓÔØÆ÷£¨Bootstrap ClassLoader£©£ºc++ÊµÏÖ
-			- Æô¶¯Àà¼ÓÔØÆ÷ÎÞ·¨±»java³ÌÐòÖ±½ÓÒûÓÃ£¬ÓÃ»§ÔÚ±àÐ´×Ô¶¨Òå¼ÓÔØÆ÷ÊÇ£¬Èç¹ûÐèÒª°Ñ¼ÓÔØÆ÷ÇëÇóÎ¯ÅÉ¸øÒýµ¼Àà¼ÓÔØÆ÷£¬Ö±½ÓÓÃnull´úÌæ¼È¿É
-			- ¼ÓÔØµÄ·¶Î§£ºJAVA_HOME\lib¡¢±»-Xbootclasspath²ÎÊýËùÖÆ¶¨µÄÂ·¾¶ÖÐµÄ£¬²¢ÇÒÊÇÐéÄâ»úÊ¶±ðµÄ£¨½ö°´ÕÕÎÄ¼þÃûÊ¶±ð£¬Èçrt.jar£¬Ãû×Ö²»·ûºÏµÄÀà¿â¼´Ê¹·Åµ½libÄ¿Â¼ÖÐÒ²²»»á±»¼ÓÔØ£©
-		- À©Õ¹Àà¼ÓÔØÆ÷£¨Extension ClassLoader£©£º
-			- ¼ÓÔØµÄ·¶Î§£ºJAVA_HOME\lib\extÄ¿Â¼ÖÐµÄ£¬»òÕß±»java.ext.dirsÏµÍ³±äÁ¿ËùÖ¸¶¨µÄÂ·¾¶ÖÐµÄËùÓÐÀà¿â£¬¿ª·¢Õß¿ÉÒÔÖ±½ÓÊ¹ÓÃÀ©Õ¹Àà¼ÓÔØÆ÷
-		- Ó¦ÓÃ³ÌÐòÀà¼ÓÔØÆ÷£¨Application ClassLoader£©£ºÏµÍ³Àà¼ÓÔØÆ÷£¨getSystemClassLoader£¨£©·µ»ØµÄÀà£©£¬Èç¹ûÓ¦ÓÃ³ÌÐòÖÐÃ»ÓÐ×Ô¶¨Òå¹ý×Ô¼ºµÄÀà¼ÓÔØÆ÷£¬Ò»°ãÇé¿öÏÂÕâ¸ö¾ÍÊÇ³ÌÐòÖÐÄ¬ÈÏµÄÀà¼ÓÔØÆ÷ 
-			- ¼ÓÔØµÄ·¶Î§£º¸ºÔð¼ÓÔØÓÃ»§ÀàÂ·¾¶£¨classpath£©ÉÏËùÖ¸¶¨µÄÀà¿â
-	- ÕâÐ©Àà¼ÓÔØÆ÷µÄ¸¸×Ó¹ØÏµ£ºÆô¶¯Àà¼ÓÔØÆ÷<--- À©Õ¹Àà¼ÓÔØÆ÷<--- Ó¦ÓÃ³ÌÐòÀà¼ÓÔØÆ÷<--- ×Ô¶¨ÒåÀà¼ÓÔØÆ÷
-	- Ê²Ã´ÊÇË«Ç×Î¯ÅÉÄ£ÐÍ£ºÈç¹ûÒ»¸öÀ×¼ÓÔØÆ÷ÊÕµ½ÁËÀàµÄ¼ÓÔØÇëÇó£¬ËüÊ×ÏÈ²»»á×Ô¼º³¢ÊÔÈ¥¼ÓÔØÕâ¸öÀà£¬¶øÊÇ°ÑÕâ¸öÇëÇóÎ¯ÅÉ¸ø¸¥À×¼ÓÔØÈ¥È¥Íê³É£¬Ã¿Ò»¸ö²ã´ÎµÄÀà¼ÓÔØÆ÷¶¼ÊÇÈç´Ë£¬Òò´ËËùÓÐµÄ¼ÓÔØÇëÇó×îÖÕ¶¼Ó¦¸Ã´«ËÍµ½Æô³ÌµÄÆô¶¯Àà¼ÓÔØÆ÷ÖÐ£¬Ö»ÓÐµ±¸¥À×¼ÓÔØÆ÷·´À¡×Ô¼ºÎÞ·¨Íê³ÉÕâ¸öÇëÇó£¨ËüËÑË÷·¶Î§ÖÐÃ»ÓÐÕÒµ½ËùÐèµÄÀà£©Ê±£¬×Ó¼ÓÔØÆ÷²Å»á³¢ÊÔ×Ô¼ºÈ¥¼ÓÔØ¡£
-	- Ë«Ç×Î¯ÅÉÄ£ÐÍµÄºÃ´¦£ºjavaÀàËæ×ÅËüµÄÀà¼ÓÔØÆ÷Ò»Æð¾ß±¸ÁËÒ»ÖÖ´øÓÐÓÅÏÈ¼¶µÄ²ã´Î¹ØÏµ£¬¶ÔÓÚ±£Ö¤javaµÄÎÈ¶¨ÔËÐÐÓÐºÜÖØÒªµÄ×÷ÓÃ¡£ÀýÈçÀàjava.lang.Object£¬Ëü´æ·ÅÔÚrt.jarÖÐ£¬ÎÞÂÛÄÄÒ»¸öÀà¼ÓÔØÆ÷Òª¼ÓÔØÕâ¸öÀà£¬×îÖÕ¶¼ÊÇÎ¯ÅÉ¸ø´¦ÓÚÄ£ÐÍ×î¶¥¶ËµÄÆô¶¯Àà¼ÓÔØÆ÷½øÐÐ¼ÓÔØ£¬Òò´ËObjectÀàÔÚ³ÌÐòµÄ¸÷¸öÀà¼ÓÔØÆ÷»·¾³ÖÐ¶¼ÊÇÍ¬Ò»¸öÀà¡£Ïà·´£¬Èç¹ûÃ»ÓÐÊ¹ÓÃË«Ç×Î¯ÅÉÄ£ÐÍ£¬ÓÉ¸÷¸öÀàÈ¡×ÔÐÐ¼ÓÔØµÄ»°£¬Èç¹ûÓÃ»§±àÐ´ÁËÒ»¸ö³ÆÎªjava.lang.Objectde Àà£¬²¢·ÅÔÚ³ÌÐòµÄClassPathÖÐ£¬ÄÇÏµÍ³ÖÐ½«»á³öÏÖ¶à¸ö²»Í¬µÄObjectÀà£¬javaÀàÐÍÌáÏµÍ³×î»ù´¡µÄÐÐÎªÒ²¾ÍÎÞ·¨±£Ö¤£¬Ó¦ÓÃ³ÌÐòÒ²»á±äµÃÒ»Æ¬»ìÂÒ¡£¿ÉÒÔ³¢ÊÔÈ¥±àÐ´Ò»¸öÓërt.jarÀà¿âÖÐÒÑÓÐÀàÖØÃûµÄjavaÀà£¬½«»á·¢ÏÖ¿ÉÒÔÕý³£±äÒì£¬µ«ÓÀÔ¶ÎÞ·¨±»¼ÓÔØÔËÐÐ¡£
-	- ÈçºÎ×Ô¶¨ÒåÀà¼ÓÔØÆ÷£º</br>
-		- 1¡¢¼Ì³ÐClassLoader
-		- 2¡¢ÖØÐ´findClass·½·¨£¨²»ÖØÐ´loadClass·½·¨£¬µ÷ÓÃ¸¸ÀàµÄloadClass·½·¨ÕÒ²»µ½Àà¾Í¿ÉÒÔµ÷ÓÃ×ÓÀàµÄfindClassÁË£©
+	- å¯¹è±¡ä»€ä¹ˆæ—¶å€™ä¼šè¢«GC:
+		- å¼•ç”¨è®¡æ•°ç®—æ³•ï¼šç»™å¯¹è±¡æ·»åŠ ä¸€ä¸ªå¼•ç”¨è®¡æ•°å™¨ï¼Œæ¯å½“æœ‰ä¸€ä¸ªåœ°æ–¹å¼•ç”¨å®ƒçš„æ—¶å€™ï¼Œè®¡æ•°å™¨å°±åŠ?ï¼Œå½“å¤±æ•ˆçš„æ—¶å€™å°±å‡?ï¼›ä»»ä½•æ—¶åˆ»è®¡æ•°å™¨ä¸?çš„å¯¹è±¡å°±æ˜¯ä¸å¯èƒ½å†è¢«æ—¶å€™çš„ï¼›ä¼˜ç‚¹æ˜¯ç®€å•ï¼Œç¼ºç‚¹ï¼šobjA.instance=objB,objB.instance=objA,å®žé™…ä¸Šè¿™ä¸¤ä¸ªå¯¹è±¡ä¸èƒ½ä½¿ç”¨äº†ï¼Œä½†è¿˜æ˜¯ç›¸äº’æœ‰å¼•ç”¨ï¼Œè™šæ‹Ÿæœºä¸èƒ½å›žæ”¶å®ƒä»¬ï¼›è™šæ‹Ÿæœºä¸æ˜¯é€šè¿‡å¼•ç”¨è®°æ•°æ³•åˆ¤æ–­å¯¹è±¡å­˜æ´»çš„ï¼?
+		- å¯è¾¾æ€§åˆ†æžç®—æ³?
+			- åŸºæœ¬æ€è·¯ï¼šé€šè¿‡ä¸€ç³»åˆ—ç§°ä¸ºâ€œGC Roots"çš„å¯¹è±¡ä½œä¸ºèµ·å§‹ç‚¹ï¼Œé‡è¿™äº›èŠ‚ç‚¹å¼€å§‹å‘ä¸‹æœç´¢ï¼Œæœç´¢æ‰€èµ°è¿‡çš„è·¯å¾„ç§°ä¸ºå¼•ç”¨é“¾(Refrence Chain),å½“ä¸€ä¸ªå¯¹è±¡åˆ°GC Rootsæ²¡æœ‰ä»»ä½•å¼•ç”¨é“¾ç›¸è¿žï¼ˆç”¨å›¾è®ºçš„è¯æ¥è¯´ï¼Œå°±æ˜¯ä»ŽGC Rootsåˆ°è¿™ä¸ªå¯¹è±¡ä¸å¯è¾¾ï¼‰æ—¶ï¼Œåˆ™è¯æ˜Žè¿™ä¸ªå¯¹è±¡æ˜¯ä¸å¯ç”¨çš„ã€?
+			- javaè¯­è¨€ä¸­ï¼šå¯ä»¥ä½œä¸ºGC Rootsçš„å¯¹è±¡åŒ…æ‹¬ä»¥ä¸‹å‡ ç§ï¼š
+				- è™šæ‹Ÿæœºæ ˆï¼ˆæ ˆå¸§ä¸­çš„æœ¬åœ°å˜é‡è¡¨ï¼‰ä¸­å¼•ç”¨çš„å¯¹è±?
+				- æ–¹æ³•åŽ»ä¸­ç±»é™æ€å±žæ€§æ‰€å¼•ç”¨çš„å¯¹è±?
+				- æ–¹æ³•åŒºä¸­å¸¸é‡å¼•ç”¨çš„å¯¹è±?
+				- æœ¬åœ°æ–¹æ³•æ ˆä¸­JNI(å³ä¸€èˆ¬è¯´çš„nativeæ–¹æ³•)å¼•ç”¨çš„å¯¹è±?
+	    - å¼•ç”¨ï¼?
+		    - å¼ºå¼•ç”¨ï¼šåªè¦å¼ºå¼•ç”¨å­˜åœ¨ï¼Œåžƒåœ¾æ”¶é›†å™¨æ°¸è¿œä¸ä¼šå›žæ”¶æŽ‰è¢«å¼•ç”¨çš„å¯¹è±¡
+		    - è½¯å¼•ç”¨ï¼ˆsoft Referenceï¼‰ï¼šåœ¨ç³»ç»Ÿå°†è¦å‘ç”Ÿå†…å­˜æº¢å‡ºå¼‚å¸¸ä¹‹å‰ï¼Œå°†ä¼šæŠŠè¿™äº›å¯¹è±¡åˆ—å…¥å›žæ”¶è¿”å›žä¹‹ä¸­è¿›è¡Œç¬¬äºŒæ¬¡å›žæ”¶ã€‚å¦‚æžœè¿™æ¬¡å›žæ”¶è¿˜æ²¡æœ‰è¶³å¤Ÿçš„å†…å­˜ï¼Œæ‰ä¼šæŠ›å‡ºå†…å­˜æº¢å‡ºå¼‚å¸¸ã€‚jdk1.2ä»¥åŽæ‰æœ‰ã€?
+		    - å¼±å¼•ç”¨ï¼šè¢«å¼±å¼•ç”¨å…³è”çš„å¯¹è±¡åªèƒ½ç”Ÿå­˜åˆ°ä¸‹ä¸€æ¬¡åžƒåœ¾å›žæ”¶å‘ç”Ÿä¹‹å‰ï¼Œå½“åžƒåœ¾æ”¶é›†å™¨å·¥ä½œæ—¶ï¼Œæ— è®ºå½“å‰å†…å­˜æ—¶å€™è¶³å¤Ÿï¼Œéƒ½ä¼šå›žæ”¶å¼±å¼•ç”¨ã€‚jdk1.2ä»¥åŽæ‰æœ‰ã€?
+		    - è™šå¼•ç”¨ï¼šä¸€ä¸ªå¯¹è±¡æ˜¯å¦æœ‰è™šå¼•ç”¨çš„å­˜åœ¨ï¼Œå®Œå…¨ä¸ä¼šå¯¹å…¶ç”Ÿäº§æ—¶é—´æž„æˆå½±å“ï¼Œä¹Ÿæ— æ³•é€šè¿‡è™šå¼•ç”¨æ¥å–å¾—ä¸€ä¸ªå¯¹è±¡å®žä¾‹ã€‚ä¸ºä¸€ä¸ªå¯¹è±¡è®¾ç½®è™šå¼•ç”¨çš„å”¯ä¸€ç›®çš„å°±æ˜¯èƒ½å¤Ÿåœ¨è¿™ä¸ªå¯¹è±¡è¢«å›žæ”¶æ—¶æ”¶åˆ°ä¸€ä¸ªé€šçŸ¥ã€? jdk1.2ä»¥åŽæ‰æœ‰ã€?
+		- æ²¡æœ‰è¢«æ ‡è®°çš„å¯¹è±¡ï¼Œä¹Ÿä¸ä¼šç«‹åˆ»è¢«å›žæ”¶ï¼Œå¦‚æžœæœ‰finalize()æ–¹æ³•ï¼Œç³»ç»Ÿä¼šå°†å®ƒåŠ å…¥åˆ°F-queueä¸­ï¼Œåœ¨finalizeæ–¹æ³•è°ƒç”¨çš„æ—¶å€™ä»–å¯ä»¥è®©åˆ«çš„å¼•ç”¨å†æŒ‡å‘å®ƒï¼Œè¿™æ ·å°±ä¸ä¼šè¢«å›žæ”¶ï¼Œä½†æ˜¯finalize()æ–¹æ³•åªè¢«ç³»ç»Ÿæ‰§è¡Œä¸€æ¬¡ï¼Œå†æ¬¡æ²¡æœ‰å¼•ç”¨ä¸ä¼šè¢«è°ƒç”¨äº†
+	- GCç®—æ³•ï¼?
+		-  æ ‡è®°æ¸…ç†ï¼ˆMark-Sweepï¼?
+			-  é¦–å…ˆæ ‡è®°å‡ºæ‰€æœ‰éœ€è¦å›žæ”¶çš„å¯¹è±¡ï¼Œåœ¨æ ‡è®°å®ŒæˆåŽç»Ÿä¸€å›žæ”¶æ‰€æœ‰è¢«æ ‡è®°çš„å¯¹è±¡ï¼Œæ˜¯ä¸€ç§åŸºç¡€çš„å›žæ”¶ç®—æ³•ï¼Œå› ä¸ºåŽç»­çš„å›žæ”¶ç®—æ³•éƒ½æ˜¯åŸºäºŽæ­¤ç®—æ³•çš„ä¸è¶³è€Œæ”¹è¿›å¾—åˆ°çš„
+			-  ä¸è¶³ï¼?ã€æ•ˆçŽ‡ä¸é«˜ï¼Œæ ‡è®°å’Œæ¸…é™¤ä¸¤ä¸ªè¿‡ç¨‹çš„æ•ˆçŽ‡éƒ½ä¸é«˜ï¼›2ã€ç©ºé—´ä¸è¿žç»­ï¼Œç©ºé—´ç¢Žç‰‡å¤ªå¤šåŽï¼Œåœ¨ç¨‹åºè¿è¡Œè¿‡ç¨‹ä¸­éœ€è¦åˆ†é…è¾ƒå¤§çš„å¯¹è±¡æ—¶ï¼Œæ— æ³•æ‰¾åˆ°è¶³å¤Ÿçš„é¢è¿žç»­å†…å­˜è€Œä¸å¾—ä¸æå‰è§¦å‘å¦ä¸€æ¬¡å›žæ”¶ã€?
+		-  å¤åˆ¶ç®—æ³•ï¼ˆCopyingï¼?
+			-  æ–¹å¼ï¼šå°†å†…å­˜æŒ‰ç…§å®¹é‡åˆ’åˆ†ä¸ºå¤§å°ç›¸ç­‰çš„ä¸¤æ¬¾ï¼Œæ¯æ¬¡åªä½¿ç”¨å…¶ä¸­çš„ä¸€å—ã€‚å½“è¿™ä¸€å—çš„å†…å­˜ç”¨å®Œäº†ï¼Œå°±å°†è¿˜å­˜æ´»çš„å¯¹è±¡å¤åˆ¶åˆ°å¦ä¸€å—ä¸Šé¢ï¼Œç„¶åŽå†æŠŠå·²ä½¿ç”¨è¿‡çš„å†…å­˜ç©ºé—´ä¸€æ¬¡æ€§æ¸…ç†æŽ‰ã€?
+			-  ä¼˜ç‚¹ï¼šæ¯æ¬¡å¯¹åŠä¸ªå†…å­˜å›žæ”¶ï¼Œå†…å­˜åˆ†é…çš„æ—¶å€™ä¹Ÿä¸ç”¨è€ƒè™‘å†…å­˜ç¢Žç‰‡çš„æƒ…å†µï¼›å®žçŽ°ç®€å•ï¼›
+			-  ç¼ºç‚¹ï¼šå°†å†…å­˜ç¼©å°ä¸ºåŽŸæ¥çš„ä¸€åŠï¼Œåœ¨å¯¹è±¡å­˜æ´»çŽ‡è¾ƒé«˜çš„æƒ…å†µä¸‹è¦è¿›è¡Œå¾ˆå¤šå¤åˆ¶æ•ˆçŽ‡ä½Žä¸?
+			-  çŽ°åœ¨çš„å•†ä¸šè™šæ‹Ÿæœºéƒ½ä½¿ç”¨è¿™ç§å›žæ”¶ç®—æ³?*å›žæ”¶æ–°ç”Ÿä»?*ï¼Œé€‚åˆæ–°ç”Ÿä»£ï¼Œä¸¤ä¸ªsurvivoråˆ†åˆ«å å†…å­?0%ï¼Œedenå ç”¨80%çš„å†…å­˜ï¼Œå½“å­˜æ´»çš„å¯¹è±¡è¶…è¿‡10%ï¼Œå¯ä»¥ç”¨è€å¹´æ‹…ä¿ï¼ˆhandle promotionï¼?
+		-  æ ‡è®°-æ•´ç†ç®—æ³•ï¼ˆMark-Compactï¼?
+			-  æ–¹å¼ï¼šåœ¨æ ‡è®°-æ¸…é™¤ç®—æ³•çš„åŽé¢ä½¿ç”¨åœ¨å¯¹å¯¹è±¡è¿›è¡Œæ•´ç?
+			-  é€‚åˆè€å¹´ä»?
+		- åˆ†ä»£æ”¶é›†ç®—æ³•
+			- æ ¹æ®å¯¹è±¡å­˜æ´»å‘¨æœŸçš„ä¸åŒå°†å†…å­˜åˆ’åˆ†ä¸ºå‡ å—ã€‚ä¸€åŠæ˜¯æŠŠjavaå †åˆ†ä¸ºæ–°ç”Ÿä»£å’Œè€å¹´ä»£ï¼Œè¿™æ ·å°±å¯ä»¥æ ¹æ®å„ä¸ªå¹´ä»£çš„ç‰¹ç‚¹é‡‡ç”¨æœ€åˆé€‚çš„ç®—æ³•ã€‚åœ¨æ–°ç”Ÿä»£ä¸­ï¼?æ¯æ¬¡åžƒåœ¾å›žæ”¶éƒ½ä¼šæœ‰å¤§é‡å¯¹è±¡æ­»åŽ»ï¼Œåªæœ‰å°‘é‡æ´»ç€ï¼Œå°±ç”¨å¤åˆ¶ç®—æ³•ï¼Œåªéœ€è¦ä»˜å‡ºå°‘é‡å­˜æ´»å¯¹è±¡çš„å¤åˆ¶æˆæœ¬å°±å¯ä»¥å®Œæˆæ”¶é›†ã€‚è€Œè€å¹´ä»£ä¸­å› ä¸ºå¯¹è±¡çš„å­˜æ´»çŽ‡é«˜ã€æ²¡æœ‰äºŒå¤–çš„ç©ºé—´å¯¹ä»–è¿›è¡Œåˆ†é…æ‹…ä¿ï¼Œå°±å¿…é¡»ä½¿ç”¨â€œæ ‡è®?æ¸…ç†â€æˆ–è€…â€œæ ‡è®?æ•´ç†â€ç®—æ³•æ¥è¿›è¡Œå›žæ”¶ã€?
+- ç±»åŠ è½½æœºåˆ?
+	- ç±»åŠ è½½å™¨æœ‰å“ªäº›ï¼š 
+		- é©±åŠ¨ç±»åŠ è½½å™¨ï¼ˆBootstrap ClassLoaderï¼‰ï¼šc++å®žçŽ°
+			- å¯åŠ¨ç±»åŠ è½½å™¨æ— æ³•è¢«javaç¨‹åºç›´æŽ¥é¥®ç”¨ï¼Œç”¨æˆ·åœ¨ç¼–å†™è‡ªå®šä¹‰åŠ è½½å™¨æ˜¯ï¼Œå¦‚æžœéœ€è¦æŠŠåŠ è½½å™¨è¯·æ±‚å§”æ´¾ç»™å¼•å¯¼ç±»åŠ è½½å™¨ï¼Œç›´æŽ¥ç”¨nullä»£æ›¿æ—¢å¯
+			- åŠ è½½çš„èŒƒå›´ï¼šJAVA_HOME\libã€è¢«-Xbootclasspathå‚æ•°æ‰€åˆ¶å®šçš„è·¯å¾„ä¸­çš„ï¼Œå¹¶ä¸”æ˜¯è™šæ‹Ÿæœºè¯†åˆ«çš„ï¼ˆä»…æŒ‰ç…§æ–‡ä»¶åè¯†åˆ«ï¼Œå¦‚rt.jarï¼Œåå­—ä¸ç¬¦åˆçš„ç±»åº“å³ä½¿æ”¾åˆ°libç›®å½•ä¸­ä¹Ÿä¸ä¼šè¢«åŠ è½½ï¼‰
+		- æ‰©å±•ç±»åŠ è½½å™¨ï¼ˆExtension ClassLoaderï¼‰ï¼š
+			- åŠ è½½çš„èŒƒå›´ï¼šJAVA_HOME\lib\extç›®å½•ä¸­çš„ï¼Œæˆ–è€…è¢«java.ext.dirsç³»ç»Ÿå˜é‡æ‰€æŒ‡å®šçš„è·¯å¾„ä¸­çš„æ‰€æœ‰ç±»åº“ï¼Œå¼€å‘è€…å¯ä»¥ç›´æŽ¥ä½¿ç”¨æ‰©å±•ç±»åŠ è½½å™?
+		- åº”ç”¨ç¨‹åºç±»åŠ è½½å™¨ï¼ˆApplication ClassLoaderï¼‰ï¼šç³»ç»Ÿç±»åŠ è½½å™¨ï¼ˆgetSystemClassLoaderï¼ˆï¼‰è¿”å›žçš„ç±»ï¼‰ï¼Œå¦‚æžœåº”ç”¨ç¨‹åºä¸­æ²¡æœ‰è‡ªå®šä¹‰è¿‡è‡ªå·±çš„ç±»åŠ è½½å™¨ï¼Œä¸€èˆ¬æƒ…å†µä¸‹è¿™ä¸ªå°±æ˜¯ç¨‹åºä¸­é»˜è®¤çš„ç±»åŠ è½½å™¨ 
+			- åŠ è½½çš„èŒƒå›´ï¼šè´Ÿè´£åŠ è½½ç”¨æˆ·ç±»è·¯å¾„ï¼ˆclasspathï¼‰ä¸Šæ‰€æŒ‡å®šçš„ç±»åº?
+	- è¿™äº›ç±»åŠ è½½å™¨çš„çˆ¶å­å…³ç³»ï¼šå¯åŠ¨ç±»åŠ è½½å™¨<--- æ‰©å±•ç±»åŠ è½½å™¨<--- åº”ç”¨ç¨‹åºç±»åŠ è½½å™¨<--- è‡ªå®šä¹‰ç±»åŠ è½½å™?
+	- ä»€ä¹ˆæ˜¯åŒäº²å§”æ´¾æ¨¡åž‹ï¼šå¦‚æžœä¸€ä¸ªé›·åŠ è½½å™¨æ”¶åˆ°äº†ç±»çš„åŠ è½½è¯·æ±‚ï¼Œå®ƒé¦–å…ˆä¸ä¼šè‡ªå·±å°è¯•åŽ»åŠ è½½è¿™ä¸ªç±»ï¼Œè€Œæ˜¯æŠŠè¿™ä¸ªè¯·æ±‚å§”æ´¾ç»™å¼—é›·åŠ è½½åŽ»åŽ»å®Œæˆï¼Œæ¯ä¸€ä¸ªå±‚æ¬¡çš„ç±»åŠ è½½å™¨éƒ½æ˜¯å¦‚æ­¤ï¼Œå› æ­¤æ‰€æœ‰çš„åŠ è½½è¯·æ±‚æœ€ç»ˆéƒ½åº”è¯¥ä¼ é€åˆ°å¯ç¨‹çš„å¯åŠ¨ç±»åŠ è½½å™¨ä¸­ï¼Œåªæœ‰å½“å¼—é›·åŠ è½½å™¨åé¦ˆè‡ªå·±æ— æ³•å®Œæˆè¿™ä¸ªè¯·æ±‚ï¼ˆå®ƒæœç´¢èŒƒå›´ä¸­æ²¡æœ‰æ‰¾åˆ°æ‰€éœ€çš„ç±»ï¼‰æ—¶ï¼Œå­åŠ è½½å™¨æ‰ä¼šå°è¯•è‡ªå·±åŽ»åŠ è½½ã€?
+	- åŒäº²å§”æ´¾æ¨¡åž‹çš„å¥½å¤„ï¼šjavaç±»éšç€å®ƒçš„ç±»åŠ è½½å™¨ä¸€èµ·å…·å¤‡äº†ä¸€ç§å¸¦æœ‰ä¼˜å…ˆçº§çš„å±‚æ¬¡å…³ç³»ï¼Œå¯¹äºŽä¿è¯javaçš„ç¨³å®šè¿è¡Œæœ‰å¾ˆé‡è¦çš„ä½œç”¨ã€‚ä¾‹å¦‚ç±»java.lang.Objectï¼Œå®ƒå­˜æ”¾åœ¨rt.jarä¸­ï¼Œæ— è®ºå“ªä¸€ä¸ªç±»åŠ è½½å™¨è¦åŠ è½½è¿™ä¸ªç±»ï¼Œæœ€ç»ˆéƒ½æ˜¯å§”æ´¾ç»™å¤„äºŽæ¨¡åž‹æœ€é¡¶ç«¯çš„å¯åŠ¨ç±»åŠ è½½å™¨è¿›è¡ŒåŠ è½½ï¼Œå› æ­¤Objectç±»åœ¨ç¨‹åºçš„å„ä¸ªç±»åŠ è½½å™¨çŽ¯å¢ƒä¸­éƒ½æ˜¯åŒä¸€ä¸ªç±»ã€‚ç›¸åï¼Œå¦‚æžœæ²¡æœ‰ä½¿ç”¨åŒäº²å§”æ´¾æ¨¡åž‹ï¼Œç”±å„ä¸ªç±»å–è‡ªè¡ŒåŠ è½½çš„è¯ï¼Œå¦‚æžœç”¨æˆ·ç¼–å†™äº†ä¸€ä¸ªç§°ä¸ºjava.lang.Objectde ç±»ï¼Œå¹¶æ”¾åœ¨ç¨‹åºçš„ClassPathä¸­ï¼Œé‚£ç³»ç»Ÿä¸­å°†ä¼šå‡ºçŽ°å¤šä¸ªä¸åŒçš„Objectç±»ï¼Œjavaç±»åž‹æç³»ç»Ÿæœ€åŸºç¡€çš„è¡Œä¸ºä¹Ÿå°±æ— æ³•ä¿è¯ï¼Œåº”ç”¨ç¨‹åºä¹Ÿä¼šå˜å¾—ä¸€ç‰‡æ··ä¹±ã€‚å¯ä»¥å°è¯•åŽ»ç¼–å†™ä¸€ä¸ªä¸Žrt.jarç±»åº“ä¸­å·²æœ‰ç±»é‡åçš„javaç±»ï¼Œå°†ä¼šå‘çŽ°å¯ä»¥æ­£å¸¸å˜å¼‚ï¼Œä½†æ°¸è¿œæ— æ³•è¢«åŠ è½½è¿è¡Œã€?
+	- å¦‚ä½•è‡ªå®šä¹‰ç±»åŠ è½½å™¨ï¼š</br>
+		- 1ã€ç»§æ‰¿ClassLoader
+		- 2ã€é‡å†™findClassæ–¹æ³•ï¼ˆä¸é‡å†™loadClassæ–¹æ³•ï¼Œè°ƒç”¨çˆ¶ç±»çš„loadClassæ–¹æ³•æ‰¾ä¸åˆ°ç±»å°±å¯ä»¥è°ƒç”¨å­ç±»çš„findClassäº†ï¼‰
 ```java
   public class MyClassLoader extends ClassLoader {
-    private String path;//¼ÓÔØÀàµÄÂ·¾¶
-    private String name;//Àà¼ÓÔØÆ÷Ãû³Æ
+    private String path;//åŠ è½½ç±»çš„è·¯å¾„
+    private String name;//ç±»åŠ è½½å™¨åç§°
     public MyClassLoader(ClassLoader parent, String path, String name) {
-        super(parent);//ÏÔÊ¾ÖÆ¶¨¸¸Àà¼ÓÔØÆ÷
+        super(parent);//æ˜¾ç¤ºåˆ¶å®šçˆ¶ç±»åŠ è½½å™?
         this.path = path;
         this.name = name;
     }
     public MyClassLoader(String path, String name) {
-        super();//ÈÃÏµÍ³Àà¼ÓÔØÆ÷³ÉÎª¸ÃÀàµÄ¸¸¼ÓÔØÆ÷
+        super();//è®©ç³»ç»Ÿç±»åŠ è½½å™¨æˆä¸ºè¯¥ç±»çš„çˆ¶åŠ è½½å™¨
         this.path = path;
         this.name = name;
     }
-    //¼ÇÔØÎÒÃÇ×Ô¼º¶¨ÒåµÄÀà£¬Í¨¹ýÎÒÃÇ×Ô¶¨ÒåµÄÕâ¸öclassloader
+    //è®°è½½æˆ‘ä»¬è‡ªå·±å®šä¹‰çš„ç±»ï¼Œé€šè¿‡æˆ‘ä»¬è‡ªå®šä¹‰çš„è¿™ä¸ªclassloader
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         byte[] data = readClassFileToByteArray(name);
         return this.defineClass(name,data,0,data.length);
     }
-    //»ñÈ¡ÎÒÃÇ.classÎÄ¼þµÄ×Ö½ÚÊý×é
+    //èŽ·å–æˆ‘ä»¬.classæ–‡ä»¶çš„å­—èŠ‚æ•°ç»?
     private byte[] readClassFileToByteArray(String name) {
-        //TODOÖ´ÐÐ×Ô¼º¼ÓÔØÀàµÄ·½·¨£¬ÏêÏ¸´úÂë¼ûcode
+        //TODOæ‰§è¡Œè‡ªå·±åŠ è½½ç±»çš„æ–¹æ³•ï¼Œè¯¦ç»†ä»£ç è§code
         return returnData;
     }
 }
-//Ê¹ÓÃ
+//ä½¿ç”¨
 public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         MyClassLoader loader = new MyClassLoader("G:/tmp/","zhangfei");
-        //ÉÏÒ»¸öloader×÷Îª¸¸¼ÓÔØÆ÷
+        //ä¸Šä¸€ä¸ªloaderä½œä¸ºçˆ¶åŠ è½½å™¨
         MyClassLoader wukongloader = new MyClassLoader(loader,"G:/tmp/","wukong");
-        //nullÔò´ú±í¸¸Àà¼ÓÔØÆ÷Îª BootStrap ClassLoader£¬¸¸Àà¼ÓÔØÆ÷ÕÒ²»µ½ÄÇ¸öÀà¾Íµ÷ÓÃfindClassÈÃ×ÓÀà¼ÓÔØÆ÷È¥¼ÓÔØ
+        //nullåˆ™ä»£è¡¨çˆ¶ç±»åŠ è½½å™¨ä¸?BootStrap ClassLoaderï¼Œçˆ¶ç±»åŠ è½½å™¨æ‰¾ä¸åˆ°é‚£ä¸ªç±»å°±è°ƒç”¨findClassè®©å­ç±»åŠ è½½å™¨åŽ»åŠ è½?
 //        MyClassLoader wukongloader = new MyClassLoader(null,"G:/tmp/","wukong");
-        //Ë«Ç×Î¯ÅÉÄ£ÐÍ£¬Èç¹û¸¸Àà´æÔÚÕâ¸öÀà£¬Ôò¼ÓÔØ¸¸Ç×µÄ
+        //åŒäº²å§”æ´¾æ¨¡åž‹ï¼Œå¦‚æžœçˆ¶ç±»å­˜åœ¨è¿™ä¸ªç±»ï¼Œåˆ™åŠ è½½çˆ¶äº²çš?
         Class<?> testDemo = wukongloader.loadClass("jvm.TestDemo");
-        //¼ÓÔØ×Ô¶¨ÒåµÄ
+        //åŠ è½½è‡ªå®šä¹‰çš„
         Class<?> testDemo1 = wukongloader.loadClass("a.b.TestDemo");
         testDemo.newInstance();
         testDemo1.newInstance();
     }
 ```
-- ÄÚ´æ
 	- ÄÚ´æ·ÖÎªÄÄ¼¸²¿·Ö£º
 		- ³ÌÐò¼ÆÊýÆ÷£º
 			- ½éÉÜ£ºÒ»¿é½ÏÐ¡µÄÄÚ´æ¿Õ¼ä£¬Ëû¿ÉÒÔ¿´×öÊÇµ±Ç°Ïß³ÌËùÖ´ÐÐµÄ×Ö½ÚÂëµÄÐÐºÅÖ¸Ê¾Æ÷¡£

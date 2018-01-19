@@ -51,8 +51,7 @@
 		- 1、继承ClassLoader
 		- 2、重写findClass方法（不重写loadClass方法，调用父类的loadClass方法找不到类就可以调用子类的findClass了）
 ```java
-	
-	public class MyClassLoader extends ClassLoader {
+  public class MyClassLoader extends ClassLoader {
     private String path;//加载类的路径
     private String name;//类加载器名称
     public MyClassLoader(ClassLoader parent, String path, String name) {
@@ -92,3 +91,30 @@ public static void main(String[] args) throws ClassNotFoundException, IllegalAcc
         testDemo1.newInstance();
     }
 ```
+- 内存
+	- 内存分为哪几部分：
+		- 程序计数器：
+			- 介绍：一块较小的内存空间，他可以看做是当前线程所执行的字节码的行号指示器。
+			- 是否线程私有：是，每个线程的计数器互不影响，独立存储
+			- 如果执行的是java方法，这个计数器记录的是正在执行的虚拟机字节码指令的地址；如果执行的是native方法，这个计数器的值为空。此内存区域是唯一一个在java虚拟机内存规范中没有规定任何OutOfMemoryError情况的区域
+		- java虚拟机栈
+			- 虚拟机栈描述的是java方法执行的内存模型：每个方法在执行的同时都会创建一个栈帧（Stack Flame）用于存储局部变量表、操作数栈、动态链接、方法出口信息等。每个方法从调用直至执行完成的过程，就对应着一个栈帧在虚拟机栈中入栈到到出栈的过程；其实平时说的堆栈中的“栈” ，就是这里讲的虚拟机栈的局部变量表部分
+				- 局部变量表：局部变量表中存放了编译期克制的各种基本数据类型（boolean、byte、char、short、int、float、long、double）、对象引用（reference类型，不是对象，可能是一个对象起始地址的引用指针，也可能是指向一个代表对象的聚句柄和其他榆次对象相关的位置）和returnAddress类型（指向了一条字节码指令的地址   ）其中64位长度的long和double类型的数据会占用2个局部变量空间，其余的数据类型只占用1个。局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。
+			- 是否线程私有：是
+			- 定义的异常：如果线程请求的栈深度大于虚拟机所允许的深度，将抛出StackOverflowError异常；如果虚拟机栈可以动态扩展（当前大部分的java虚拟机都可以动态扩展，只不过java虚拟机规范中也允许固定长度的虚拟机栈），如果扩展时无法申请到足够的内存，就会抛出OutOfMemoryError
+		- 本地方法栈
+			-  介绍：与虚拟机栈所发挥的作用是非常相似的，他们之间的区别不过是虚拟机栈为虚拟机执行java（也就是字节码）服务，而本地方法栈则为续集你使用的native方法服务。在虚拟机规范中对本地方法栈中方法使用的语言、使用的方式和数据结构并没有强制规定，因此具体的虚拟机可以自由实现它。甚至有的虚拟机（例如Sun HotSpot）直接把本地方法栈和虚拟机栈合二为一。
+			-  是否线程私有：是
+			-  定义的异常：与虚拟机栈一样，本地方法栈区域也会抛出StackOverflowError和OutOfMemoryError异常
+		- java堆
+			- 介绍：在启动时创建，唯一目的就是存放对象实例和数组，所有的对象实例和数据都要在堆上分配（现在没有那么绝对）。垃圾回收的主要地方。但是java堆中可能分出多个线程私有的分配缓冲区（Thread Local Allocation Buffer，TLAB）。java堆中可以处于物理上不连续的内存空间。可以实现成固定大小，也可以实现成可扩展的。
+			- 是够线程私有：否（线程共享的）  
+			- 定义的异常：如果堆中没有内存完成实例分配，并且堆中也无法再扩展时，将会抛出OutOfMemoryError异常。
+		-  方法区
+			-  介绍：用于存储已被虚拟机加载的类信息、常量、静态变量、及时编译器编译后的代码等数据。
+			-  是否线程私有：否
+			-  定义的异常：OutOfMemoryError
+			-  运行时常量池：方法区的一部分。Class文件中除了有类的版本、字段、方法、接口等描述信息外，嗨哟袶信息是常量池，用于存放编译期产生的各种字面量和符号引用，这部分内容将在类加载后进入方法区的运行时常量池存放。
+		- 直接内存：
+			- 介绍：直接内存 并不是虚拟机运行时数据区的一部分，也不是java虚拟机规范中定义的内存区域。当时这部分内存也被频繁地使用，而且也可能导致OutOfMemoryError。jdk1.4引入的nio，引入了基于通道的缓冲区io方式，它可以使用native函数库直接分配堆外内存，通过一个存储在java堆中的DirectByteBuffer对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在java堆和native堆中来回复制数据。这个内存的分配不会受到java堆大小的限制，但是会受到本机内存大小及处理器寻址空间的限制。
+			- 定义的异常：OutOfMemoryError

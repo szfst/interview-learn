@@ -19,9 +19,11 @@
 - 技术：
 	- netty
 	- springCloud：
+	- shiro：
 - 内容：
 	- 数据同步：netty
 	- 评级模型：多线程
+	- 账户：shiro
 ##### 三、hn
 - 技术:
 	- elastisearch

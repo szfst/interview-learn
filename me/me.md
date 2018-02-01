@@ -1,0 +1,40 @@
+##### 一、wb3.0
+- 技术：
+	- elasticsearch：
+	- springCloud：
+	- 文件服务器：
+	- mongodb
+	- redis：
+	- kafka：
+	- elk：
+	- websocket：
+	- nginx：
+	- mybatis:
+	- vue
+- 内容：
+	-  财务分析：MongoDB，多线程，redis
+	-  新闻公告：elasticsearch
+	-  评级：
+##### 二、ax
+- 技术：
+	- netty
+	- springCloud：
+- 内容：
+	- 数据同步：netty
+	- 评级模型：多线程
+##### 三、hn
+- 技术:
+	- elastisearch
+	- springCloud：
+- 内容:
+	-  新闻公告：elasticsearch
+	- springCloud：
+##### 四、zq
+- 技术:
+	- springboot+spingmvc+mybatis
+	- 前后端分离
+	- bootstrap
+	- restful
+- 内容：
+	- 账户：单点登录
+	- 基本信息

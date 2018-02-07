@@ -56,5 +56,5 @@
 	- bootstrap
 	- restful
 - 内容：
-	- 账户：单点登录
+	- 账户：单点登录（一处登录导出可用），忘记密码（guavaCache存储--redis存储）
 	- 基本信息

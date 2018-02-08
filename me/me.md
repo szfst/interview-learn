@@ -14,7 +14,7 @@
 - 内容：
 	-  财务分析：MongoDB，多线程，redis
 	-  新闻公告：elasticsearch，kafka，zookeeper
-	-  评级：
+	-  评级：断点续传
 ##### 二、ax
 - 技术：
 	- netty

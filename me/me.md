@@ -33,7 +33,7 @@
 	- springCloud：
 ##### 四、zq
 - 技术:
-	- springboot+spingmvc+mybatis
+	- ssm演进为springboot+spingmvc+mybatis
 	- 前后端分离
 	- bootstrap
 	- restful

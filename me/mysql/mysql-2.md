@@ -9,3 +9,39 @@
 	- (8) select 
 	- (9) distinct 
 	- (10) order by 
+- explain 
+	- id
+	- select_type
+	- table
+	- partitions
+	- **type**
+		- system:表仅有一行(=系统表)。这是const联接类型的一个特例。
+		- const:表最多有一个匹配行,它将在查询开始时被读取。因为仅有一行,在这行的列值可被优化器剩余部分认为是常数。const表很快,因为它们只读取一次!
+		- eq_ref:对于每个来自于前面的表的行组合（索引组合）,行组合的每条记录有唯一的值（例如唯一索引），从该表中读取一行。这可能是最好的联接类型,除了const类型。
+		- ref:对于每个来自于前面的表的行组合（索引组合）,行组合的每条记录不一定有唯一的值，所有有匹配索引值的行将从这张表中读取。
+		- ref_or_null:该联接类型如同ref,但是添加了MySQL可以专门搜索包含NULL值的行。
+		- index_merge:该联接类型表示使用了索引合并优化方法,mysql5.6之后支持多个索引，然后将索引合并优化。
+		- unique_subquery:该类型替换了下面形式的IN子查询的ref: value IN (SELECT primary_key FROM single_table WHERE some_expr) unique_subquery是一个索引查找函数,可以完全替换子查询,效率更高。
+		- index_subquery:该联接类型类似于unique_subquery。可以替换IN子查询,但只适合下列形式的子查询中的非唯一索引: value IN (SELECT key_column FROM single_table WHERE some_expr)
+		- range:只检索给定范围的行,使用一个索引来选择行。
+		- index:该联接类型与ALL相同,除了只有索引树被扫描。这通常比ALL快,因为索引文件通常比数据文件小。
+		- ALL:对于每个来自于先前的表的行组合,进行完整的表扫描。
+	- possible_keys：指出MySQL能使用哪个索引在该表中找到行
+	- key：显示MySQL实际决定使用的键(索引)。如果没有选择索引,键是NULL 
+	- key_len：使用的索引的长度。在不损失精确性的情况 下,长度越短越好；如果联合索引，长度不够所有联合索引的长度则说明没有用到全部的索引；长度并不是指实际的长度，是指字段定义的长度。
+	- ref：显示索引的哪一列被使用了，如果可能的话，是一个常数
+	- rows：MYSQL认为必须检查的用来返回请求数据的行数；依赖统计信息，所以不是很准确。
+	- filtered：表示返回结果的行数占需读取结果的行数的百分比，值越大越好；依赖统计信息，所以不是很准确。
+	- Extra
+		- Distinct:MySQL发现第1个匹配行后,停止为当前的行组合搜索更多的行。
+		- Not exists:MySQL能够对查询进行LEFT JOIN优化,发现1个匹配LEFT JOIN标准的行后,不再为前面的的行组合在该表内检查更多的行。
+		- range checked for each record (index map: #):MySQL没有发现好的可以使用的索引,但发现如果来自前面的表的列值已知,可能部分索引可以使用。
+		- Using filesort:MySQL需要额外的一次传递,以找出如何按排序顺序检索行。
+		- Using index:从只使用索引树中的信息而不需要进一步搜索读取实际的行来检索表中的列信息。
+		- Using temporary:为了解决查询,MySQL需要创建一个临时表来容纳结果。
+		- Using where:WHERE 子句用于限制哪一个行匹配下一个表或发送到客户。
+		- Using sort_union(...), Using union(...), Using intersect(...):这些函数说明如何为index_merge联接类型合并索引扫描。
+		- Using index for group-by:类似于访问表的Using index方式,Using index for group-by表示MySQL发现了一个索引,可以用来查 询GROUP BY或DISTINCT查询的所有列,而不要额外搜索硬盘访问实际的表。
+- explain 缺点：
+	- 无法对存储过程，触发器和UDF进行分析
+	- 早期的mysql只对select语句支持explain  

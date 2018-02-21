@@ -45,3 +45,4 @@
 - explain 缺点：
 	- 无法对存储过程，触发器和UDF进行分析
 	- 早期的mysql只对select语句支持explain  
+- btree和b+tree很好的介绍：https://www.cnblogs.com/vianzhang/p/7922426.html 

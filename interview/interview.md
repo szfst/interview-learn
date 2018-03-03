@@ -86,6 +86,38 @@ socket.close();
 - mybatis的原理
 - rpc的理解，dobble
 - mybatis实现分库分表
+- abstract
+	- abstract 可以修饰方法、类，但是不能修饰变量。
+	- abstract 修饰的方法不能有大括号。
+- 哪个不是response对象的方法 （getParameter不是）
+	- setContentType（String ct）；
+	- setHeader（String hdname，String hdValue）；
+	- getParameter（）；
+	- sendError（int errorCode）
+- Set<Integer> set = new LinkedHashSet<Integer>(10)：有序的，初始化为10，后面可以动态增加数量 
+- 输出结果为aaa bbb
+```java
+public class Test {
+    private void test(){
+        int x = 1;
+        switch (x){
+            case 1:{
+                System.out.println("aaa");
+            }
+            case 2:{
+                System.out.println("bbb");break;
+            }
+            case 3:
+                System.out.println("ccc");break;
+        }
+    }
+    public static void main(String[] args) {
+        new Test().test();
+    }
+}
+```
+- throw（在方法体内抛出异常） 和throws（在方法的声明处）
+- spring bean同一个配置文件id不能相同，但是不同文件可以相同
 ### 萨摩耶金服
 - 这个公司好坑，面试官没做准备
 - spring IOC 好处：
@@ -93,7 +125,23 @@ socket.close();
 	- 方便
 	- 高效
 - spring AOP 好处：
+	- 声明式事务在此展开
+	- 注点分离：将问题细化为单独部分，即可以理解为不可再分割的组件，如上边的日志组件和支付组件
+	- 1：降低模块的耦合度
+	- 2：使系统容易扩展
+	- 3：设计决定的迟绑定：使用AOP,设计师可以推迟为将来的需求作决定，因为它
+可以把这种需求作为独立的方面很容易的实现。
+	- 4：更好的代码复用性
 - 什么时候用联合索引什么时候用单个索引
 - 为什么联合索引第一个不走，后面的都不走了
 	- b+tree索引就是按顺序的，如果前面找不到，后面就找不到了。
 - spring cloud 如何做服务注册发现，实现原理。 
+	- https://zhuanlan.zhihu.com/p/24829766
+	- http://blog.csdn.net/jrn1012/article/details/77837671
+### 自己看的
+- 分布式领域CAP理论，
+	- Consistency(一致性), 数据一致更新，所有数据变动都是同步的
+	- Availability(可用性), 好的响应性能
+	- Partition tolerance(分区容忍性) 可靠性
+	- 定理：任何分布式系统只可同时满足二点，没法三者兼顾。
+	- 忠告：架构师不要将精力浪费在如何设计能满足三者的完美分布式系统，而是应该进行取舍。

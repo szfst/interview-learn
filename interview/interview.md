@@ -15,6 +15,7 @@ http://blog.csdn.net/excellentyuxiao/article/details/53390408
 	- b、不验证通信方身份，可能遭到伪装
 	- c、无法验证报文完整性，可能被篡改；HTTPS就是HTTP加上加密处理（一般是SSL安全通信线路）+认证+完整性保护
     - https://www.zhihu.com/question/53226983?sort=created
+    - http很有意思的一点是header每一行都用回车\r\n结尾，并用2个\r\n作为终止符。
 - 秒杀，库存不为负数的做法
 - mysql和mongodb的区别
 - 堆

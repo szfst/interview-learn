@@ -26,6 +26,15 @@ Connection connection = DriverManager.getConnection("url", "username", "password
         Statement statement = connection.createStatement();
         statement.execute("select * from tabl where j = 0");
 ```
+```java
+Class.forName("com.mysql.jdbc.Driver");
+Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/message", "root", "password");
+PreparedStatement preparedStatement = connection.prepareStatement("select id from message");
+ResultSet resultSet = preparedStatement.executeQuery();
+while (resultSet.next()){
+	resultSet.getString("id");
+}
+```
 - 如下程序，在同一个文件里面，编译报错：
 ```java
 class Base {
@@ -118,6 +127,7 @@ public class Test {
 ```
 - throw（在方法体内抛出异常） 和throws（在方法的声明处）
 - spring bean同一个配置文件id不能相同，但是不同文件可以相同
+- 分布式session的理解
 ### 萨摩耶金服
 - 这个公司好坑，面试官没做准备
 - spring IOC 好处：
@@ -145,3 +155,4 @@ public class Test {
 	- Partition tolerance(分区容忍性) 可靠性
 	- 定理：任何分布式系统只可同时满足二点，没法三者兼顾。
 	- 忠告：架构师不要将精力浪费在如何设计能满足三者的完美分布式系统，而是应该进行取舍。
+	- mybatis原理

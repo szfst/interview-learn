@@ -1,4 +1,5 @@
 
+
 ### 滴滴优点
 - SimpleDateFormat的特点：
 	- 内部维护一个Calendar，存在线程不安全的情况
@@ -148,7 +149,6 @@ public class Test {
 - spring cloud 如何做服务注册发现，实现原理。 
 	- https://zhuanlan.zhihu.com/p/24829766
 	- http://blog.csdn.net/jrn1012/article/details/77837671
-	
 ### 自己看的
 - 分布式领域CAP理论，
 	- Consistency(一致性), 数据一致更新，所有数据变动都是同步的

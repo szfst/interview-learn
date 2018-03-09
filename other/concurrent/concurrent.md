@@ -63,3 +63,9 @@ public final boolean compareAndSet(int expect, int update) {
 - ReadWriteLock描述的是：一个资源能够被多个读线程访问，或者被一个写线程访问，**但是不能同时存在读写线程**。也就是说读写锁使用的场合是一个共享资源被大量读取操作，而只有少量的写操作（修改数据）。清单1描述了ReadWriteLock的AP
 ##### 十、concurrentMap
 - ConcurrentHashMap是HashMap的线程安全版本，ConcurrentSkipListMap是TreeMap的线程安全版本。
+##### 十一、AtomicInteger
+- http://www.blogjava.net/xylz/archive/2010/07/01/324988.html
+- void lazySet(int newValue)和void set(int newValue)
+lazySet(int newValue)最后设置为给定值。 延时设置变量值，这个等价于set()方法，但是由于字段是**volatile**类型的，因此次字段的修改会比普通字段（非volatile字段）有稍微的性能延时（尽管可以忽略），所以如果不是想立即读取设置的新值，允许在“后台”修改值，那么此方法就很有用。如果还是难以理解，这里就类似于启动一个后台线程如执行修改新值的任务，原线程就不等待修改结果立即返回（这种解释其实是不正确的，但是可以这么理解）。
+void set(int newValue)
+- boolean weakCompareAndSet(int expect, int update) 和boolean CompareAndSet(int expect, int update)前者不禁止指令重排序，后者禁止。但是jdk的源码实现是一样的。

@@ -4,6 +4,7 @@
 	- **禁止重排序**：Java 存储模型不会对valatile指令的操作进行重排序：这个保证对volatile变量的操作时按照指令的出现顺序执行的
 	- **保证可见性**：volatile变量不会被缓存在寄存器中（只有拥有线程可见）或者其他对CPU不可见的地方，每次总是从主存中读取volatile变量的结果。也就是说对于volatile变量的修改，其它线程总是可见的，并且不是使用自己线程栈内部的变量。也就是在happens-before法则中，对一个valatile变量的写操作后，其后的任何读操作理解可见此写操作的结果。
 - 尽管volatile变量的特性不错，但是volatile并不能保证线程安全的，也就是说volatile字段的操作不是原子性的，volatile变量只能保证可见性（一个线程修改后其它线程能够理解看到此变化后的结果），要想保证原子性，目前为止只能加锁
+- 如果是读操作不加锁，写操作加锁，对于竞争资源来说就需要定义为volatile类型的。volatile类型能够保证happens-before法则，所以volatile能够近似保证正确性的情况下最大程度的降低加锁带来的影响，同时还与写操作的锁不产生冲突。
 ##### 二、synchronized关键字
 - 存在锁，而且是悲观锁，也就是独占锁
 - 独占锁是一种悲观锁，synchronized就是一种独占锁，会导致其他所有需要锁的线程挂起，等待持有锁的线程释放锁。。而另一个更加有效的锁就是乐观锁。所谓乐观锁就是，每次不加锁而是假设没有冲突而去完成某项操作，如果因为冲突失败就重试，直到成功为止。
@@ -60,3 +61,5 @@ public final boolean compareAndSet(int expect, int update) {
 - 缓存池整好使用此思想来实现的，比如链接池、对象池等。
 ##### 九、ReadWriteLock
 - ReadWriteLock描述的是：一个资源能够被多个读线程访问，或者被一个写线程访问，**但是不能同时存在读写线程**。也就是说读写锁使用的场合是一个共享资源被大量读取操作，而只有少量的写操作（修改数据）。清单1描述了ReadWriteLock的AP
+##### 十、concurrentMap
+- ConcurrentHashMap是HashMap的线程安全版本，ConcurrentSkipListMap是TreeMap的线程安全版本。

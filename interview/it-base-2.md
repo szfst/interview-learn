@@ -1,101 +1,101 @@
-#####��Щ����µĶ���ᱻ�������ջ��ƴ�����
-https://www.zhihu.com/question/35164211
-- ʲôʱ��
-	- ��˵����������������ṹ�������minor gc/full gc ��Minor GC
-��������ռ䣨���� Eden �� Survivor ���򣩻����ڴ汻��Ϊ Minor GC��Major GC �������������Full GC �����������ѿռ䡪��������������������
-	- ��˵��minor gc/full gc�Ĵ���������OOM�Ĵ�������������GC�ĵ��ŵĲ��ԡ� 
-	- eden����minor gc
-	- ����������Ķ�����������ʣ��ռ�full gc������С��ʱ��HandlePromotionFailure����ǿ��full gc
-	- gc���gcʱ���ʱ������GCTimeRatio����������OOM����������ͨ��NewRatio���������������������ͨ��MaxTenuringThreshold���ƽ�������ǰ���������
-- ��ʲô����
-	- ��gc root��ʼ���������������Ķ���
-	- ����ǿ���á������á������á���Ӱ���������
-	- ��root�������������Ҿ�����һ�α�ǡ���������Ȼû�и���Ķ��� ��û����finalize�����������渴��Ķ���
-- ��ʲô����
-	- ��˵�����������������Ǹ���������from survivor��to survivor�Ǹ�ɶ�õġ�����������Ǳ�������������������ƬҪ��Ҫ���������������ͱ����������ʲô�����Ƶ�
-	- ���ܽ�������С����У�����/��������Ƭ����CMS���Ѽ��������õ�������ص㡢�����ƣ�������˵������/�����ռ���ѡ��ķ�ʽ�� 
-#####��һ�³������뷽ʽ
-utf-8��GBK
-#####�޸Ķ���A��equals������ǩ������ôʹ��HashMap����������ʵ����ʱ�򣬻�����ĸ�equals������
-- ����ö�������equals������
-��==������ǻ������͵Ļ����ǿ����ǵ�����ֵ�Ƿ���ȾͿ��ԡ�
-������������͵Ļ����Ƚϵ���ջ�ڴ�ֲ���������ָ����ڴ��е�ָ���ֵ�Ƿ����
-��equals����������equals����û����д�Ļ���equals�����͡�==����ͬһ�֡�
-hashcod�Ƿ��ض���ʵ���ڴ��ַ��hashӳ�䡣
-���������ж����hashӳ�䶼�ǲ���ͬ�ġ�
+#####哪些情况下的对象会被垃圾回收机制处理掉
+- https://www.zhihu.com/question/35164211
+- 什么时候
+	- 能说出新生代、老年代结构，能提出minor gc/full gc （Minor GC
+从年轻代空间（包括 Eden 和 Survivor 区域）回收内存被称为 Minor GC。Major GC 是清理老年代。Full GC 是清理整个堆空间—包括年轻代和老年代。）
+	- 能说明minor gc/full gc的触发条件、OOM的触发条件，降低GC的调优的策略。 
+	- eden满了minor gc
+	- 升到老年代的对象大于老年代剩余空间full gc，或者小于时被HandlePromotionFailure参数强制full gc
+	- gc与非gc时间耗时超过了GCTimeRatio的限制引发OOM，调优诸如通过NewRatio控制新生代老年代比例，通过MaxTenuringThreshold控制进入老年前生存次数等
+- 对什么东西
+	- 从gc root开始搜索，搜索不到的对象
+	- 补充强引用、弱引用、软引用、幻影引用区别等
+	- 从root搜索不到，而且经过第一次标记、清理后，仍然没有复活的对象 （没有在finalize（）方法里面复活的对象）
+- 做什么事情
+	- 能说出诸如新生代做的是复制清理、from survivor、to survivor是干啥用的、老年代做的是标记清理、标记清理后碎片要不要整理、复制清理和标记清理有有什么优劣势等
+	- 还能讲清楚串行、并行（整理/不整理碎片）、CMS等搜集器可作用的年代、特点、优劣势，并且能说明控制/调整收集器选择的方式。 
+#####讲一下常见编码方式
+utf-8，GBK
+#####修改对象A的equals方法的签名，那么使用HashMap存放这个对象实例的时候，会调用哪个equals方法？
+- 会调用对象对象的equals方法。
+“==”如果是基本类型的话就是看他们的数据值是否相等就可以。
+如果是引用类型的话，比较的是栈内存局部变量表中指向堆内存中的指针的值是否相等
+“equals”如果对象的equals方法没有重写的话，equals方法和“==”是同一种。
+hashcod是返回对象实例内存地址的hash映射。
+理论上所有对象的hash映射都是不相同的。
 https://www.jianshu.com/p/985534b21089
-#####Java��String���˽�
-- 1.String����final���ǲ����Ա��̳еģ��������ĳ�Ա����Ĭ����final������java��final�����ǲ����Ա��̳е�
-- 2.String����һ�����������ǹ̶�������ˣ���String������κθı䶼��Ӱ�쵽ԭ������ص��κ�change�������������µĶ���
-- 3.ÿ�����Ǵ����ַ�������ʱ��JVM�����ȼ���ַ��������أ�������ַ����Ѿ����ڳ������У���ô��ֱ�ӷ��س������е�ʵ�����á�����ַ��������ڳ������У��ͻ�ʵ�������ַ������ҽ���ŵ��������С�����String�ַ����Ĳ��ɱ������ǿ���ʮ�ֿ϶���������һ��������������ͬ���ַ�
-- ��̬�����أ���*.class�ļ��еĳ����أ�class�ļ��еĳ����ز����������ַ���(����)���������������ࡢ��������Ϣ��ռ��class�ļ����󲿷ֿռ�.����ʱ�����أ�����jvm������������װ�ز����󣬽�class�ļ��еĳ��������뵽�ڴ��У��������ڷ������У����ǳ�˵�ĳ����أ�����ָ�������е�����ʱ�����ء�
-- 4.intern����ʹ�ã�һ����ʼΪ�յ��ַ����أ�������String����ά���������� intern����ʱ��������Ѿ�����һ�����ڴ�String������ַ�������equals(oject)����ȷ�������򷵻س��е��ַ��������򣬽���String�������ӵ����У������ش�String��������á�
-#####Java��ʵ�ֶ�̬�Ļ�����ʲô��
+#####Java中String的了解
+- 1.String类是final类是不可以被继承的，并且他的成员方法默认是final方法。java中final方法是不可以被继承的
+- 2.String对象一旦被创建就是固定不变的了，对String对象的任何改变都不影响到原对象，相关的任何change操作都会生成新的对象
+- 3.每当我们创建字符串常量时，JVM会首先检查字符串常量池，如果该字符串已经存在常量池中，那么就直接返回常量池中的实例引用。如果字符串不存在常量池中，就会实例化该字符串并且将其放到常量池中。由于String字符串的不可变性我们可以十分肯定常量池中一定不存在两个相同的字符
+- 静态常量池：即*.class文件中的常量池，class文件中的常量池不仅仅包含字符串(数字)字面量，还包含类、方法的信息，占用class文件绝大部分空间.运行时常量池：则是jvm虚拟机在完成类装载操作后，将class文件中的常量池载入到内存中，并保存在方法区中，我们常说的常量池，就是指方法区中的运行时常量池。
+- 4.intern方法使用：一个初始为空的字符串池，它由类String独自维护。当调用 intern方法时，如果池已经包含一个等于此String对象的字符串（用equals(oject)方法确定），则返回池中的字符串。否则，将此String对象添加到池中，并返回此String对象的引用。
+#####Java中实现多态的机制是什么？
 - http://blog.csdn.net/bornlili/article/details/55213563
-- Javaʵ�ֶ�̬��������Ҫ�������̳С���д������ת��
-	- �̳У��ڶ�̬�б�������м̳й�ϵ������͸��ࡣ
-	- ��д������Ը�����ĳЩ�����������¶��壬�ڵ�����Щ����ʱ�ͻ��������ķ�����
-	- ����ת�ͣ��ڶ�̬����Ҫ����������ø����������ֻ�����������ò��ܹ��߱����ܵ��ø���ķ���������ķ�����
-- ��Java����������ʽ����ʵ�ֶ�̬���̳кͽӿڡ�
-- ���Զ�̬������ѭ��ԭ�����Ϊ��������������ñ��������������ʱ�������ö�������Ͷ��������ñ��������;����˵���˭�ĳ�Ա������������������õķ����������ڳ����ж�����ģ�Ҳ����˵�����า�ǵķ�������������ȻҪ���ݼ̳����з������õ����ȼ���ȷ�Ϸ����������ȼ�Ϊ��this.show(O)��super.show(O)��this.show((super)O)��super.show((super)O)��
-#####��ν�һ��Java�������л����ļ��
+- Java实现多态有三个必要条件：继承、重写、向上转型
+	- 继承：在多态中必须存在有继承关系的子类和父类。
+	- 重写：子类对父类中某些方法进行重新定义，在调用这些方法时就会调用子类的方法。
+	- 向上转型：在多态中需要将子类的引用赋给父类对象，只有这样该引用才能够具备技能调用父类的方法和子类的方法。
+- 在Java中有两种形式可以实现多态。继承和接口。
+- 所以多态机制遵循的原则概括为：当超类对象引用变量引用子类对象时，被引用对象的类型而不是引用变量的类型决定了调用谁的成员方法，但是这个被调用的方法必须是在超类中定义过的，也就是说被子类覆盖的方法，但是它仍然要根据继承链中方法调用的优先级来确认方法，该优先级为：this.show(O)、super.show(O)、this.show((super)O)、super.show((super)O)。
+#####如何将一个Java对象序列化到文件里？
 - serilization
 - fastjson
 - protobuf
-Ȼ����outputstreamд���ļ�
+然后用outputstream写入文件
 http://blog.csdn.net/leefengboy/article/details/52724019
-#####˵˵���Java���������
+#####说说你对Java反射的理解
 - http://blog.csdn.net/piaoyi493279486/article/details/45624257
-- JAVA���������������״̬�У���������һ���࣬���ܹ�֪���������������Ժͷ�������������һ�����󣬶��ܹ�������������һ�����������ԣ����ֶ�̬��ȡ����Ϣ�Լ���̬���ö���ķ����Ĺ��ܳ�Ϊjava���Եķ�����ơ�
-- Java���������Ҫ�ṩ�����¹��ܣ� ������ʱ�ж�����һ�������������ࣻ������ʱ�ж�����һ���������еĳ�Ա�����ͷ�����������ʱ��������һ������ķ��������ɶ�̬������������ʱ��������һ����Ķ���
-- ���÷�������ܻ��ʲô��Ϣ��һ�仰��������ʲô��Ϣ�����Ϳ��Ի��ʲô��Ϣ������ǰ���ǵ�֪��������֣�Ҫ����û�к�����
--  ���ȵø��ݴ�������ȫ��������Class����
-	-  Class c=Class.forName("className");ע����className����Ϊȫ����Ҳ���ǵð������������磬cn.netjava.pojo.UserInfo;
-	-   Object obj=c.newInstance();//���������ʵ��
-	-    ��ù��캯���ķ���
-	-   Constructor getConstructor(Class[] params)//����ָ���������public������
-	-  Constructor[] getConstructors()//���public�����й�����
-	-   Constructor getDeclaredConstructor(Class[] params)//����ָ���������public�ͷ�public�Ĺ�����
-	-  Constructor[] getDeclaredConstructors()//���public�����й�����
-	-   ����෽���ķ���
-	-   Method getMethod(String name, Class[] params),���ݷ��������������ͻ�÷���
-	- Method[] getMethods()//������е�public����
-    - Method getDeclaredMethod(String name, Class[] params)//���ݷ������Ͳ������ͣ����public�ͷ�public�ķ���
-	- Method[] getDeclaredMethods()//������Ե�public�ͷ�public����
-	- ����������Եķ���
-	- Field getField(String name)//���ݱ������õ���Ӧ��public����
-	- Field[] getFields()//�����������public�ķ���
-	-  Field getDeclaredField(String name)//���ݷ��������public�ͷ�public����
-	-  Field[] getDeclaredFields()//����������е�public�ͷ�public����
-- Java�ķ���ǳ�ǿ�󣬴���class�� ���Զ�̬�����ɸ��ࡢȡ��������������Ϣ��������������ԡ������Լ����캯���ȣ���������ȡ���丸��򸸽ӿ���������ݡ�
-	- obj.getClass().getDeclaredMethods();//ȡ��obj�����Լ�����ķ����� ����˽�еķ�����
-	- obj.getClass().getMethods();//ȡ��obj�����Լ�����ķ������̳й����ķ����� ��˽�з����ò�����
-#####˵˵���Javaע�������
+- JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。
+- Java反射机制主要提供了以下功能： 在运行时判断任意一个对象所属的类；在运行时判断任意一个类所具有的成员变量和方法；在运行时调用任意一个对象的方法；生成动态代理；在运行时构造任意一个类的对象；
+- 利用反射机制能获得什么信息：一句话，类中有什么信息，它就可以获得什么信息，不过前提是得知道类的名字，要不就没有后文了
+-  首先得根据传入的类的全名来创建Class对象。
+	-  Class c=Class.forName("className");注明：className必须为全名，也就是得包含包名，比如，cn.netjava.pojo.UserInfo;
+	-   Object obj=c.newInstance();//创建对象的实例
+	-    获得构造函数的方法
+	-   Constructor getConstructor(Class[] params)//根据指定参数获得public构造器
+	-  Constructor[] getConstructors()//获得public的所有构造器
+	-   Constructor getDeclaredConstructor(Class[] params)//根据指定参数获得public和非public的构造器
+	-  Constructor[] getDeclaredConstructors()//获得public的所有构造器
+	-   获得类方法的方法
+	-   Method getMethod(String name, Class[] params),根据方法名，参数类型获得方法
+	- Method[] getMethods()//获得所有的public方法
+    - Method getDeclaredMethod(String name, Class[] params)//根据方法名和参数类型，获得public和非public的方法
+	- Method[] getDeclaredMethods()//获得所以的public和非public方法
+	- 获得类中属性的方法
+	- Field getField(String name)//根据变量名得到相应的public变量
+	- Field[] getFields()//获得类中所以public的方法
+	-  Field getDeclaredField(String name)//根据方法名获得public和非public变量
+	-  Field[] getDeclaredFields()//获得类中所有的public和非public方法
+- Java的反射非常强大，传递class， 可以动态的生成该类、取得这个类的所有信息，包括里面的属性、方法以及构造函数等，甚至可以取得其父类或父接口里面的内容。
+	- obj.getClass().getDeclaredMethods();//取得obj类中自己定义的方法， 包括私有的方法。
+	- obj.getClass().getMethods();//取得obj类中自己定义的方法及继承过来的方法， 但私有方法得不到。
+#####说说你对Java注解的理解
 - https://www.zhihu.com/question/47449512?sort=created
--  java 1.5��ʼ������ע��ͷ��䣬��ȷ����˵ע���Ƿ����һ���֣�û�з��䣬ע���޷�����ʹ�ã����뿪ע�⣬�������ɿ���ʹ�ã������˵������Ķ���Ӧ�ð���ע��ź���һЩ��
--  ע��Ĺ��ܷ֣�
-	- 1����д�ĵ���ͨ���������ʶ��Ԫ���������ĵ��������ĵ�doc�ĵ���
-	- 2�����������ͨ���������ʶ��Ԫ���ݶԴ�����з�����ʹ�÷��䡿
-	- 3�������飺ͨ���������ʶ��Ԫ�����ñ������ܹ�ʵ�ֻ����ı����顾Override��
-- Ԫע�⣺
-	- 1. Retention�����Ԫע���ʾһ��ע��ᱻ������ʲôʱ��
-	- 2��Documented�� ��һ��ע�ⱻ@DocumentedԪע��������ʱ����ô����������ʹ�����ע�⣬���ᱻJavadoc�����ĵ�����
-	- 3��Inherited�����������ε�ע���������Զ��̳еġ����������һ������������඼����ĳ��ע�⣬�Ϳ���ʹ��@Inherited���������ע�⡣Ҳ����˵������Parent����Child��ĸ��࣬��ô�������ñ�@InheritedԪע�������ε�ĳ��ע���Parent����������Σ����൱��Child��Ҳ����ע���������ˡ�
-	-  4. Target�����Ԫע��˵���˱����ε�ע���Ӧ�÷�Χ��Ҳ���Ǳ����ε�ע���������ע����Щ����Ԫ��
-#####˵˵�������ע�������
+-  java 1.5开始引入了注解和反射，正确的来说注解是反射的一部分，没有反射，注解无法正常使用，但离开注解，反射依旧可以使用，因此来说，反射的定义应该包含注解才合理一些。
+-  注解的功能分：
+	- 1、编写文档：通过代码里标识的元数据生成文档【生成文档doc文档】
+	- 2、代码分析：通过代码里标识的元数据对代码进行分析【使用反射】
+	- 3、编译检查：通过代码里标识的元数据让编译器能够实现基本的编译检查【Override】
+- 元注解：
+	- 1. Retention：这个元注解表示一个注解会被保留到什么时候
+	- 2、Documented： 当一个注解被@Documented元注解所修饰时，那么无论在哪里使用这个注解，都会被Javadoc工具文档化、
+	- 3、Inherited：表明被修饰的注解类型是自动继承的。如果你想让一个类和它的子类都包含某个注解，就可以使用@Inherited来修饰这个注解。也就是说，假设Parent类是Child类的父类，那么我们若用被@Inherited元注解所修饰的某个注解对Parent类进行了修饰，则相当于Child类也被该注解所修饰了。
+	-  4. Target：这个元注解说明了被修饰的注解的应用范围，也就是被修饰的注解可以用来注解哪些程序元素
+#####说说你对依赖注入的理解
 - https://www.jianshu.com/p/ba7dabe61bbe
 - https://www.zhihu.com/question/48427693?answer_deleted_redirect=true
-- ������A����F��Ҫ������B����ͳ�ĳ����У����Ǿͻ�ȥnewһ����B�Ķ��������A�ͻ�����������B�������˵�����B�����ڣ�����AҲ���޷�ʹ�á���ʹ������ע���Ժ���Aֻ��Ҫȥ����ʵ�ֹ���F�ӿڵ�һ��ʵ���࣬���ʵ�����������B,C�ȵȣ��������˭����Spring�������ļ������ģ�������A�Ͳ�����������B��
-- ���ǿ�������������Ʒ�ת����Դ������ʹ����Դ��˫�����й����������ɲ�ʹ����Դ�ĵ���������Spring���������й���
-- �ô�
-	- ��Դ���й�����ʵ����Դ�Ŀ��������׹���
-	-��**����**�� ����ʹ����Դ˫���������̶�
-- Spring Ioc�빤��ģʽ������
-	- ����û��������仯��Ҫ��Chinese���޸�һ�¡���ôǰһ�ֹ���ģʽ����Ҫ����Factory��ķ������������±��벼�𡣶�IoCֻ�� Ҫ��class���Ըı�һ�£���������IoC������Java������ƣ���Щ������**��̬����**�ģ���ʱ���ǾͿ����Ȳ岦Chinese���󣨲��ذ�ԭ����ֹͣ �������±��벼��
-	- ע�⣬IoC����������д��۵ģ����ò����鷳�����ɶ���ķ�ʽ��ֱ�ۡ�������������ɶ�����Ч������һ�㡣���ʹ��IoCҪ����û�б�Ҫ������Ϊ�Ƚ�ͨ�õ��жϷ�ʽ�ǣ��õ�����ģʽ�ĵط������Կ�����IoCģʽ��
-	- ����IoC�ĵ������ԡ�ʲô�ǵ������ԣ�������ù�Struts��EJB�ͻᷢ�֣�Ҫ�̳�һЩ�ӿڻ��࣬�����������ǵĿ�ܿ�����������ϵͳ�ͱ�����Struts��EJB�� �ˣ���ϵͳ�Ŀ���ֲ�Բ���������Ӱ�졣��������к����漰ĳһ����ܵĴ��룬��ô�����ܾͿ��Գ�����һ���������ԵĿ�ܡ�
-#####˵һ�·���ԭ����������˵��
-- ���Ͳ���:�������Ͳ������������ڶ�����ͬ�Ķ��󣬷���true'
+- 假设类A因功能F需要调用类B，传统的程序中，我们就会去new一个类B的对象，因而类A就会依赖类于类B，这就是说如果类B不存在，则类A也就无法使用。而使用依赖注入以后，类A只需要去调用实现功能F接口的一个实现类，这个实现类可能是类B,C等等，具体调用谁是有Spring的配置文件决定的，这样类A就不再依赖于类B。
+- 我们可以这样理解控制反转：资源不是由使用资源的双方进行管理，而是由不使用资源的第三方（即Spring容器）进行管理
+- 好处
+	- 资源集中管理，实现资源的可配置与易管理
+	-（**解耦**） 降低使用资源双方的依赖程度
+- Spring Ioc与工厂模式的区别
+	- 如果用户需求发生变化，要把Chinese类修改一下。那么前一种工厂模式，就要更改Factory类的方法，并且重新编译布署。而IoC只需 要将class属性改变一下，并且由于IoC利用了Java反射机制，这些对象是**动态生成**的，这时我们就可以热插拨Chinese对象（不必把原程序停止 下来重新编译布署）
+	- 注意，IoC的灵活性是有代价的：设置步骤麻烦、生成对象的方式不直观、反射比正常生成对象在效率上慢一点。因此使用IoC要看有没有必要，我认为比较通用的判断方式是：用到工厂模式的地方都可以考虑用IoC模式。
+	- 关于IoC的低侵入性。什么是低侵入性？如果你用过Struts或EJB就会发现，要继承一些接口或类，才能利用它们的框架开发。这样，系统就被绑定在Struts、EJB上 了，对系统的可移植性产生不利的影响。如果代码中很少涉及某一个框架的代码，那么这个框架就可以称做是一个低侵入性的框架。
+#####说一下泛型原理，并举例说明
+- 类型擦除:由于类型擦除，在运行期都是相同的对象，返回true'
 ```java
 public static void main(String[] args) {
     ArrayList<String> arrayList1=new ArrayList<String>();
@@ -105,8 +105,8 @@ public static void main(String[] args) {
  System.out.println(arrayList1.getClass()==arrayList2.getClass());
 }
 ```
-<<��������jvm>>p311
-- ���´��벻�ܱ���ͨ��
+<<深入理解jvm>>p311
+- 如下代码不能编译通过
 ```java
 public class GenericTypes {
     public static void method(List<String> list){
@@ -117,7 +117,7 @@ public class GenericTypes {
     }
 }
 ```
-- ����ֻ����jdk1.6�вſ������
+- 如下只有在jdk1.6中才可以输出
 - invoke method(List<String> list)
 - invoke method(List<Integer> list)
 ```java
@@ -136,32 +136,33 @@ public class GenericTypes {
     }
 }
 ```
-#####StringΪʲôҪ��Ƴɲ��ɱ�ģ�
+	
+#####String为什么要设计成不可变的？
 - http://blog.csdn.net/renfufei/article/details/16808775
-- 1. �ַ��������ص���Ҫ(��ƿ���,)
+- 1. 字符串常量池的需要(设计考虑,)
 ```java
 String s1= "ab" + "cd";
 String s2= "abc" + "d";
-System.out.println(s1==s2);	//���������   ����Ϊ���ڳ������
+System.out.println(s1==s2);	//这两个相等   ，因为都在常量池里，
 String a = "abc";
 String b = new String("abc");
-System.out.println(a==b);//���������ȣ���Ϊһ������ڶ��һ������ڳ�����  
+System.out.println(a==b);//这两个不等，因为一个存放在堆里，一个存放在常量池  
  ```
-- 2. ����String���󻺴�HashCode(Ч���Ż�)
-Java��String����Ĺ�ϣ�뱻Ƶ����ʹ��, ������hashMap �������С�
-�ַ��������Ա�֤��hash���Ψһ��,��˿��Է��ĵؽ��л���.��Ҳ��һ�������Ż��ֶ�,��ζ�Ų���ÿ�ζ�ȥ�����µĹ�ϣ��. ��String��Ķ����������´���:
-- 3. ��ȫ��(��ȫ��)
-String�������Java��(��)������������,���� �������ӵ�ַURL,�ļ�·��path,���з����������Ҫ��String������, ����String���ǹ̶������,����������ְ�ȫ������
-#####Object���equal��hashCode������д��Ϊʲô��
+- 2. 允许String对象缓存HashCode(效率优化)
+Java中String对象的哈希码被频繁地使用, 比如在hashMap 等容器中。
+字符串不变性保证了hash码的唯一性,因此可以放心地进行缓存.这也是一种性能优化手段,意味着不必每次都去计算新的哈希码. 在String类的定义中有如下代码:
+- 3. 安全性(安全性)
+String被许多的Java类(库)用来当做参数,例如 网络连接地址URL,文件路径path,还有反射机制所需要的String参数等, 假若String不是固定不变的,将会引起各种安全隐患。
+#####Object类的equal和hashCode方法重写，为什么？
 http://blog.csdn.net/shiyanming1223/article/details/6893401
-- 1�� ΪʲôҪ����equal������
-��ΪObject��equal����Ĭ����������������õıȽϣ���˼����ָ��ͬһ�ڴ�,��ַ����ȣ�������ȣ������������Ҫ���ö��������ֵ���ж��Ƿ���ȣ�������equal������
-- 2�� Ϊʲô����hashCode������
-һ��ĵط�����Ҫ����hashCode��ֻ�е�����Ҫ����HashTable��HashMap��HashSet�ȵ�hash�ṹ�ļ���ʱ�Ż�����hashCode����ôΪʲôҪ����hashCode�أ���HashMap��˵���ñ�HashMap����һ�����ڴ�飬�����кܶ�С�ڴ�飬С�ڴ��������һϵ�еĶ��󣬿�������hashCode������С�ڴ��hashCode%size(С�ڴ������)�����Ե�equal���ʱ��hashCode������ȣ����������object���󣬱�������hashCode��equal������
-- 3�� Ϊʲôequals()��ȣ�hashCode��һ��Ҫ��ȣ���hashCode��ȣ�ȴ��Ҫ��equals���?
-	- 1����Ϊ�ǰ���hashCode������С�ڴ�飬����hashCode������ȡ�
-	- 2��HashMap��ȡһ�������ǱȽ�key��hashCode��Ⱥ�equalΪtrue��
-֮����hashCode��ȣ�ȴ����equal���ȣ��ͱ���ObjectA��ObjectB���Ƕ�������name����ôhashCode����name���㣬����hashCodeһ�������������������ڲ�ͬ���ͣ�����equalΪfalse
-- 4�� Ϊʲô��ҪhashCode?
-	- 1�� ͨ��hashCode���Ժܿ�Ĳ鵽С�ڴ�顣
-	- 2�� ͨ��hashCode�Ƚϱ�equal�����죬��getʱ�ȱȽ�hashCode�����hashCode��ͬ��ֱ�ӷ���false��
+- 1、 为什么要重载equal方法？
+因为Object的equal方法默认是两个对象的引用的比较，意思就是指向同一内存,地址则相等，否则不相等；如果你现在需要利用对象里面的值来判断是否相等，则重载equal方法。
+- 2、 为什么重载hashCode方法？
+一般的地方不需要重载hashCode，只有当类需要放在HashTable、HashMap、HashSet等等hash结构的集合时才会重载hashCode，那么为什么要重载hashCode呢？就HashMap来说，好比HashMap就是一个大内存块，里面有很多小内存块，小内存块里面是一系列的对象，可以利用hashCode来查找小内存块hashCode%size(小内存块数量)，所以当equal相等时，hashCode必须相等，而且如果是object对象，必须重载hashCode和equal方法。
+- 3、 为什么equals()相等，hashCode就一定要相等，而hashCode相等，却不要求equals相等?
+	- 1、因为是按照hashCode来访问小内存块，所以hashCode必须相等。
+	- 2、HashMap获取一个对象是比较key的hashCode相等和equal为true。
+之所以hashCode相等，却可以equal不等，就比如ObjectA和ObjectB他们都有属性name，那么hashCode都以name计算，所以hashCode一样，但是两个对象属于不同类型，所以equal为false
+- 4、 为什么需要hashCode?
+	- 1、 通过hashCode可以很快的查到小内存块。
+	- 2、 通过hashCode比较比equal方法快，当get时先比较hashCode，如果hashCode不同，直接返回false。

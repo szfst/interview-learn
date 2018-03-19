@@ -82,3 +82,86 @@ http://blog.csdn.net/leefengboy/article/details/52724019
 	- 2、Documented： 当一个注解被@Documented元注解所修饰时，那么无论在哪里使用这个注解，都会被Javadoc工具文档化、
 	- 3、Inherited：表明被修饰的注解类型是自动继承的。如果你想让一个类和它的子类都包含某个注解，就可以使用@Inherited来修饰这个注解。也就是说，假设Parent类是Child类的父类，那么我们若用被@Inherited元注解所修饰的某个注解对Parent类进行了修饰，则相当于Child类也被该注解所修饰了。
 	-  4. Target：这个元注解说明了被修饰的注解的应用范围，也就是被修饰的注解可以用来注解哪些程序元素
+#####说说你对依赖注入的理解
+- https://www.jianshu.com/p/ba7dabe61bbe
+- https://www.zhihu.com/question/48427693?answer_deleted_redirect=true
+- 假设类A因功能F需要调用类B，传统的程序中，我们就会去new一个类B的对象，因而类A就会依赖类于类B，这就是说如果类B不存在，则类A也就无法使用。而使用依赖注入以后，类A只需要去调用实现功能F接口的一个实现类，这个实现类可能是类B,C等等，具体调用谁是有Spring的配置文件决定的，这样类A就不再依赖于类B。
+- 我们可以这样理解控制反转：资源不是由使用资源的双方进行管理，而是由不使用资源的第三方（即Spring容器）进行管理
+- 好处
+	- 资源集中管理，实现资源的可配置与易管理
+	-（**解耦**） 降低使用资源双方的依赖程度
+- Spring Ioc与工厂模式的区别
+	- 如果用户需求发生变化，要把Chinese类修改一下。那么前一种工厂模式，就要更改Factory类的方法，并且重新编译布署。而IoC只需 要将class属性改变一下，并且由于IoC利用了Java反射机制，这些对象是**动态生成**的，这时我们就可以热插拨Chinese对象（不必把原程序停止 下来重新编译布署）
+	- 注意，IoC的灵活性是有代价的：设置步骤麻烦、生成对象的方式不直观、反射比正常生成对象在效率上慢一点。因此使用IoC要看有没有必要，我认为比较通用的判断方式是：用到工厂模式的地方都可以考虑用IoC模式。
+	- 关于IoC的低侵入性。什么是低侵入性？如果你用过Struts或EJB就会发现，要继承一些接口或类，才能利用它们的框架开发。这样，系统就被绑定在Struts、EJB上 了，对系统的可移植性产生不利的影响。如果代码中很少涉及某一个框架的代码，那么这个框架就可以称做是一个低侵入性的框架。
+#####说一下泛型原理，并举例说明
+- 类型擦除:由于类型擦除，在运行期都是相同的对象，返回true'
+```java
+public static void main(String[] args) {
+    ArrayList<String> arrayList1=new ArrayList<String>();
+    arrayList1.add("abc");
+    ArrayList<Integer> arrayList2=new ArrayList<Integer>();
+    arrayList2.add(123);
+ System.out.println(arrayList1.getClass()==arrayList2.getClass());
+}
+```
+<<深入理解jvm>>p311
+- 如下代码不能编译通过
+```java
+public class GenericTypes {
+    public static void method(List<String> list){
+        System.out.println("invoke method(List<String> list");
+    }
+    public static void method(List<Integer> list){
+        System.out.println("invoke method(List<Integer> list");
+    }
+}
+```
+- 如下只有在jdk1.6中才可以输出
+- invoke method(List<String> list)
+- invoke method(List<Integer> list)
+```java
+public class GenericTypes {
+    public static String method(List<String> list){
+        System.out.println("invoke method(List<String> list");
+        return "";
+    }
+    public static int method(List<Integer> list){
+        System.out.println("invoke method(List<Integer> list");
+        return 1;
+    }
+    public static void main(String[] args) {
+        method(new ArrayList<String>());
+        method(new ArrayList<Integer>());
+    }
+}
+```
+#####String为什么要设计成不可变的？
+- http://blog.csdn.net/renfufei/article/details/16808775
+- 1. 字符串常量池的需要(设计考虑,)
+```java
+String s1= "ab" + "cd";
+String s2= "abc" + "d";
+System.out.println(s1==s2);	//这两个相等   ，因为都在常量池里，
+String a = "abc";
+String b = new String("abc");
+System.out.println(a==b);//这两个不等，因为一个存放在堆里，一个存放在常量池  
+ ```
+- 2. 允许String对象缓存HashCode(效率优化)
+Java中String对象的哈希码被频繁地使用, 比如在hashMap 等容器中。
+字符串不变性保证了hash码的唯一性,因此可以放心地进行缓存.这也是一种性能优化手段,意味着不必每次都去计算新的哈希码. 在String类的定义中有如下代码:
+- 3. 安全性(安全性)
+String被许多的Java类(库)用来当做参数,例如 网络连接地址URL,文件路径path,还有反射机制所需要的String参数等, 假若String不是固定不变的,将会引起各种安全隐患。
+#####Object类的equal和hashCode方法重写，为什么？
+http://blog.csdn.net/shiyanming1223/article/details/6893401
+- 1、 为什么要重载equal方法？
+因为Object的equal方法默认是两个对象的引用的比较，意思就是指向同一内存,地址则相等，否则不相等；如果你现在需要利用对象里面的值来判断是否相等，则重载equal方法。
+- 2、 为什么重载hashCode方法？
+一般的地方不需要重载hashCode，只有当类需要放在HashTable、HashMap、HashSet等等hash结构的集合时才会重载hashCode，那么为什么要重载hashCode呢？就HashMap来说，好比HashMap就是一个大内存块，里面有很多小内存块，小内存块里面是一系列的对象，可以利用hashCode来查找小内存块hashCode%size(小内存块数量)，所以当equal相等时，hashCode必须相等，而且如果是object对象，必须重载hashCode和equal方法。
+- 3、 为什么equals()相等，hashCode就一定要相等，而hashCode相等，却不要求equals相等?
+	- 1、因为是按照hashCode来访问小内存块，所以hashCode必须相等。
+	- 2、HashMap获取一个对象是比较key的hashCode相等和equal为true。
+之所以hashCode相等，却可以equal不等，就比如ObjectA和ObjectB他们都有属性name，那么hashCode都以name计算，所以hashCode一样，但是两个对象属于不同类型，所以equal为false
+- 4、 为什么需要hashCode?
+	- 1、 通过hashCode可以很快的查到小内存块。
+	- 2、 通过hashCode比较比equal方法快，当get时先比较hashCode，如果hashCode不同，直接返回false。

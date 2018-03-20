@@ -143,11 +143,12 @@ public class GenericTypes {
 ```java
 String s1= "ab" + "cd";
 String s2= "abc" + "d";
-System.out.println(s1==s2);	//这两个相等   ，因为都在常量池里，
+System.out.println(s1==s2);	//这两个相等，因为都在常量池里，
 String a = "abc";
 String b = new String("abc");
 System.out.println(a==b);//这两个不等，因为一个存放在堆里，一个存放在常量池  
- ```
+```
+
 - 2. 允许String对象缓存HashCode(效率优化)
 Java中String对象的哈希码被频繁地使用, 比如在hashMap 等容器中。
 字符串不变性保证了hash码的唯一性,因此可以放心地进行缓存.这也是一种性能优化手段,意味着不必每次都去计算新的哈希码. 在String类的定义中有如下代码:

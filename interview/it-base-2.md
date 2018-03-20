@@ -1,4 +1,4 @@
-#####哪些情况下的对象会被垃圾回收机制处理掉
+﻿#####哪些情况下的对象会被垃圾回收机制处理掉
 - https://www.zhihu.com/question/35164211
 - 什么时候
 	- 能说出新生代、老年代结构，能提出minor gc/full gc （Minor GC
@@ -166,3 +166,60 @@ http://blog.csdn.net/shiyanming1223/article/details/6893401
 - 4、 为什么需要hashCode?
 	- 1、 通过hashCode可以很快的查到小内存块。
 	- 2、 通过hashCode比较比equal方法快，当get时先比较hashCode，如果hashCode不同，直接返回false。
+#####并发集合了解哪些？
+#####java的集合以及集合之间的继承关系
+http://blog.csdn.net/sdhgood/article/details/38849477
+#####HashMap如何put数据（从HashMap源码角度讲解）？
+https://github.com/szfst/learn-java-project/tree/master/tulingInterview/src/hashmap
+#####ArrayMap和HashMap的对比
+#####HashTable实现原理
+#####ConcurrentHashMap的实现原理
+- http://www.importnew.com/26049.html
+- 其实可以看出JDK1.8版本的ConcurrentHashMap的数据结构已经接近HashMap，相对而言，ConcurrentHashMap只是增加了同步的操作来控制并发，从JDK1.7版本的ReentrantLock+Segment+HashEntry，到JDK1.8版本中synchronized+CAS+HashEntry+红黑树（**在没有hash冲突的时候直接使用cas，在有hash冲突的时候，用synchronized锁住整个链表；**当链表的长度大于8的时候使用红黑树）
+- 在JDK1.8版本中，对于size的计算，在扩容和addCount()方法就已经有处理了，JDK1.7是在调用size()方法才去计算，其实在并发集合中去计算size是没有多大的意义的，因为size是实时在变的，只能计算某一刻的大小，但是某一刻太快了，人的感知是一个时间段，所以并不是很精确。
+- JDK1.8的实现降低锁的粒度，JDK1.7版本锁的粒度是基于Segment的，包含多个HashEntry，而JDK1.8锁的粒度就是HashEntry（首节点）
+- JDK1.8版本的数据结构变得更加简单，使得操作也更加清晰流畅，因为已经使用synchronized来进行同步，所以不需要分段锁的概念，也就不需要Segment这种数据结构了，由于粒度的降低，实现的复杂度也增加了
+- JDK1.8使用红黑树来优化链表，基于长度很长的链表的遍历是一个很漫长的过程，而红黑树的遍历效率是很快的，代替一定阈值的链表，这样形成一个最佳拍档
+- JDK1.8为什么使用内置锁synchronized来代替重入锁ReentrantLock，我觉得有以下几点：
+	- 因为粒度降低了，在相对而言的低粒度加锁方式，synchronized并不比ReentrantLock差，在粗粒度加锁中ReentrantLock可能通过Condition来控制各个低粒度的边界，更加的灵活，而在低粒度中，Condition的优势就没有了
+	- JVM的开发团队从来都没有放弃synchronized，而且基于JVM的synchronized优化空间更大，使用内嵌的关键字比使用API更加自然
+	- 在大量的数据操作下，对于JVM的内存压力，基于API的ReentrantLock会开销更多的内存，虽然不是瓶颈，但是也是一个选择依据
+#####HashSet与HashMap怎么判断集合元素重复？
+- hashmap通过equal和hashcode
+- 而hashset通过hashmap来实现
+```java
+public class HashSet<E>
+    extends AbstractSet<E>
+    implements Set<E>, Cloneable, java.io.Serializable
+{
+    private transient HashMap<E,Object> map;
+    // Dummy value to associate with an Object in the backing Map
+    private static final Object PRESENT = new Object();
+    public HashSet() {
+    map = new HashMap<E,Object>();
+    }
+    public boolean contains(Object o) {
+    return map.containsKey(o);
+    }
+    public boolean add(E e) {
+    return map.put(e, PRESENT)==null;
+    }
+}
+```
+#####java什么是深拷贝和浅拷贝
+- https://www.oschina.net/translate/java-copy-shallow-vs-deep-in-which-you-will-swim
+- 浅拷贝：对象的浅拷贝会对“主”对象进行拷贝，但不会复制主对象里面的对象。"里面的对象“会在原来的对象和它的副本之间共享。Person copyPerson= new Person(beforePerson)
+- 深拷贝：对象里面所有的数据都被拷贝了，两份数据
+- 要创建一个真正的深拷贝，就需要我们一直这样拷贝下去，一直覆盖到 Person 对象所有的内部元素, 最后只剩下原始的类型以及“不可变对象（Immutables）”。让我们观察下如下这个 Street 类以获得更好的理解:
+```java
+public class Street {
+    private String name;
+    private int number;
+
+    public Street(Street otherStreet){
+         this.name = otherStreet.name;
+         this.number = otherStreet.number;
+    }
+}
+```
+Street 对象有两个实体变量组成 – String 类型的 name 以及 int 类型的 number。int  类型的 number 是一个原始类型，并非对象。它只是一个简单的值，不能共享, 因此在创建第二个实体变量时，我们可以自动创建一个独立的拷贝。String 是一个不可变对象（Immutable）。简言之，不可变对象也是对象，可一旦创建好了以后就再也不能被修改了。因此，你可以不用为其创建深拷贝就能对其进行共享。

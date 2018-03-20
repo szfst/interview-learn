@@ -1,4 +1,5 @@
-﻿- 请[参照](https://www.zhihu.com/question/35164211)
+﻿####哪些情况下的对象会被垃圾回收机制处理掉
+- 请[参照](https://www.zhihu.com/question/35164211)
 - 什么时候
 	- 能说出新生代、老年代结构，能提出minor gc/full gc （Minor GC
 从年轻代空间（包括 Eden 和 Survivor 区域）回收内存被称为 Minor GC。Major GC 是清理老年代。Full GC 是清理整个堆空间—包括年轻代和老年代。）

@@ -224,3 +224,99 @@ public class Street {
 }
 ```
 Street 对象有两个实体变量组成 – String 类型的 name 以及 int 类型的 number。int  类型的 number 是一个原始类型，并非对象。它只是一个简单的值，不能共享, 因此在创建第二个实体变量时，我们可以自动创建一个独立的拷贝。String 是一个不可变对象（Immutable）。简言之，不可变对象也是对象，可一旦创建好了以后就再也不能被修改了。因此，你可以不用为其创建深拷贝就能对其进行共享。
+#####手写链表逆序代码(leetcode206)
+```java
+        public ListNode reverseList(ListNode head) {
+            ListNode pre = null;
+            ListNode cur = head;
+            while(cur!=null){
+                ListNode next = cur.next;
+
+                cur.next=pre;
+                pre = cur;
+                cur = next;
+            }
+            return pre;
+        }
+```
+#####讲一下对树，B+树的理解
+- [参考](http://blog.csdn.net/zhangbo_0323/article/details/50156357)
+-  B+树是B-树的变体，也是一种多路搜索树
+-  非叶子结点的子树指针与关键字个数相同；
+-  非叶子结点的子树指针P[i]，指向关键字值属于[K[i], K[i+1])的子树
+（B-树是开区间）
+- **为所有叶子结点增加一个链指针**
+- 所有关键字都在叶子结点出现
+- 特性：
+	- 所有关键字都出现在叶子结点的链表中（稠密索引），且链表中的关键字恰好是有序的
+	- 不可能在非叶子结点命中
+	- 非叶子结点相当于是叶子结点的索引（稀疏索引），叶子结点相当于是存储（关键字）数据的数据层；
+	- 更适合文件索引系统
+
+![avatar](http://p.blog.csdn.net/images/p_blog_csdn_net/manesking/5.JPG)
+#####讲一下对图的理解
+#####判断单链表成环与否？
+- 定义两个指针p, q，其中p每次向前移动一步，q每次向前移动两步，所以就成p为慢指针，q为快指针。 
+那么如果单链表存在环，则p和q进入环后一定会在某一点相遇，因为进入环后就会一直循环下去，否则q将首先遇到null，就说明不存在环。[参考](http://blog.csdn.net/fu908323236/article/details/78205462)
+```java
+  private static boolean isCircle(Node head) {
+        if (head == null) {
+            return false;
+        }
+        //定义两个指针为同一起点
+        Node n1 = head;   //慢指针
+        Node n2 = head;   //快指针
+        //只要有环的话，这个循环条件就绝对会满足，如果没有环的话，到了最后总不满足
+        while(n2.next != null && n2.next.next != null) {
+            n1 = n1.next; //n1一次走一步
+            n2 = n2.next.next; //n2一次走两步
+            if (n1 == n2) {  //如果成环，总会有一点n1==n2
+                return true;
+            }
+        }
+        return false;
+    }
+```
+- 判断环的长度
+相遇两次，步数相减（假设同一个节点开始）[参考](https://www.jianshu.com/p/6ff4f6cef1d0)
+#####合并多个单有序链表（假设都是递增的）
+- 合并两个链表
+```java
+ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode(0);
+        ListNode l3 = head;
+        while (l1 != null && l2 != null) {
+            if (l1.val > l2.val) {
+                l3.next = l2;
+                l2 = l2.next;
+            } else {
+                l3.next = l1;
+                l1 = l1.next;
+            }
+            l3 = l3.next;
+        }
+        l3.next = l1 == null ? l2 : l1;
+        return head.next;
+    }
+``` 
+- 合并多个：
+通过队列实现，记得实现comparator
+```java
+       PriorityQueue<ListNode> p = new PriorityQueue<>((o1, o2) -> o1.val<o2.val?-1:1);
+       for(ListNode item:lists){
+           if(item!=null){
+               p.add(item);
+           }
+       }
+       ListNode head = new ListNode(0);
+       ListNode cur = head;
+       while(!p.isEmpty()){
+           ListNode peek = p.remove();
+           cur.next = peek;
+           if(peek.next!=null){
+               p.add(peek.next);
+           }
+           cur=cur.next;
+       }
+       return head.next;
+```

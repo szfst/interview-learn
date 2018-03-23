@@ -1,26 +1,26 @@
-##### 开启线程的三种方式？
+﻿### 开启线程的三种方式？
 - 1.继承Thread类
 - 2.实现Runnable接口
 - 3.实现callable接口，重写call方法
 
-##### 线程和进程的区别？
+### 线程和进程的区别？
 - 进程是资源的分配和调度的一个独立单元，而线程是CPU调度的基本单元
 - 同一个进程中可以包括多个线程，并且线程共享整个进程的资源（寄存器、堆栈、上下文），一个进程至少包括一个线程
 - .进程之间相互独立。但同一个进程之间的线程共享内存空间以及进程级的资源，某进程的线程在其他进程是看不到的
 - 进程之间相互独立。但同一个进程之间的线程共享内存空间以及进程级的资源，某进程的线程在其他进程是看不到的
 - 调度和切换：线程上下文切换比进程上下文切换要快的多
 
-##### 为什么要有线程，而不是仅仅用进程？
+### 为什么要有线程，而不是仅仅用进程？
 - 1.早期的确是这样的，但是后面随着计算机的发展，进程之间的切换是在太耗时间了。
 - 2.进程只能在一个时间干一件事，如果想同时干两件事或多件事，进程就无能为力了
 - 3.进程在执行的过程中如果阻塞，例如等待输入，整个进程就会挂起，即使进程中有些工作不依赖于输入的数据，也将无法执行
 
-##### run()和start()方法区别
+### run()和start()方法区别
 - 调用start方法方可启动线程，**而run方法只是thread的一个普通方法调用，还是在主线程里执行。**把需要并行处理的代码放在run()方法中，start()方法启动线程将自动调用 run()方法，这是由jvm的内存机制规定的。并且run()方法必须是public访问权限，返回值类型为void。
 	- 用start方法来启动线程，真正实现了多线程运行，这时无需等待run方法体代码执行完毕而直接继续执行下面的代码。通过调用Thread类的 start()方法来启动一个线程，这时此线程处于就绪（可运行）状态，并没有运行，一旦得到cpu时间片，就开始执行run()方法，这里方法 run()称为线程体，它包含了要执行的这个线程的内容，Run方法运行结束，此线程随即终止。
 	- run()方法只是类的一个普通方法而已，如果直接调用Run方法，程序中依然只有主线程这一个线程，其程序执行路径还是只有一条，还是要顺序执行，还是要等待run方法体执行完毕后才可继续执行下面的代码，这样就没有达到写线程的目的。
 
-##### 如何控制某个方法允许并发访问线程的个数？
+### 如何控制某个方法允许并发访问线程的个数？
 ```java
 static Semaphore semaphore = new Semaphore(5,true)
 semaphore.acquire();
@@ -30,7 +30,7 @@ Seamphore是一组信号量，用于管理一组资源。他也是实现了AQS�
 ，那么就可能重新唤醒等待队列中的线程继续执行。
 Seamphore分为公平模式和非公平模式。
 
-##### 在Java中sleep和wait方法的不同；
+### 在Java中sleep和wait方法的不同；
 - [参考](https://www.cnblogs.com/loren-Yang/p/7538482.html)
 - 这两个方法来自不同的类分别是Thread和Object 
 - 最主要是sleep方法没有释放锁，而wait方法释放了锁，使得其他线程可以使用同步控制块或者方法(锁代码块和方法锁)
@@ -45,7 +45,7 @@ Seamphore分为公平模式和非公平模式。
 	- yield方法  暂停当前正在执行的线程对象。  
 yield()方法是停止当前线程，让同等优先权的线程或更高优先级的线程有执行的机会。如果没有的话，那么yield()方法将不会起作用，并且由可执行状态后马上又被执行。   join方法是用于在某一个线程的执行过程中调用另一个线程执行，等到被调用的线程执行结束后，再继续执行当前线程。如：t.join();//主要用于等待t线程运行结束，若无此句，main则会执行完毕，导致结果不可预测。
 
-##### 谈谈wait/notify关键字的理解
+### 谈谈wait/notify关键字的理解
 - [参考](ttp://blog.csdn.net/jianiuqi/article/details/53448849)
 - wait( )，notify( )，notifyAll( )都不属于Thread类，而是属于Object基础类，也就是**每个对象都有wait( )，notify( )，notifyAll( ) 的功能**，因为每个对象都有锁，锁是每个对象的基础，当然操作锁的方法也是最基础了
 - 当需要调用以上的方法的时候，**一定要对竞争资源进行加锁**，如果不加锁的话，则会报 IllegalMonitorStateException 异常
@@ -57,13 +57,13 @@ yield()方法是停止当前线程，让同等优先权的线程或更高优先�
 - 假设有三个线程执行了obj.wait( )，那么obj.notifyAll( )则能全部唤醒tread1，thread2，thread3，但是要继续执行obj.wait（）的下一条语句，必须获得obj锁，因此，tread1，thread2，thread3只有一个有机会获得锁继续执行，例如tread1，其余的需要等待thread1释放obj锁之后才能继续执行。
 - 当调用obj.notify/notifyAll后，调用线程依旧持有obj锁，因此，thread1，thread2，thread3虽被唤醒，但是仍无法获得obj锁。**直到调用线程退出synchronized块，释放obj锁后，thread1，thread2，thread3中的一个才有机会获得锁继续执行。**
 
-##### 什么导致线程阻塞
+### 什么导致线程阻塞
 - 线程执行了Thread.sleep(intmillsecond);方法，当前线程放弃CPU，睡眠一段时间，然后再恢复执行
 - 线程执行了一个对象的wait()方法，直接进入阻塞状态，等待其他线程执行notify()或者notifyAll()方法。
 - 线程执行一段同步代码，但是尚且无法获得相关的同步锁，只能进入阻塞状态，等到获取了同步锁，才能回复执行
 - 线程执行某些IO操作，因为等待相关的资源而进入了阻塞状态。比如说监听system.in，但是尚且没有收到键盘的输入，则进入阻塞状态
 
-##### 线程如何关闭？
+### 线程如何关闭？
 - [参考](http://blog.csdn.net/linux2_scdn/article/details/48052153)
 - 针对没有阻塞的情况：设置标志变量，让线程正常自然死亡，和谐，也就是让其run结束
 ```java
@@ -89,7 +89,7 @@ yield()方法是停止当前线程，让同等优先权的线程或更高优先�
 - 针对有阻塞的情况：中断阻塞，靠抛出异常终止线程，看似暴力，但如果是我们预期的异常，那也是安全的(interrupt()).不管有没有阻塞情况，都用标志变量控制线程循环。
 - stop()函数终止线程就像是强行拔掉电源线关机一样，可能会带来未知风险，因此目前不再推荐使用这种方式。不安全。
 
-##### 讲一下java中的同步的方法
+### 讲一下java中的同步的方法
 [参考](https://www.cnblogs.com/duanxz/p/3709608.html?utm_source=tuicool&utm_medium=referral)
 - 一、同步方法:
 	- 即有synchronized关键字修饰的方法。 由于java的每个对象都有一个内置锁，当用此关键字修饰方法时， 内置锁会保护整个方法。在调用该方法前，需要获得内置锁，否则就处于阻塞状态。
@@ -108,15 +108,15 @@ ReentrantLock类是可重入、互斥、实现了Lock接口的锁，它与使用
 如果使用ThreadLocal管理变量，则每一个使用该变量的线程都获得该变量的副本，副本之间相互独立，这样每一个线程都可以随意修改自己的变量副本，而不会对其他线程产生影响。 ThreadLocal与同步机制都是为了解决多线程中相同变量的访问冲突问题
 - 七、使用原子变量实现线程同步(AtomicInteger)
 
-##### 两个进程同时要求写或者读，能不能实现？如何防止进程的同步？
+### 两个进程同时要求写或者读，能不能实现？如何防止进程的同步？
 不能同时对一个文件写操作，因为这样会对数据造成不一致性。对同一个文件进行读是可以的，可以使用读写锁。
 
-##### 线程间操作List
+### 线程间操作List
 [参考](http://wuwenjun0919-msn-com.iteye.com/blog/2174652)
 要使用Collection..synchronizedList(new ArrayList<E>())
 但是在进行操作的时候得保证使用同一把锁的对象。
 
-##### Java中对象的生命周期
+### Java中对象的生命周期
 [参考](http://blog.csdn.net/sodino/article/details/38387049)
 - 1. 创建阶段(Created)
 	- 为对象分配存储空间
@@ -149,14 +149,14 @@ System.out.println(count);
 - 7.对象空间重新分配阶段:
 	- 垃圾回收器对该对象的所占用的内存空间进行回收或者再分配了，则该对象彻底消失了，称之为“对象空间重新分配阶段”。
 
-##### java类的生命周期
+### java类的生命周期
 - 加载
 - （验证、准备，解析）链接
 - 初始化
 - 使用
 - 卸载
 
-##### Synchronized用法
+### Synchronized用法
 [参考](http://www.importnew.com/21866.html)
 - 修饰一个代码块，synchronized(this)
 - 修饰一个方法，下面两个函数是等价的。
@@ -189,22 +189,22 @@ class ClassName {
    }
 ```
 
-##### synchronize的原理
+### synchronize的原理
 [参考](http://blog.csdn.net/u012715840/article/details/58247556)
 
-##### 谈谈对Synchronized关键字，类锁，方法锁，重入锁的理解
+### 谈谈对Synchronized关键字，类锁，方法锁，重入锁的理解
 
-##### static synchronized 方法的多线程访问和作用
+### static synchronized 方法的多线程访问和作用
 
-##### 同一个类里面两个synchronized方法，两个线程同时访问的问题
+### 同一个类里面两个synchronized方法，两个线程同时访问的问题
 - Java中两个线程是不可以同时访问一个对象的两个不同的synchronized方法"[参考](https://www.jianshu.com/p/f23a90a79b3a)
 
-##### volatile的原理
+### volatile的原理
 - 将当前处理器缓存行的数据会写回到系统内存。
 - 这个写回内存的操作会引起在其他CPU里缓存了该内存地址的数据无效。(每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置成无效状态，当处理器要对这个数据进行修改操作的时候，会强制重新从系统内存里把数据读到处理器缓存里)
 - 禁止指令重排序优化。有volatile修饰的变量，赋值后多执行了一个“load addl $0x0, (%esp)”操作，这个操作相当于一个内存屏障（指令重排序时不能把后面的指令重排序到内存屏障之前的位置），只有一个CPU访问内存时，并不需要内存屏障；
 
-##### volatile关键字的用法
+### volatile关键字的用法
 [参考](https://www.ibm.com/developerworks/cn/java/j-jtp06197.html)
 - 标志状态
 ```java
@@ -287,14 +287,14 @@ public class CheesyCounter {
 }
 ```
 上面显示的线程安全的计数器使用 synchronized 确保增量操作是原子的，并使用 volatile 保证当前结果的可见性。可以在读操作中使用 volatile 确保当前值的可见性，因此可以使用锁进行所有变化的操作，使用 volatile 进行只读操作。其中，锁一次只允许一个线程访问值，volatile 允许多个线程执行读操作，因此当使用 volatile 保证读代码路径时，要比使用锁执行全部代码路径获得更高的共享度 —— 就像读－写操作一样。
-#####java volatile关键字的作用
+###java volatile关键字的作用
 - 禁止指令重排序，保证可见性，但是不保证原子性。
 - **定义long或double变量时，如果使用volatile关键字，就会获得（简单的赋值与返回操作）原子性**
 
-##### NIO的理解
+### NIO的理解
 [参考](https://github.com/szfst/learnNote/blob/master/tuling/nio/nio.md)
 
-##### synchronized 和volatile 关键字的区别
+### synchronized 和volatile 关键字的区别
 [参考](https://www.cnblogs.com/tf-Y/p/5266710.html)
 - volatile本质是在告诉jvm当前变量在寄存器（工作内存）中的值是不确定的，需要从主存中读取； synchronized则是锁定当前变量，只有当前线程可以访问该变量，其他线程被阻塞住。
 - volatile仅能使用在变量级别；synchronized则可以使用在变量、方法、和类级别的
@@ -304,29 +304,29 @@ public class CheesyCounter {
 - 当一个域的值依赖于它之前的值时，volatile就无法工作了，如n=n+1,n++等。如果某个域的值受到其他域的值的限制，那么volatile也无法工作，如Range类的lower和upper边界，必须遵循lower<=upper的限制。
 - 使用volatile而不是synchronized的唯一安全的情况是类中只有一个可变的域。
  
-##### synchronized与Lock的区别
+### synchronized与Lock的区别
 - （灵活性）ReentrantLock功能性方面更全面，比如时间锁等候，可中断锁等候，锁投票等，因此更有扩展性。在多个条件变量和高度竞争锁的地方，用ReentrantLock更合适，ReentrantLock还提供了Condition，对线程的等待和唤醒等操作更加灵活，一个ReentrantLock可以有多个Condition实例，所以更有扩展性。 
 - （锁自定释放）ReentrantLock必须在finally中释放锁，否则后果很严重，编码角度来说使用synchronized更加简单，不容易遗漏或者出错。
 - （阻塞、死锁）ReentrantLock提供了可轮询的锁请求，他可以尝试的去取得锁，如果取得成功则继续处理，取得不成功，可以等下次运行的时候处理，所以不容易产生死锁，而synchronized则一旦进入锁请求要么成功，要么一直阻塞，所以更容易产生死锁。
 - （定义）synchronized是java的一个关键字，在jvm层面上。Lock是一个类。
 
-##### ReentrantLock 、synchronized和volatile比较
+### ReentrantLock 、synchronized和volatile比较
 
-##### ReentrantLock的内部实现
+### ReentrantLock的内部实现
 - [参考](https://blog.csdn.net/yanyan19880509/article/details/52345422)
 - 可重入的原理:state变量加1，初始化变量为0，只有为0的时候别的线程才能获取锁
 - 队列实现：公平锁和非公平锁
 [参考](https://blog.csdn.net/u011202334/article/details/73188404)
 
-##### lock原理
+### lock原理
 
-##### 死锁的四个必要条件
+### 死锁的四个必要条件
 - 互斥条件：一个资源每次只能被一个进程使用。
 - 请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放
 - 不剥夺条件:进程已获得的资源，在末使用完之前，不能强行剥夺。
 - 循环等待条件:若干进程之间形成一种头尾相接的循环等待资源关系。
 
-##### 怎么避免死锁？
+### 怎么避免死锁？
 [参考](https://blog.csdn.net/ls5718/article/details/51896159)
 - 加锁顺序（线程按照一定的顺序加锁）
 - 加锁时限（线程尝试获取所的时候加上一定的时限，超过时限则放弃对该锁的请求，并释放自己占有的锁）

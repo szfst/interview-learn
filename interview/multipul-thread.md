@@ -331,3 +331,24 @@ public class CheesyCounter {
 - 加锁顺序（线程按照一定的顺序加锁）
 - 加锁时限（线程尝试获取所的时候加上一定的时限，超过时限则放弃对该锁的请求，并释放自己占有的锁）
 - 死锁检测
+#### 对象锁和类锁是否会互相影响
+不会相互影响。类锁和对象锁不是同1个东西，一个是类的Class对象的锁，一个是类的实例的锁。也就是说：1个线程访问静态synchronized的时候，允许另一个线程访问对象的实例synchronized方法。反过来也是成立的，因为他们需要的锁是不同的。
+#### 什么是线程池，如何使用
+https://blog.csdn.net/wolf909867753/article/details/77500625
+#### Java的并发、多线程、线程模型
+#### 谈谈对多线程的理解
+https://jingyan.baidu.com/article/afd8f4de50289934e286e9d6.html
+https://blog.csdn.net/thatboys/article/details/51869819
+#### 多线程有什么要注意的问题？
+#### 谈谈你对并发编程的理解并举例说明
+#### 谈谈你对多线程同步机制的理解？
+####  如何保证多线程读写文件的安全
+#### 多线程断点续传原理
+#### 断点续传的实现
+#### 断点续传的实现
+#### 其他
+
+- [深入理解java内存模型系列文章](https://link.jianshu.com/?t=http%3A%2F%2Fifeve.com%2Fjava-memory-model-0%2F)
+- [一张图让你看懂JAVA线程间的状态转换](https://link.jianshu.com/?t=https%3A%2F%2Fmy.oschina.net%2Fmingdongcheng%2Fblog%2F139263)
+![avatar](http://static.oschina.net/uploads/space/2013/0621/174442_0BNr_182175.jpg)
+- [所有的面试题]https://www.jianshu.com/p/c70989bd5f29?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation

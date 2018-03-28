@@ -287,7 +287,8 @@ public class CheesyCounter {
 }
 ```
 上面显示的线程安全的计数器使用 synchronized 确保增量操作是原子的，并使用 volatile 保证当前结果的可见性。可以在读操作中使用 volatile 确保当前值的可见性，因此可以使用锁进行所有变化的操作，使用 volatile 进行只读操作。其中，锁一次只允许一个线程访问值，volatile 允许多个线程执行读操作，因此当使用 volatile 保证读代码路径时，要比使用锁执行全部代码路径获得更高的共享度 —— 就像读－写操作一样。
-###java volatile关键字的作用
+-double check
+### java volatile关键字的作用
 - 禁止指令重排序，保证可见性，但是不保证原子性。
 - **定义long或double变量时，如果使用volatile关键字，就会获得（简单的赋值与返回操作）原子性**
 

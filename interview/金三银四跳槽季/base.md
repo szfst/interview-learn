@@ -31,3 +31,42 @@ https://blog.csdn.net/jek123456/article/details/73869203
 - 双向链表+HashMap
 - https://blog.csdn.net/hxqneuq2012/article/details/52709652
 - 方法二：使用LinkedHashMap，LinkedHashMap 提供了 removeEldestEntry(Map.Entry<K,V> eldest) 方法。该方法可以提供在每次添加新条目时移除最旧条目的实现程序，默认返回 false，这样，此映射的行为将类似于正常映射，即永远不能移除最旧的元素
+#### cloneable接口实现原理
+- http://kentkwan.iteye.com/blog/739514
+- 深拷贝（如果对象里面有别的对象的应用，需要也拷贝一份而不是直接使用应用）就要改写cloneable接口，否则，实现cloneable接口，重写clone方法为return super.clone()即可。
+####  异常分类以及处理机制 
+- throwable为父类，error和exception为子类
+- 在try catch finally语句中，如果finally语句里面出现return，catch里面抛出的异常可能会被屏蔽
+```java
+    boolean testEx() throws Exception {  
+        boolean ret = true;  
+        try {  
+            throw new Exception();
+        } catch (Exception e) {  
+            System.out.println("testEx, catch exception");  
+            ret = false;  
+            throw e;  
+        } finally {  
+            System.out.println("testEx, finally; return value=" + ret);  
+            return ret;  
+        }  
+    } 
+    public static void main(String[] args) {  
+        TestException testException1 = new TestException();  
+        try {  
+            testException1.testEx();  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }  
+    } 
+```
+#### sleep和wait的区别
+- 最主要是sleep方法没有释放锁，而wait方法释放了锁，
+- 这两个方法来自不同的类分别是Thread和Object
+- wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用，而sleep可以在任何地方使用(使用范围)(只有获取了锁才能调用wait方法或者notify)（wait()和notify()因为会对对象的“锁标志”进行操作，所以它们必须在synchronized函数或synchronized block中进行调用。如果在non-synchronized函数或non-synchronizedblock中进行调用，虽然能编译通过，但在运行时会发生illegalMonitorStateException的异常。）
+- sleep必须捕获异常，而wait，notify和notifyAll不需要捕获异常
+- 注意sleep()方法是一个静态方法，也就是说他只对当前对象有效，通过t.sleep()让t对象进入sleep，这样的做法是错误的，它只会是使当前线程被sleep 而不是t线程
+- wait属于Object的成员方法，一旦一个对象调用了wait方法，必须要采用notify()和notifyAll()方法唤醒该进程
+#### 数组在内存中如何分配
+- https://www.cnblogs.com/chenpi/p/5489732.html
+- 一维数组二维数组多维数组等都是在堆上分配

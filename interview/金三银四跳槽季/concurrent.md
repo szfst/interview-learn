@@ -24,3 +24,14 @@
 - .阻塞队列BlockingQueue：所有等待事件的线程尝试从空的阻塞队列获取元素，将阻塞，当事件发生时，向阻塞队列中同时放入N个元素(N的值与等待的线程数相同)，则所有等待的线程从阻塞队列中取出元素后得以继续执行。
 - 信号量Semaphore：设置信号量的初始值为等待的线程数N，一开始将信号量申请完，让剩余的信号量为0，待事件发生时，同时释放N个占用的信号量，则等待信号量的所有线程将获取信号量得以继续执行。 
 - 栅栏CyclicBarrier：设置栅栏的初始值为1，当事件发生时，调用barrier.wait()冲破设置的栅栏，将调用指定的Runable线程执行，在该线程中启动N个新的子线程执行。这个方法并不是让执行中的线程全部等待在某个点，待某一事件发生后继续执行。
+#### CAS？CAS 有什么缺陷，如何解决
+- [参考](https://baijiahao.baidu.com/s?id=1571172971189129&wfr=spider&for=pc)
+- 更新库存：update stock set num=num_new where sid=sid**and num=num_old**
+- ABA问题：
+	- 解决：“版本号”的比对，一个数据一个版本，版本变化，即使值相同，也不应该修改成功。
+update stock set num=num_new version=version_new where sid=sid and **version=version_old**
+####  synchronized 和 lock 有什么区别？ 
+####  Hashtable 是怎么加锁的 ？
+- Hashtable的实现方法里面都添加了synchronized关键字来确保线程同步
+- HashMap和Hashtable的底层实现都是数组+链表结构实现的，这点上完全一致
+- [HashMap和Hashtable的区别](https://blog.csdn.net/double2hao/article/details/53411594)

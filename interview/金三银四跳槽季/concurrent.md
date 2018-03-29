@@ -35,3 +35,17 @@ update stock set num=num_new version=version_new where sid=sid and **version=ver
 - Hashtable的实现方法里面都添加了synchronized关键字来确保线程同步
 - HashMap和Hashtable的底层实现都是数组+链表结构实现的，这点上完全一致
 - [HashMap和Hashtable的区别](https://blog.csdn.net/double2hao/article/details/53411594)
+#### HashMap 的并发问题
+https://blog.csdn.net/zhuqiuhui/article/details/51849692
+####  ConcurrenHashMap 介绍？1.8 中为什么要用红黑树？
+- http://www.importnew.com/23610.html
+- http://www.importnew.com/23621.html
+- 从JDK1.7版本的ReentrantLock+Segment+HashEntry，到JDK1.8版本中synchronized+CAS+HashEntry+红黑树（**在没有hash冲突的时候直接使用cas，在有hash冲突的时候，用synchronized锁住整个链表**，当链表的长度大于8的时候使用红黑树）
+#### AQS
+- 写得很好https://www.cnblogs.com/waterystone/p/4920797.html
+#### 如何检测死锁？怎么预防死锁
+- 检测死锁方法论：有两个容器，一个用于保存线程正在请求的锁，一个用于保存线程已经持有的锁。每次加锁之前都会做如下检测:
+	- 1)检测当前正在请求的锁是否已经被其它线程持有,如果有，则把那些线程找出来
+	- 2)遍历第一步中返回的线程，检查自己持有的锁是否正被其中任何一个线程请求。 如果第二步返回真,表示出现了死锁；如果第二步没有返回真，那么就递进检测（也就是：死锁一般要比两个线程互相持有对方的锁这种情况要复杂的多。线程A等待线程B，线程B等待线程C，线程C等待线程D，线程D又在等待线程A。线程A为了检测死锁，它需要递进地检测所有被B请求的锁。从线程B所请求的锁开始，线程A找到了线程C，然后又找到了线程D，发现线程D请求的锁被线程A自己持有着。这是它就知道发生了死锁）
+-  jdk安装目录/bin/Jconsole->选择要检测的线程->点击线程选项->检测死锁;[参考](https://blog.csdn.net/u014039577/article/details/52351626)
+-  jdk安装目录/bin/jps->查找出要检测的线程->jstack -l 进程ID

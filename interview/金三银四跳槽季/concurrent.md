@@ -49,3 +49,20 @@ https://blog.csdn.net/zhuqiuhui/article/details/51849692
 	- 2)遍历第一步中返回的线程，检查自己持有的锁是否正被其中任何一个线程请求。 如果第二步返回真,表示出现了死锁；如果第二步没有返回真，那么就递进检测（也就是：死锁一般要比两个线程互相持有对方的锁这种情况要复杂的多。线程A等待线程B，线程B等待线程C，线程C等待线程D，线程D又在等待线程A。线程A为了检测死锁，它需要递进地检测所有被B请求的锁。从线程B所请求的锁开始，线程A找到了线程C，然后又找到了线程D，发现线程D请求的锁被线程A自己持有着。这是它就知道发生了死锁）
 -  jdk安装目录/bin/Jconsole->选择要检测的线程->点击线程选项->检测死锁;[参考](https://blog.csdn.net/u014039577/article/details/52351626)
 -  jdk安装目录/bin/jps->查找出要检测的线程->jstack -l 进程ID
+#### Java 内存模型？
+#### 如何保证多线程下 i++ 结果正确？
+#### 线程池的种类，区别和使用场景？
+- https://www.jianshu.com/p/a38113f925d9
+https://www.cnblogs.com/sachen/p/7401959.html
+#### 线程池execute和submit的区别
+- submit内部调用execute
+- submit有返回值
+- submit方便exception处理
+- 结论:https://blog.csdn.net/hayre/article/details/53314599
+	- 结论1：如果提交的任务不需要一个结果的话直接用execute()会提升很多性能。
+	- 结论二：就是相当于说如果你传的任务是需要结果的，那你就使用你的类去继承Callable接口，然后告诉submit方法就行了，如果你只需要一个特定的结果，就把那个特定的结果告诉submit方法然后把你想要的特定结果也告诉他，它只是帮你完成以前使用Future模式的时候你自己需要做的那些步骤而已，如果你不需要一个结果，那么就老老实实使用execute，如果你需要的是一个空结果，那么submit(yourRunnable)与submit(yourRunnable,null)是等价的！
+#### 分析线程池的实现原理和线程的调度过程？
+- https://www.jianshu.com/p/edab547f2710
+![avatar](https://upload-images.jianshu.io/upload_images/1958298-7a6ae7778a4c6009.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700)
+#### 线程池如何调优，最大数目如何确认？
+- https://www.cnblogs.com/jianzh5/p/6437315.html

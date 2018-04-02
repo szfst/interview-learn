@@ -66,3 +66,18 @@ https://www.cnblogs.com/sachen/p/7401959.html
 ![avatar](https://upload-images.jianshu.io/upload_images/1958298-7a6ae7778a4c6009.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700)
 #### 线程池如何调优，最大数目如何确认？
 - https://www.cnblogs.com/jianzh5/p/6437315.html
+#### ThreadLocal原理，用的时候需要注意什么
+- https://mp.weixin.qq.com/s/1ccG1R3ccP0_5A7A5zCdzQ
+- 每个线程里面维护一个类似hashmap的结构（但是没有链表的结构），这个结构叫做ThreadLoalMap，key为threadLocal
+- 注意的地方：用完记得remove，否则容易造成内存泄露（ThreadLocal被保存到WeakReference中，在没有外部强引用时，发生GC时会被回收，如果创建ThreadLocal的线程一直持续运行，那么这个Entry对象中的value就有可能一直得不到回收，发生内存泄露）
+#### CountDownLatch 和 CyclicBarrier 的用法，以及相互之间的差别
+- CountDownLatch只能用一次，CyclicBarrier可以循环利用
+- countDownLatch是一个或者几个线程等待特定的线程countdown一定的数量，然后执行，例如主线程等待其他线程countdown。CyclicBarrier是各个线程之间相互等待对方，等待（await）到一定的数量，这些线程继续往下执行。
+#### LockSupport工具 
+- https://blog.csdn.net/u013851082/article/details/70242395
+- https://segmentfault.com/a/1190000008420938
+- https://www.cnblogs.com/hvicen/p/6217303.html
+####  Condition接口及其实现原理 
+#### Fork/Join框架的理解 
+#### 分段锁的原理,锁力度减小的思考 
+#### 八种阻塞队列以及各个阻塞队列的特性

@@ -92,6 +92,6 @@ public Object getBean(String name) throws Exception {
 - https://segmentfault.com/a/1190000013882720#articleHeader17
 #### Spring 如何保证 Controller 并发的安全
 Spring 多线程请求过来默认调用的Controller对象都是一个，而不是一个请求过来就创建一个Controller对象。那有没有办法让Controller不以单例而以每次请求都重新创建的形式存在呢？
-答案是当然可以，只需要在类上添加注解**@Scope("prototype")**即可，这样每次请求调用的类都是重新生成的（每次生成会影响效率）
+答案是当然可以，只需要在类上**添加注解@Scope("prototype")**即可**，这样每次请求调用的类都是重新生成的（每次生成会影响效率）
 虽然这样可以解决问题，但增加了时间成本，总让人不爽，还有其他方法么？答案是肯定的！
 **使用ThreadLocal来保存类变量**，将类变量保存在线程的变量域中，让不同的请求隔离开来。

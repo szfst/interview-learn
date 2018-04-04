@@ -1,96 +1,97 @@
-#### BeanFactory ºÍ FactoryBean£¿
+#### BeanFactory å’Œ FactoryBeanï¼Ÿ
+- FactoryBeanæ˜¯ä¸€ä¸ªèƒ½å¤Ÿç”Ÿäº§beançš„beanï¼Œåœ¨getObjectæ–¹æ³•ä¸­èƒ½å¤Ÿå®žçŽ°è‡ªå®šä¹‰åŠ è½½beanï¼Œç„¶åŽæ”¾å›žç‰¹å®šçš„beanï¼Œè€Œä¸æ˜¯è‡ªå·±æœ¬èº«ã€‚ï¼ˆå‚è€ƒã€Šspringæºç æ·±åº¦è§£æžã€‹p82ï¼‰
 https://blog.csdn.net/joenqc/article/details/66479154
-- Beanfactory ºÍ Factory bean£¬ÆäÖÐ BeanFactory Ö¸µÄÊÇ IOC ÈÝÆ÷µÄ±à³Ì³éÏó£¬±ÈÈç ApplicationContext£¬ XmlBeanFactory µÈ£¬ÕâÐ©¶¼ÊÇ IOC ÈÝÆ÷µÄ¾ßÌå±íÏÖ£¬ÐèÒªÊ¹ÓÃÊ²Ã´ÑùµÄÈÝÆ÷ÓÉ¿Í»§¾ö¶¨,µ« Spring ÎªÎÒÃÇÌá¹©ÁË·á¸»µÄÑ¡Ôñ¡£ FactoryBean Ö»ÊÇÒ»¸ö¿ÉÒÔÔÚ IOC¶øÈÝÆ÷ÖÐ±»¹ÜÀíµÄÒ»¸ö bean,ÊÇ¶Ô¸÷ÖÖ´¦Àí¹ý³ÌºÍ×ÊÔ´Ê¹ÓÃµÄ³éÏó,Factory bean ÔÚÐèÒªÊ±²úÉúÁíÒ»¸ö¶ÔÏó£¬¶ø²»·µ»Ø FactoryBean±¾Éí,ÎÒÃÇ¿ÉÒÔ°ÑËü¿´³ÉÊÇÒ»¸ö³éÏó¹¤³§£¬¶ÔËüµÄµ÷ÓÃ·µ»ØµÄÊÇ¹¤³§Éú²úµÄ²úÆ·¡£ËùÓÐµÄ Factory bean ¶¼ÊµÏÖÌØÊâµÄorg.springframework.beans.factory.FactoryBean ½Ó¿Ú£¬µ±Ê¹ÓÃÈÝÆ÷ÖÐ factory bean µÄÊ±ºò£¬¸ÃÈÝÆ÷²»»á·µ»Ø factory bean ±¾Éí,¶øÊÇ·µ»ØÆäÉú³ÉµÄ¶ÔÏó¡£Spring °üÀ¨ÁË´ó²¿·ÖµÄÍ¨ÓÃ×ÊÔ´ºÍ·þÎñ·ÃÎÊ³éÏóµÄ Factory bean µÄÊµÏÖ£¬ÆäÖÐ°üÀ¨:¶Ô JNDI ²éÑ¯µÄ´¦Àí£¬¶Ô´úÀí¶ÔÏóµÄ´¦Àí£¬¶ÔÊÂÎñÐÔ´úÀíµÄ´¦Àí£¬¶Ô RMI ´úÀíµÄ´¦ÀíµÈ£¬ÕâÐ©ÎÒÃÇ¶¼¿ÉÒÔ¿´³ÉÊÇ¾ßÌåµÄ¹¤³§,¿´³ÉÊÇSPRING ÎªÎÒÃÇ½¨Á¢ºÃµÄ¹¤³§¡£Ò²¾ÍÊÇËµ Spring Í¨¹ýÊ¹ÓÃ³éÏó¹¤³§Ä£Ê½ÎªÎÒÃÇ×¼±¸ÁËÒ»ÏµÁÐ¹¤³§À´Éú²úÒ»Ð©ÌØ¶¨µÄ¶ÔÏó,Ãâ³ýÎÒÃÇÊÖ¹¤ÖØ¸´µÄ¹¤×÷£¬ÎÒÃÇÒªÊ¹ÓÃÊ±Ö»ÐèÒªÔÚ IOC ÈÝÆ÷ÀïÅäÖÃºÃ¾ÍÄÜºÜ·½±ãµÄÊ¹ÓÃÁË.
-- BeanFactoryÊÇ¸öFactory£¬Ò²¾ÍÊÇIOCÈÝÆ÷»ò¶ÔÏó¹¤³§£¬ÔÚSpringÖÐ£¬ËùÓÐµÄBean¶¼ÊÇÓÉBeanFactory(Ò²¾ÍÊÇIOCÈÝÆ÷)À´½øÐÐ¹ÜÀíµÄ£¬Ìá¹©ÁËÊµÀý»¯¶ÔÏóºÍÄÃ¶ÔÏóµÄ¹¦ÄÜ£»FactoryBeanÊÇ¸öBean£¬Õâ¸öBean²»ÊÇ¼òµ¥µÄBean£¬¶øÊÇÒ»¸öÄÜÉú²ú»òÕßÐÞÊÎ¶ÔÏóÉú³ÉµÄ¹¤³§Bean,ËüµÄÊµÏÖÓëÉè¼ÆÄ£Ê½ÖÐµÄ¹¤³§Ä£Ê½ºÍÐÞÊÎÆ÷Ä£Ê½ÀàËÆ¡£
-#### Spring IOC µÄÀí½â£¬Æä³õÊ¼»¯¹ý³Ì
+- Beanfactory å’Œ Factory beanï¼Œå…¶ä¸­ BeanFactory æŒ‡çš„æ˜¯ IOC å®¹å™¨çš„ç¼–ç¨‹æŠ½è±¡ï¼Œæ¯”å¦‚ ApplicationContextï¼Œ XmlBeanFactory ç­‰ï¼Œè¿™äº›éƒ½æ˜¯ IOC å®¹å™¨çš„å…·ä½“è¡¨çŽ°ï¼Œéœ€è¦ä½¿ç”¨ä»€ä¹ˆæ ·çš„å®¹å™¨ç”±å®¢æˆ·å†³å®š,ä½† Spring ä¸ºæˆ‘ä»¬æä¾›äº†ä¸°å¯Œçš„é€‰æ‹©ã€‚ FactoryBean åªæ˜¯ä¸€ä¸ªå¯ä»¥åœ¨ IOCè€Œå®¹å™¨ä¸­è¢«ç®¡ç†çš„ä¸€ä¸ª bean,æ˜¯å¯¹å„ç§å¤„ç†è¿‡ç¨‹å’Œèµ„æºä½¿ç”¨çš„æŠ½è±¡,Factory bean åœ¨éœ€è¦æ—¶äº§ç”Ÿå¦ä¸€ä¸ªå¯¹è±¡ï¼Œè€Œä¸è¿”å›ž FactoryBeanæœ¬èº«,æˆ‘ä»¬å¯ä»¥æŠŠå®ƒçœ‹æˆæ˜¯ä¸€ä¸ªæŠ½è±¡å·¥åŽ‚ï¼Œå¯¹å®ƒçš„è°ƒç”¨è¿”å›žçš„æ˜¯å·¥åŽ‚ç”Ÿäº§çš„äº§å“ã€‚æ‰€æœ‰çš„ Factory bean éƒ½å®žçŽ°ç‰¹æ®Šçš„org.springframework.beans.factory.FactoryBean æŽ¥å£ï¼Œå½“ä½¿ç”¨å®¹å™¨ä¸­ factory bean çš„æ—¶å€™ï¼Œè¯¥å®¹å™¨ä¸ä¼šè¿”å›ž factory bean æœ¬èº«,è€Œæ˜¯è¿”å›žå…¶ç”Ÿæˆçš„å¯¹è±¡ã€‚Spring åŒ…æ‹¬äº†å¤§éƒ¨åˆ†çš„é€šç”¨èµ„æºå’ŒæœåŠ¡è®¿é—®æŠ½è±¡çš„ Factory bean çš„å®žçŽ°ï¼Œå…¶ä¸­åŒ…æ‹¬:å¯¹ JNDI æŸ¥è¯¢çš„å¤„ç†ï¼Œå¯¹ä»£ç†å¯¹è±¡çš„å¤„ç†ï¼Œå¯¹äº‹åŠ¡æ€§ä»£ç†çš„å¤„ç†ï¼Œå¯¹ RMI ä»£ç†çš„å¤„ç†ç­‰ï¼Œè¿™äº›æˆ‘ä»¬éƒ½å¯ä»¥çœ‹æˆæ˜¯å…·ä½“çš„å·¥åŽ‚,çœ‹æˆæ˜¯SPRING ä¸ºæˆ‘ä»¬å»ºç«‹å¥½çš„å·¥åŽ‚ã€‚ä¹Ÿå°±æ˜¯è¯´ Spring é€šè¿‡ä½¿ç”¨æŠ½è±¡å·¥åŽ‚æ¨¡å¼ä¸ºæˆ‘ä»¬å‡†å¤‡äº†ä¸€ç³»åˆ—å·¥åŽ‚æ¥ç”Ÿäº§ä¸€äº›ç‰¹å®šçš„å¯¹è±¡,å…é™¤æˆ‘ä»¬æ‰‹å·¥é‡å¤çš„å·¥ä½œï¼Œæˆ‘ä»¬è¦ä½¿ç”¨æ—¶åªéœ€è¦åœ¨ IOC å®¹å™¨é‡Œé…ç½®å¥½å°±èƒ½å¾ˆæ–¹ä¾¿çš„ä½¿ç”¨äº†.
+- BeanFactoryæ˜¯ä¸ªFactoryï¼Œä¹Ÿå°±æ˜¯IOCå®¹å™¨æˆ–å¯¹è±¡å·¥åŽ‚ï¼Œåœ¨Springä¸­ï¼Œæ‰€æœ‰çš„Beanéƒ½æ˜¯ç”±BeanFactory(ä¹Ÿå°±æ˜¯IOCå®¹å™¨)æ¥è¿›è¡Œç®¡ç†çš„ï¼Œæä¾›äº†å®žä¾‹åŒ–å¯¹è±¡å’Œæ‹¿å¯¹è±¡çš„åŠŸèƒ½ï¼›FactoryBeanæ˜¯ä¸ªBeanï¼Œè¿™ä¸ªBeanä¸æ˜¯ç®€å•çš„Beanï¼Œè€Œæ˜¯ä¸€ä¸ªèƒ½ç”Ÿäº§æˆ–è€…ä¿®é¥°å¯¹è±¡ç”Ÿæˆçš„å·¥åŽ‚Bean,å®ƒçš„å®žçŽ°ä¸Žè®¾è®¡æ¨¡å¼ä¸­çš„å·¥åŽ‚æ¨¡å¼å’Œä¿®é¥°å™¨æ¨¡å¼ç±»ä¼¼ã€‚
+#### Spring IOC çš„ç†è§£ï¼Œå…¶åˆå§‹åŒ–è¿‡ç¨‹
 https://www.cnblogs.com/ITtangtang/p/3978349.html
-#### BeanFactory ºÍ ApplicationContext
-- ApplicationContextÓÉBeanFactoryÅÉÉú¶øÀ´£¬Ìá¹©ÁË¸ü¶àÃæÏòÊµ¼ÊÓ¦ÓÃµÄ¹¦ÄÜ¡£ÔÚBeanFactoryÖÐ£¬ºÜ¶à¹¦ÄÜÐèÒªÒÔ±à³ÌµÄ·½Ê½ÊµÏÖ£¬¶øÔÚApplicationContextÖÐÔò¿ÉÒÔÍ¨¹ýÅäÖÃÊµÏÖ¡£
-- BeanFactorty½Ó¿ÚÌá¹©ÁËÅäÖÃ¿ò¼Ü¼°»ù±¾¹¦ÄÜ£¬µ«ÊÇÎÞ·¨Ö§³ÖspringµÄaop¹¦ÄÜºÍwebÓ¦ÓÃ¡£¶øApplicationContext½Ó¿Ú×÷ÎªBeanFactoryµÄÅÉÉú£¬Òò¶øÌá¹©BeanFactoryËùÓÐµÄ¹¦ÄÜ¡£¶øÇÒApplicationContext»¹ÔÚ¹¦ÄÜÉÏ×öÁËÀ©Õ¹£¬Ïà½ÏÓÚBeanFactorty£¬ApplicationContext»¹Ìá¹©ÁËÒÔÏÂµÄ¹¦ÄÜ£º 
-	- £¨1£©MessageSource, Ìá¹©¹ú¼Ê»¯µÄÏûÏ¢·ÃÎÊ  
-	- £¨2£©×ÊÔ´·ÃÎÊ£¬ÈçURLºÍÎÄ¼þ  
-	- £¨3£©ÊÂ¼þ´«²¥ÌØÐÔ£¬¼´Ö§³ÖaopÌØÐÔ
-	- £¨4£©ÔØÈë¶à¸ö£¨ÓÐ¼Ì³Ð¹ØÏµ£©ÉÏÏÂÎÄ £¬Ê¹µÃÃ¿Ò»¸öÉÏÏÂÎÄ¶¼×¨×¢ÓÚÒ»¸öÌØ¶¨µÄ²ã´Î£¬±ÈÈçÓ¦ÓÃµÄweb²ã 
+#### BeanFactory å’Œ ApplicationContext
+- ApplicationContextç”±BeanFactoryæ´¾ç”Ÿè€Œæ¥ï¼Œæä¾›äº†æ›´å¤šé¢å‘å®žé™…åº”ç”¨çš„åŠŸèƒ½ã€‚åœ¨BeanFactoryä¸­ï¼Œå¾ˆå¤šåŠŸèƒ½éœ€è¦ä»¥ç¼–ç¨‹çš„æ–¹å¼å®žçŽ°ï¼Œè€Œåœ¨ApplicationContextä¸­åˆ™å¯ä»¥é€šè¿‡é…ç½®å®žçŽ°ã€‚
+- BeanFactortyæŽ¥å£æä¾›äº†é…ç½®æ¡†æž¶åŠåŸºæœ¬åŠŸèƒ½ï¼Œä½†æ˜¯æ— æ³•æ”¯æŒspringçš„aopåŠŸèƒ½å’Œwebåº”ç”¨ã€‚è€ŒApplicationContextæŽ¥å£ä½œä¸ºBeanFactoryçš„æ´¾ç”Ÿï¼Œå› è€Œæä¾›BeanFactoryæ‰€æœ‰çš„åŠŸèƒ½ã€‚è€Œä¸”ApplicationContextè¿˜åœ¨åŠŸèƒ½ä¸Šåšäº†æ‰©å±•ï¼Œç›¸è¾ƒäºŽBeanFactortyï¼ŒApplicationContextè¿˜æä¾›äº†ä»¥ä¸‹çš„åŠŸèƒ½ï¼š 
+	- ï¼ˆ1ï¼‰MessageSource, æä¾›å›½é™…åŒ–çš„æ¶ˆæ¯è®¿é—®  
+	- ï¼ˆ2ï¼‰èµ„æºè®¿é—®ï¼Œå¦‚URLå’Œæ–‡ä»¶  
+	- ï¼ˆ3ï¼‰äº‹ä»¶ä¼ æ’­ç‰¹æ€§ï¼Œå³æ”¯æŒaopç‰¹æ€§
+	- ï¼ˆ4ï¼‰è½½å…¥å¤šä¸ªï¼ˆæœ‰ç»§æ‰¿å…³ç³»ï¼‰ä¸Šä¸‹æ–‡ ï¼Œä½¿å¾—æ¯ä¸€ä¸ªä¸Šä¸‹æ–‡éƒ½ä¸“æ³¨äºŽä¸€ä¸ªç‰¹å®šçš„å±‚æ¬¡ï¼Œæ¯”å¦‚åº”ç”¨çš„webå±‚ 
 - https://www.cnblogs.com/xiaoxi/p/5846416.html
-- BeanFactory²ÉÓÃÁË¹¤³§Éè¼ÆÄ£Ê½£¬¸ºÔð¶ÁÈ¡beanÅäÖÃÎÄµµ£¬¹ÜÀíbeanµÄ¼ÓÔØ£¬ÊµÀý»¯£¬Î¬»¤beanÖ®¼äµÄÒÀÀµ¹ØÏµ£¬¸ºÔðbeanµÄÉùÃ÷ÖÜÆÚ¡£¶øApplicationContext³ýÁËÌá¹©ÉÏÊöBeanFactoryËùÄÜÌá¹©µÄ¹¦ÄÜÖ®Íâ£¬»¹Ìá¹©ÁË¸üÍêÕûµÄ¿ò¼Ü¹¦ÄÜ£º¹ú¼Ê»¯Ö§³Ö¡¢aop¡¢ÊÂÎñµÈ¡£Í¬Ê±BeanFactoryÔÚ½âÎöÅäÖÃÎÄ¼þÊ±²¢²»»á³õÊ¼»¯¶ÔÏó,Ö»ÓÐÔÚÊ¹ÓÃ¶ÔÏógetBean()²Å»á¶Ô¸Ã¶ÔÏó½øÐÐ³õÊ¼»¯£¬¶øApplicationContextÔÚ½âÎöÅäÖÃÎÄ¼þÊ±¶ÔÅäÖÃÎÄ¼þÖÐµÄËùÓÐ¶ÔÏó¶¼³õÊ¼»¯ÁË,getBean()·½·¨Ö»ÊÇ»ñÈ¡¶ÔÏóµÄ¹ý³Ì¡£[²Î¿¼](https://blog.csdn.net/qiesheng/article/details/60869592)
-#### Spring Bean µÄÉúÃüÖÜÆÚ£¬ÈçºÎ±»¹ÜÀíµÄ
+- BeanFactoryé‡‡ç”¨äº†å·¥åŽ‚è®¾è®¡æ¨¡å¼ï¼Œè´Ÿè´£è¯»å–beané…ç½®æ–‡æ¡£ï¼Œç®¡ç†beançš„åŠ è½½ï¼Œå®žä¾‹åŒ–ï¼Œç»´æŠ¤beanä¹‹é—´çš„ä¾èµ–å…³ç³»ï¼Œè´Ÿè´£beançš„å£°æ˜Žå‘¨æœŸã€‚è€ŒApplicationContexté™¤äº†æä¾›ä¸Šè¿°BeanFactoryæ‰€èƒ½æä¾›çš„åŠŸèƒ½ä¹‹å¤–ï¼Œè¿˜æä¾›äº†æ›´å®Œæ•´çš„æ¡†æž¶åŠŸèƒ½ï¼šå›½é™…åŒ–æ”¯æŒã€aopã€äº‹åŠ¡ç­‰ã€‚åŒæ—¶BeanFactoryåœ¨è§£æžé…ç½®æ–‡ä»¶æ—¶å¹¶ä¸ä¼šåˆå§‹åŒ–å¯¹è±¡,åªæœ‰åœ¨ä½¿ç”¨å¯¹è±¡getBean()æ‰ä¼šå¯¹è¯¥å¯¹è±¡è¿›è¡Œåˆå§‹åŒ–ï¼Œè€ŒApplicationContextåœ¨è§£æžé…ç½®æ–‡ä»¶æ—¶å¯¹é…ç½®æ–‡ä»¶ä¸­çš„æ‰€æœ‰å¯¹è±¡éƒ½åˆå§‹åŒ–äº†,getBean()æ–¹æ³•åªæ˜¯èŽ·å–å¯¹è±¡çš„è¿‡ç¨‹ã€‚[å‚è€ƒ](https://blog.csdn.net/qiesheng/article/details/60869592)
+#### Spring Bean çš„ç”Ÿå‘½å‘¨æœŸï¼Œå¦‚ä½•è¢«ç®¡ç†çš„
 ![avatar](https://pic1.zhimg.com/80/v2-baaf7d50702f6d0935820b9415ff364c_hd.jpg)
-- 1. ÊµÀý»¯Bean:¶ÔÓÚBeanFactoryÈÝÆ÷£¬µ±¿Í»§ÏòÈÝÆ÷ÇëÇóÒ»¸öÉÐÎ´³õÊ¼»¯µÄbeanÊ±£¬»ò³õÊ¼»¯beanµÄÊ±ºòÐèÒª×¢ÈëÁíÒ»¸öÉÐÎ´³õÊ¼»¯µÄÒÀÀµÊ±£¬ÈÝÆ÷¾Í»áµ÷ÓÃcreateBean½øÐÐÊµÀý»¯¡£ ¶ÔÓÚApplicationContextÈÝÆ÷£¬µ±ÈÝÆ÷Æô¶¯½áÊøºó£¬±ãÊµÀý»¯ËùÓÐµÄbean¡£ ÈÝÆ÷Í¨¹ý»ñÈ¡BeanDefinition¶ÔÏóÖÐµÄÐÅÏ¢½øÐÐÊµÀý»¯¡£²¢ÇÒÕâÒ»²½½ö½öÊÇ¼òµ¥µÄÊµÀý»¯£¬²¢Î´½øÐÐÒÀÀµ×¢Èë¡£ ÊµÀý»¯¶ÔÏó±»°ü×°ÔÚBeanWrapper¶ÔÏóÖÐ£¬BeanWrapperÌá¹©ÁËÉèÖÃ¶ÔÏóÊôÐÔµÄ½Ó¿Ú£¬´Ó¶ø±ÜÃâÁËÊ¹ÓÃ·´Éä»úÖÆÉèÖÃÊôÐÔ¡£
-- 2. ÉèÖÃ¶ÔÏóÊôÐÔ£¨ÒÀÀµ×¢Èë£©:ÊµÀý»¯ºóµÄ¶ÔÏó±»·â×°ÔÚBeanWrapper¶ÔÏóÖÐ£¬²¢ÇÒ´ËÊ±¶ÔÏóÈÔÈ»ÊÇÒ»¸öÔ­ÉúµÄ×´Ì¬£¬²¢Ã»ÓÐ½øÐÐÒÀÀµ×¢Èë¡£ 
-½ô½Ó×Å£¬Spring¸ù¾ÝBeanDefinitionÖÐµÄÐÅÏ¢½øÐÐÒÀÀµ×¢Èë¡£ 
-²¢ÇÒÍ¨¹ýBeanWrapperÌá¹©µÄÉèÖÃÊôÐÔµÄ½Ó¿ÚÍê³ÉÒÀÀµ×¢Èë¡£
-- 3. ×¢ÈëAware½Ó¿Ú:½ô½Ó×Å£¬Spring»á¼ì²â¸Ã¶ÔÏóÊÇ·ñÊµÏÖÁËxxxAware½Ó¿Ú£¬²¢½«Ïà¹ØµÄxxxAwareÊµÀý×¢Èë¸øbean¡£
-- 4. BeanPostProcessor:µ±¾­¹ýÉÏÊö¼¸¸ö²½Öèºó£¬bean¶ÔÏóÒÑ¾­±»ÕýÈ·¹¹Ôì£¬µ«Èç¹ûÄãÏëÒª¶ÔÏó±»Ê¹ÓÃÇ°ÔÙ½øÐÐÒ»Ð©×Ô¶¨ÒåµÄ´¦Àí£¬¾Í¿ÉÒÔÍ¨¹ýBeanPostProcessor½Ó¿ÚÊµÏÖ¡£ 
-- 5. InitializingBeanÓëinit-method:µ±BeanPostProcessorµÄÇ°ÖÃ´¦ÀíÍê³Éºó¾Í»á½øÈë±¾½×¶Î¡£ 
-InitializingBean½Ó¿ÚÖ»ÓÐÒ»¸öº¯Êý£ºafterPropertiesSet()
-- 6. DisposableBeanºÍdestroy-method:ºÍinit-methodÒ»Ñù£¬Í¨¹ý¸ødestroy-methodÖ¸¶¨º¯Êý£¬¾Í¿ÉÒÔÔÚbeanÏú»ÙÇ°Ö´ÐÐÖ¸¶¨µÄÂß¼­¡£
-- ¹ÜÀíbean£ºhttps://blog.csdn.net/qiesheng/article/details/60869592
-#### Spring Bean µÄ¼ÓÔØ¹ý³ÌÊÇÔõÑùµÄ
-#### Èç¹ûÒªÄãÊµÏÖSpring AOP£¬ÇëÎÊÔõÃ´ÊµÏÖ£¿
-#### Èç¹ûÒªÄãÊµÏÖSpring IOC£¬Äã»á×¢ÒâÄÄÐ©ÎÊÌâ£¿
-- Ñ­»·ÒÀÀµ
-- ¶àÖÖ¼ÓÔØbeanµÄ·½Ê½£¬xml£¬file£¬json
-- Áé»î£¬³éÏó
-#### Spring ÊÇÈçºÎ¹ÜÀíÊÂÎñµÄ£¬ÊÂÎñ¹ÜÀí»úÖÆ£¿
+- 1. å®žä¾‹åŒ–Bean:å¯¹äºŽBeanFactoryå®¹å™¨ï¼Œå½“å®¢æˆ·å‘å®¹å™¨è¯·æ±‚ä¸€ä¸ªå°šæœªåˆå§‹åŒ–çš„beanæ—¶ï¼Œæˆ–åˆå§‹åŒ–beançš„æ—¶å€™éœ€è¦æ³¨å…¥å¦ä¸€ä¸ªå°šæœªåˆå§‹åŒ–çš„ä¾èµ–æ—¶ï¼Œå®¹å™¨å°±ä¼šè°ƒç”¨createBeanè¿›è¡Œå®žä¾‹åŒ–ã€‚ å¯¹äºŽApplicationContextå®¹å™¨ï¼Œå½“å®¹å™¨å¯åŠ¨ç»“æŸåŽï¼Œä¾¿å®žä¾‹åŒ–æ‰€æœ‰çš„beanã€‚ å®¹å™¨é€šè¿‡èŽ·å–BeanDefinitionå¯¹è±¡ä¸­çš„ä¿¡æ¯è¿›è¡Œå®žä¾‹åŒ–ã€‚å¹¶ä¸”è¿™ä¸€æ­¥ä»…ä»…æ˜¯ç®€å•çš„å®žä¾‹åŒ–ï¼Œå¹¶æœªè¿›è¡Œä¾èµ–æ³¨å…¥ã€‚ å®žä¾‹åŒ–å¯¹è±¡è¢«åŒ…è£…åœ¨BeanWrapperå¯¹è±¡ä¸­ï¼ŒBeanWrapperæä¾›äº†è®¾ç½®å¯¹è±¡å±žæ€§çš„æŽ¥å£ï¼Œä»Žè€Œé¿å…äº†ä½¿ç”¨åå°„æœºåˆ¶è®¾ç½®å±žæ€§ã€‚
+- 2. è®¾ç½®å¯¹è±¡å±žæ€§ï¼ˆä¾èµ–æ³¨å…¥ï¼‰:å®žä¾‹åŒ–åŽçš„å¯¹è±¡è¢«å°è£…åœ¨BeanWrapperå¯¹è±¡ä¸­ï¼Œå¹¶ä¸”æ­¤æ—¶å¯¹è±¡ä»ç„¶æ˜¯ä¸€ä¸ªåŽŸç”Ÿçš„çŠ¶æ€ï¼Œå¹¶æ²¡æœ‰è¿›è¡Œä¾èµ–æ³¨å…¥ã€‚ 
+ç´§æŽ¥ç€ï¼ŒSpringæ ¹æ®BeanDefinitionä¸­çš„ä¿¡æ¯è¿›è¡Œä¾èµ–æ³¨å…¥ã€‚ 
+å¹¶ä¸”é€šè¿‡BeanWrapperæä¾›çš„è®¾ç½®å±žæ€§çš„æŽ¥å£å®Œæˆä¾èµ–æ³¨å…¥ã€‚
+- 3. æ³¨å…¥AwareæŽ¥å£:ç´§æŽ¥ç€ï¼ŒSpringä¼šæ£€æµ‹è¯¥å¯¹è±¡æ˜¯å¦å®žçŽ°äº†xxxAwareæŽ¥å£ï¼Œå¹¶å°†ç›¸å…³çš„xxxAwareå®žä¾‹æ³¨å…¥ç»™beanã€‚
+- 4. BeanPostProcessor:å½“ç»è¿‡ä¸Šè¿°å‡ ä¸ªæ­¥éª¤åŽï¼Œbeanå¯¹è±¡å·²ç»è¢«æ­£ç¡®æž„é€ ï¼Œä½†å¦‚æžœä½ æƒ³è¦å¯¹è±¡è¢«ä½¿ç”¨å‰å†è¿›è¡Œä¸€äº›è‡ªå®šä¹‰çš„å¤„ç†ï¼Œå°±å¯ä»¥é€šè¿‡BeanPostProcessoræŽ¥å£å®žçŽ°ã€‚ 
+- 5. InitializingBeanä¸Žinit-method:å½“BeanPostProcessorçš„å‰ç½®å¤„ç†å®ŒæˆåŽå°±ä¼šè¿›å…¥æœ¬é˜¶æ®µã€‚ 
+InitializingBeanæŽ¥å£åªæœ‰ä¸€ä¸ªå‡½æ•°ï¼šafterPropertiesSet()
+- 6. DisposableBeanå’Œdestroy-method:å’Œinit-methodä¸€æ ·ï¼Œé€šè¿‡ç»™destroy-methodæŒ‡å®šå‡½æ•°ï¼Œå°±å¯ä»¥åœ¨beané”€æ¯å‰æ‰§è¡ŒæŒ‡å®šçš„é€»è¾‘ã€‚
+- ç®¡ç†beanï¼šhttps://blog.csdn.net/qiesheng/article/details/60869592
+#### Spring Bean çš„åŠ è½½è¿‡ç¨‹æ˜¯æ€Žæ ·çš„
+#### å¦‚æžœè¦ä½ å®žçŽ°Spring AOPï¼Œè¯·é—®æ€Žä¹ˆå®žçŽ°ï¼Ÿ
+#### å¦‚æžœè¦ä½ å®žçŽ°Spring IOCï¼Œä½ ä¼šæ³¨æ„å“ªäº›é—®é¢˜ï¼Ÿ
+- å¾ªçŽ¯ä¾èµ–
+- å¤šç§åŠ è½½beançš„æ–¹å¼ï¼Œxmlï¼Œfileï¼Œjson
+- çµæ´»ï¼ŒæŠ½è±¡
+#### Spring æ˜¯å¦‚ä½•ç®¡ç†äº‹åŠ¡çš„ï¼Œäº‹åŠ¡ç®¡ç†æœºåˆ¶ï¼Ÿ
 https://blog.csdn.net/jie_liang/article/details/77600742 
-- ÊÂÎñ»úÖÆ£º±à³ÌÊ½ÊÂÎñ¹ÜÀí¡¢ÉùÃ÷Ê½ÊÂÎñ¹ÜÀí
-- ¹ÜÀí£ºPlatformTransactionManager¡¢TransactionDefinition¡¢TransactionStatus
-#### Spring µÄ²»Í¬ÊÂÎñ´«²¥ÐÐÎªÓÐÄÄÐ©£¬¸ÉÊ²Ã´ÓÃµÄ£¿
+- äº‹åŠ¡æœºåˆ¶ï¼šç¼–ç¨‹å¼äº‹åŠ¡ç®¡ç†ã€å£°æ˜Žå¼äº‹åŠ¡ç®¡ç†
+- ç®¡ç†ï¼šPlatformTransactionManagerã€TransactionDefinitionã€TransactionStatus
+#### Spring çš„ä¸åŒäº‹åŠ¡ä¼ æ’­è¡Œä¸ºæœ‰å“ªäº›ï¼Œå¹²ä»€ä¹ˆç”¨çš„ï¼Ÿ
 - https://github.com/szfst/interview-learn/blob/master/me/spring/spring-transaction.md
-#### Spring ÖÐÓÃµ½ÁËÄÇÐ©Éè¼ÆÄ£Ê½
-[²Î¿¼](https://www.cnblogs.com/hwaggLee/p/4510687.html)
-- ¶¯Ì¬´úÀí£ºÔÚAopÊµÏÖÖÐÓÃµ½ÁËJDKµÄ¶¯Ì¬´úÀí£»CGLib×Ö½ÚÂëÉú³É¼¼Êõ´úÀí£»
-- ²ßÂÔÄ£Ê½£ºcglibºÍjava´úÀíÁ½ÖÖ²ßÂÔ
-- ÊÊÅäÆ÷Ä£Ê½£ºAdvisorAdapter £¬ÓÉÓÚAdvisorÁ´ÐèÒªµÄÊÇMethodInterceptor£¨À¹½ØÆ÷£©¶ÔÏó£¬ËùÒÔÃ¿Ò»¸öAdvisorÖÐµÄAdvice¶¼ÒªÊÊÅä³É¶ÔÓ¦µÄMethodInterceptor¶ÔÏó¡£
-- ¹¤³§Ä£Ê½£ºÕâ¸öºÜÃ÷ÏÔ£¬ÔÚ¸÷ÖÖBeanFactoryÒÔ¼°ApplicationContext´´½¨ÖÐ¶¼ÓÃµ½ÁË
-- µ¥ÀýÄ£Ê½£º´´½¨beanµÄÊ±ºò
-- ¹Û²ìÕß£¨Observer£©£º¶¨Òå¶ÔÏó¼äµÄÒ»ÖÖÒ»¶Ô¶àµÄÒÀÀµ¹ØÏµ£¬µ±Ò»¸ö¶ÔÏóµÄ×´Ì¬·¢Éú¸Ä±äÊ±£¬ËùÓÐÒÀÀµÓÚËüµÄ¶ÔÏó¶¼µÃµ½Í¨Öª²¢±»×Ô¶¯¸üÐÂ¡£
-springÖÐObserverÄ£Ê½³£ÓÃµÄµØ·½ÊÇlistenerµÄÊµÏÖ¡£ÈçApplicationListener¡£ 
-- °ü×°Æ÷£¨Decorator£©
-- Ä£°å·½·¨£¨Template Method£©
-#### Spring MVC µÄ¹¤×÷Ô­Àí£¿
+#### Spring ä¸­ç”¨åˆ°äº†é‚£äº›è®¾è®¡æ¨¡å¼
+[å‚è€ƒ](https://www.cnblogs.com/hwaggLee/p/4510687.html)
+- åŠ¨æ€ä»£ç†ï¼šåœ¨Aopå®žçŽ°ä¸­ç”¨åˆ°äº†JDKçš„åŠ¨æ€ä»£ç†ï¼›CGLibå­—èŠ‚ç ç”ŸæˆæŠ€æœ¯ä»£ç†ï¼›
+- ç­–ç•¥æ¨¡å¼ï¼šcglibå’Œjavaä»£ç†ä¸¤ç§ç­–ç•¥
+- é€‚é…å™¨æ¨¡å¼ï¼šAdvisorAdapter ï¼Œç”±äºŽAdvisoré“¾éœ€è¦çš„æ˜¯MethodInterceptorï¼ˆæ‹¦æˆªå™¨ï¼‰å¯¹è±¡ï¼Œæ‰€ä»¥æ¯ä¸€ä¸ªAdvisorä¸­çš„Adviceéƒ½è¦é€‚é…æˆå¯¹åº”çš„MethodInterceptorå¯¹è±¡ã€‚
+- å·¥åŽ‚æ¨¡å¼ï¼šè¿™ä¸ªå¾ˆæ˜Žæ˜¾ï¼Œåœ¨å„ç§BeanFactoryä»¥åŠApplicationContextåˆ›å»ºä¸­éƒ½ç”¨åˆ°äº†
+- å•ä¾‹æ¨¡å¼ï¼šåˆ›å»ºbeançš„æ—¶å€™
+- è§‚å¯Ÿè€…ï¼ˆObserverï¼‰ï¼šå®šä¹‰å¯¹è±¡é—´çš„ä¸€ç§ä¸€å¯¹å¤šçš„ä¾èµ–å…³ç³»ï¼Œå½“ä¸€ä¸ªå¯¹è±¡çš„çŠ¶æ€å‘ç”Ÿæ”¹å˜æ—¶ï¼Œæ‰€æœ‰ä¾èµ–äºŽå®ƒçš„å¯¹è±¡éƒ½å¾—åˆ°é€šçŸ¥å¹¶è¢«è‡ªåŠ¨æ›´æ–°ã€‚
+springä¸­Observeræ¨¡å¼å¸¸ç”¨çš„åœ°æ–¹æ˜¯listenerçš„å®žçŽ°ã€‚å¦‚ApplicationListenerã€‚ 
+- åŒ…è£…å™¨ï¼ˆDecoratorï¼‰
+- æ¨¡æ¿æ–¹æ³•ï¼ˆTemplate Methodï¼‰
+#### Spring MVC çš„å·¥ä½œåŽŸç†ï¼Ÿ
 - https://www.cnblogs.com/xiaoxi/p/6164383.html
-- 1¡¢  ÓÃ»§·¢ËÍÇëÇóÖÁÇ°¶Ë¿ØÖÆÆ÷DispatcherServlet¡£2¡¢  DispatcherServletÊÕµ½ÇëÇóµ÷ÓÃHandlerMapping´¦ÀíÆ÷Ó³ÉäÆ÷¼°HandlerAdapter´¦ÀíÆ÷ÊÊÅäÆ÷¡£5¡¢  HandlerAdapter¾­¹ýÊÊÅäµ÷ÓÃ¾ßÌåµÄ´¦ÀíÆ÷(Controller£¬Ò²½Ðºó¶Ë¿ØÖÆÆ÷)¡£6¡¢  ControllerÖ´ÐÐÍê³É·µ»ØModelAndView¡£7¡¢  HandlerAdapter½«controllerÖ´ÐÐ½á¹ûModelAndView·µ»Ø¸øDispatcherServlet¡£8¡¢  DispatcherServlet½«ModelAndView´«¸øViewResloverÊÓÍ¼½âÎöÆ÷¡£9¡¢  ViewReslover½âÎöºó·µ»Ø¾ßÌåView¡£10¡¢DispatcherServlet¸ù¾ÝView½øÐÐäÖÈ¾ÊÓÍ¼£¨¼´½«Ä£ÐÍÊý¾ÝÌî³äÖÁÊÓÍ¼ÖÐ£©¡£11¡¢ DispatcherServletÏìÓ¦ÓÃ»§¡£
+- 1ã€  ç”¨æˆ·å‘é€è¯·æ±‚è‡³å‰ç«¯æŽ§åˆ¶å™¨DispatcherServletã€‚2ã€  DispatcherServletæ”¶åˆ°è¯·æ±‚è°ƒç”¨HandlerMappingå¤„ç†å™¨æ˜ å°„å™¨åŠHandlerAdapterå¤„ç†å™¨é€‚é…å™¨ã€‚5ã€  HandlerAdapterç»è¿‡é€‚é…è°ƒç”¨å…·ä½“çš„å¤„ç†å™¨(Controllerï¼Œä¹Ÿå«åŽç«¯æŽ§åˆ¶å™¨)ã€‚6ã€  Controlleræ‰§è¡Œå®Œæˆè¿”å›žModelAndViewã€‚7ã€  HandlerAdapterå°†controlleræ‰§è¡Œç»“æžœModelAndViewè¿”å›žç»™DispatcherServletã€‚8ã€  DispatcherServletå°†ModelAndViewä¼ ç»™ViewResloverè§†å›¾è§£æžå™¨ã€‚9ã€  ViewResloverè§£æžåŽè¿”å›žå…·ä½“Viewã€‚10ã€DispatcherServletæ ¹æ®Viewè¿›è¡Œæ¸²æŸ“è§†å›¾ï¼ˆå³å°†æ¨¡åž‹æ•°æ®å¡«å……è‡³è§†å›¾ä¸­ï¼‰ã€‚11ã€ DispatcherServletå“åº”ç”¨æˆ·ã€‚
 - https://blog.csdn.net/nimeijian/article/details/49209869
-#### Spring Ñ­»·×¢ÈëµÄÔ­Àí£¿
-- Í¨¹ýÐÂ½¨Ò»¸ö»º´æmap½â¾ö£ºÑ­»·ÒÀÀµ£¬ÌáÇ°·µ»ØÉÐÎ´¼ÓÔØÍê³ÉµÄbean
+#### Spring å¾ªçŽ¯æ³¨å…¥çš„åŽŸç†ï¼Ÿ
+- é€šè¿‡æ–°å»ºä¸€ä¸ªç¼“å­˜mapè§£å†³ï¼šå¾ªçŽ¯ä¾èµ–ï¼Œæå‰è¿”å›žå°šæœªåŠ è½½å®Œæˆçš„bean
 - http://heeexy.com/2018/01/28/IoC/
 ```java
 @Override
 public Object getBean(String name) throws Exception {
-    //²éÕÒ¶ÔÏóÊÇ·ñÒÑ¾­ÊµÀý»¯¹ý
+    //æŸ¥æ‰¾å¯¹è±¡æ˜¯å¦å·²ç»å®žä¾‹åŒ–è¿‡
     Object bean = beanMap.get(name);
     if (bean != null) {
         return bean;
     }
     Object earlyBean = earlySingletonObjects.get(name);
     if (earlyBean != null) {
-        System.out.println("Ñ­»·ÒÀÀµ£¬ÌáÇ°·µ»ØÉÐÎ´¼ÓÔØÍê³ÉµÄbean:" + name);
+        System.out.println("å¾ªçŽ¯ä¾èµ–ï¼Œæå‰è¿”å›žå°šæœªåŠ è½½å®Œæˆçš„bean:" + name);
         return earlyBean;
     }
-    //Èç¹ûÃ»ÓÐÊµÀý»¯£¬ÄÇ¾ÍÐèÒªµ÷ÓÃcreateBeanÀ´´´½¨¶ÔÏó
+    //å¦‚æžœæ²¡æœ‰å®žä¾‹åŒ–ï¼Œé‚£å°±éœ€è¦è°ƒç”¨createBeanæ¥åˆ›å»ºå¯¹è±¡
     BeanDefinition beanDefinition = beanDefineMap.get(name);
     bean = createBean(beanDefinition);
     if (bean != null) {
         earlySingletonObjects.put(name, bean);
-        //¶ÔÏó´´½¨³É¹¦ÒÔºó£¬×¢Èë¶ÔÏóÐèÒªµÄ²ÎÊý
+        //å¯¹è±¡åˆ›å»ºæˆåŠŸä»¥åŽï¼Œæ³¨å…¥å¯¹è±¡éœ€è¦çš„å‚æ•°
         populatebean(bean, beanDefinition);
-        //ÔÙ°É¶ÔÏó´æÈëMapÖÐ·½±ãÏÂ´ÎÊ¹ÓÃ¡£
+        //å†å§å¯¹è±¡å­˜å…¥Mapä¸­æ–¹ä¾¿ä¸‹æ¬¡ä½¿ç”¨ã€‚
         beanMap.put(name, bean);
-        //´ÓÔçÆÚµ¥ÀýMapÖÐÒÆ³ý
+        //ä»Žæ—©æœŸå•ä¾‹Mapä¸­ç§»é™¤
         earlySingletonObjects.remove(name);
     }
-    //½áÊø·µ»Ø
+    //ç»“æŸè¿”å›ž
     return bean;
 }
 ```
 - https://blog.csdn.net/jijianshuai/article/details/78122738
-- ¹¹ÔìÆ÷×¢Èë¹¹³ÉµÄÑ­»·ÒÀÀµ£¬´ËÒÀÀµÃ»·¨½â¾ö£¬Ö»ÄÜÅ×³öBeanCurrentlyInCreationExceptionÒì³£±íÊ¾Ñ­»·ÒÀÀµ
-- setterÑ­»·ÒÀÀµ£º¶ÔÓÚsetter×¢ÈëÔì³ÉµÄÒÀÀµÊÇÍ¨¹ýSpringÈÝÆ÷ÌáÇ°±©Â¶¸ÕÍê³É¹¹ÔìÆ÷×¢Èëµ«Î´Íê³ÉÆäËû²½Öè£¨Èçsetter×¢Èë£©µÄBeanÀ´Íê³ÉµÄ£¬¶øÇÒÖ»ÄÜ½â¾öµ¥Àý×÷ÓÃÓòµÄBeanÑ­»·ÒÀÀµ¡£¶ÔÓÚ¡°prototype¡±×÷ÓÃÓòBean£¬SpringÈÝÆ÷ÎÞ·¨Íê³ÉÒÀÀµ×¢Èë£¬ÒòÎª¡°prototype¡±×÷ÓÃÓòµÄBean£¬SpringÈÝÆ÷²»½øÐÐ»º´æ£¬Òò´ËÎÞ·¨ÌáÇ°±©Â¶Ò»¸ö´´½¨ÖÐµÄBean¡£
-#### Spring AOPµÄÀí½â£¬¸÷¸öÊõÓï£¬ËûÃÇÊÇÔõÃ´Ïà»¥¹¤×÷µÄ£¿
+- æž„é€ å™¨æ³¨å…¥æž„æˆçš„å¾ªçŽ¯ä¾èµ–ï¼Œæ­¤ä¾èµ–æ²¡æ³•è§£å†³ï¼Œåªèƒ½æŠ›å‡ºBeanCurrentlyInCreationExceptionå¼‚å¸¸è¡¨ç¤ºå¾ªçŽ¯ä¾èµ–
+- setterå¾ªçŽ¯ä¾èµ–ï¼šå¯¹äºŽsetteræ³¨å…¥é€ æˆçš„ä¾èµ–æ˜¯é€šè¿‡Springå®¹å™¨æå‰æš´éœ²åˆšå®Œæˆæž„é€ å™¨æ³¨å…¥ä½†æœªå®Œæˆå…¶ä»–æ­¥éª¤ï¼ˆå¦‚setteræ³¨å…¥ï¼‰çš„Beanæ¥å®Œæˆçš„ï¼Œè€Œä¸”åªèƒ½è§£å†³å•ä¾‹ä½œç”¨åŸŸçš„Beanå¾ªçŽ¯ä¾èµ–ã€‚å¯¹äºŽâ€œprototypeâ€ä½œç”¨åŸŸBeanï¼ŒSpringå®¹å™¨æ— æ³•å®Œæˆä¾èµ–æ³¨å…¥ï¼Œå› ä¸ºâ€œprototypeâ€ä½œç”¨åŸŸçš„Beanï¼ŒSpringå®¹å™¨ä¸è¿›è¡Œç¼“å­˜ï¼Œå› æ­¤æ— æ³•æå‰æš´éœ²ä¸€ä¸ªåˆ›å»ºä¸­çš„Beanã€‚
+#### Spring AOPçš„ç†è§£ï¼Œå„ä¸ªæœ¯è¯­ï¼Œä»–ä»¬æ˜¯æ€Žä¹ˆç›¸äº’å·¥ä½œçš„ï¼Ÿ
 - https://segmentfault.com/a/1190000013882720#articleHeader17
-#### Spring ÈçºÎ±£Ö¤ Controller ²¢·¢µÄ°²È«
-Spring ¶àÏß³ÌÇëÇó¹ýÀ´Ä¬ÈÏµ÷ÓÃµÄController¶ÔÏó¶¼ÊÇÒ»¸ö£¬¶ø²»ÊÇÒ»¸öÇëÇó¹ýÀ´¾Í´´½¨Ò»¸öController¶ÔÏó¡£ÄÇÓÐÃ»ÓÐ°ì·¨ÈÃController²»ÒÔµ¥Àý¶øÒÔÃ¿´ÎÇëÇó¶¼ÖØÐÂ´´½¨µÄÐÎÊ½´æÔÚÄØ£¿
-´ð°¸ÊÇµ±È»¿ÉÒÔ£¬Ö»ÐèÒªÔÚÀàÉÏÌí¼Ó×¢½â**@Scope("prototype")**¼´¿É£¬ÕâÑùÃ¿´ÎÇëÇóµ÷ÓÃµÄÀà¶¼ÊÇÖØÐÂÉú³ÉµÄ£¨Ã¿´ÎÉú³É»áÓ°ÏìÐ§ÂÊ£©
-ËäÈ»ÕâÑù¿ÉÒÔ½â¾öÎÊÌâ£¬µ«Ôö¼ÓÁËÊ±¼ä³É±¾£¬×ÜÈÃÈË²»Ë¬£¬»¹ÓÐÆäËû·½·¨Ã´£¿´ð°¸ÊÇ¿Ï¶¨µÄ£¡
-**Ê¹ÓÃThreadLocalÀ´±£´æÀà±äÁ¿**£¬½«Àà±äÁ¿±£´æÔÚÏß³ÌµÄ±äÁ¿ÓòÖÐ£¬ÈÃ²»Í¬µÄÇëÇó¸ôÀë¿ªÀ´¡£
+#### Spring å¦‚ä½•ä¿è¯ Controller å¹¶å‘çš„å®‰å…¨
+Spring å¤šçº¿ç¨‹è¯·æ±‚è¿‡æ¥é»˜è®¤è°ƒç”¨çš„Controllerå¯¹è±¡éƒ½æ˜¯ä¸€ä¸ªï¼Œè€Œä¸æ˜¯ä¸€ä¸ªè¯·æ±‚è¿‡æ¥å°±åˆ›å»ºä¸€ä¸ªControllerå¯¹è±¡ã€‚é‚£æœ‰æ²¡æœ‰åŠžæ³•è®©Controllerä¸ä»¥å•ä¾‹è€Œä»¥æ¯æ¬¡è¯·æ±‚éƒ½é‡æ–°åˆ›å»ºçš„å½¢å¼å­˜åœ¨å‘¢ï¼Ÿ
+ç­”æ¡ˆæ˜¯å½“ç„¶å¯ä»¥ï¼Œåªéœ€è¦åœ¨ç±»ä¸Šæ·»åŠ æ³¨è§£**@Scope("prototype")**å³å¯ï¼Œè¿™æ ·æ¯æ¬¡è¯·æ±‚è°ƒç”¨çš„ç±»éƒ½æ˜¯é‡æ–°ç”Ÿæˆçš„ï¼ˆæ¯æ¬¡ç”Ÿæˆä¼šå½±å“æ•ˆçŽ‡ï¼‰
+è™½ç„¶è¿™æ ·å¯ä»¥è§£å†³é—®é¢˜ï¼Œä½†å¢žåŠ äº†æ—¶é—´æˆæœ¬ï¼Œæ€»è®©äººä¸çˆ½ï¼Œè¿˜æœ‰å…¶ä»–æ–¹æ³•ä¹ˆï¼Ÿç­”æ¡ˆæ˜¯è‚¯å®šçš„ï¼
+**ä½¿ç”¨ThreadLocalæ¥ä¿å­˜ç±»å˜é‡**ï¼Œå°†ç±»å˜é‡ä¿å­˜åœ¨çº¿ç¨‹çš„å˜é‡åŸŸä¸­ï¼Œè®©ä¸åŒçš„è¯·æ±‚éš”ç¦»å¼€æ¥ã€‚

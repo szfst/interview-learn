@@ -30,3 +30,24 @@ https://blog.csdn.net/yinxiangbing/article/details/48627997
 	-  AOF文件刷新的方式，有三种，参考配置参数appendfsync ：appendfsync always每提交一个修改命令都调用fsync刷新到AOF文件，非常非常慢，但也非常安全；appendfsync everysec每秒钟都调用fsync刷新到AOF文件，很快，但可能会丢失一秒以内的数据；appendfsync no依靠OS进行刷新，redis不主动刷新AOF，这样最快，但安全性就差。默认并推荐每秒刷新，这样在速度和安全上都做到了兼顾。
 	-  AOF的重写的工作原理： 产生一个子进程，子进程产生一个临时文件，临时文件做aof重写，当有新的数据，同时追加到旧的文件和新的文件。完成之后替换旧文件。https://blog.csdn.net/hezhiqiang1314/article/details/69396887
 - 最后，为以防万一（机器坏掉或磁盘坏掉），记得定期把使用 filesnapshotting 或 Append-only 生成的*rdb *.aof文件备份到远程机器上。我是用crontab每半小时SCP一次。我没有使用redis的主从功能 ，因为半小时备份一次应该是可以了，而且我觉得有如果做主从有点浪费机器。这个最终还是看应用来定了。
+#### Redis的缓存失效策略
+- volatile-lru：从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰
+- volatile-ttl：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰
+- volatile-random：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰
+- allkeys-lru：从数据集（server.db[i].dict）中挑选最近最少使用的数据淘汰
+- allkeys-random：从数据集（server.db[i].dict）中任意选择数据淘汰
+- no-enviction（驱逐）：禁止驱逐数据
+https://www.cnblogs.com/xuliangxing/p/7151812.html
+#### Redis集群，高可用，原理
+- https://www.zhihu.com/question/21419897（第一个回答讲得很好）
+#### 集群：
+- Redis Cluster：3.0以后有的，Redis Cluster
+- Redis Sharding集群：Redis Sharding可以说是Redis Cluster出来之前，业界普遍使用的多Redis实例集群方法。其主要思想是采用哈希算法将Redis数据的key进行散列，通过hash函数，特定的key会映射到特定的Redis节点上。这样，客户端就知道该向哪个Redis节点操作数据。庆幸的是，java redis客户端驱动jedis，已支持Redis Sharding功能，即ShardedJedis以及结合缓存池的ShardedJedisPool。
+- 阿里云的解决方案
+#### redis高可用
+- redis sentinel
+- https://www.jianshu.com/p/c2ab606b00b7
+#### Redis缓存分片
+- redis分片应该就是集群吧
+#### Redis的数据淘汰策略
+- 就是缓存失效策略

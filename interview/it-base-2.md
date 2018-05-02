@@ -4,7 +4,7 @@
 	- 能说出新生代、老年代结构，能提出minor gc/full gc （Minor GC
 从年轻代空间（包括 Eden 和 Survivor 区域）回收内存被称为 Minor GC。Major GC 是清理老年代。Full GC 是清理整个堆空间—包括年轻代和老年代。）
 	- 能说明minor gc/full gc的触发条件、OOM的触发条件，降低GC的调优的策略。 
-	- eden满了minor gc
+	- eden满了minor gc：当eden区没有足够空间进行分配时，jvm将发起一次Minor GC
 	- 升到老年代的对象大于老年代剩余空间full gc，或者小于时被HandlePromotionFailure参数强制full gc
 	- gc与非gc时间耗时超过了GCTimeRatio的限制引发OOM，调优诸如通过NewRatio控制新生代老年代比例，通过MaxTenuringThreshold控制进入老年前生存次数等
 - 对什么东西

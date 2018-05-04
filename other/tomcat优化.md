@@ -13,5 +13,5 @@ maxConnections：最大连接数
 - 在bin里面的catalina.sh里面配置添加，JAVA_OPTS=“-Server -Xms128m -Xmx128m”等等
 #### tomcat的三种线程模式
 - 1.7之前bio
-- 1.7nio，1.8默认开启nio
+- 1.7nio，jdk1.8默认开启nio
 - apr：原生的c语言编写的非阻塞io，目前性能最理想。

@@ -11,3 +11,7 @@ maxConnections：最大连接数
 - 最大内存尽量达到可用内存的80%
 - 元空间，就是物理内存，建议配置为服务器可用空间，可配可不配
 - 在bin里面的catalina.sh里面配置添加，JAVA_OPTS=“-Server -Xms128m -Xmx128m”等等
+#### tomcat的三种线程模式
+- 1.7之前bio
+- 1.7nio，1.8默认开启nio
+- apr：原生的c语言编写的非阻塞io，目前性能最理想。

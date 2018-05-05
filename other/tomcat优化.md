@@ -13,5 +13,14 @@ maxConnections：最大连接数
 - 在bin里面的catalina.sh里面配置添加，JAVA_OPTS=“-Server -Xms128m -Xmx128m”等等
 #### tomcat的三种线程模式
 - 1.7之前bio
-- 1.7nio，jdk1.8默认开启nio
+- 1.7nio，1.8默认开启nio
 - apr：原生的c语言编写的非阻塞io，目前性能最理想。
+  - tomcat-native.tar.gz解压，然后./configure 参数是apr的安装路径。还要做别的配置
+  - 压测比较，apr稳定性好，波动小
+
+#### tomcat集群
+- tomcat自带集群，集群之间session可以传输（一般不推荐使用这种方式，效率问题）
+- 使用memecache(MSM)，性能比redis高
+
+#### openresty
+- 基于nginx和lua的代理框架

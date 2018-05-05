@@ -23,4 +23,4 @@ maxConnections：最大连接数
 - 使用memecache(MSM)，性能比redis高
 
 #### openresty
-- 基于nginx和lua的代理框架
+- 基于nginx和lua脚本的代理框架

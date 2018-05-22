@@ -26,7 +26,7 @@ public synchronized void method3(){
 	- 单例模式，最常见的就是饥饿模式和懒汉模式，一个直接实例化对象，一个在调用方法的时候实例化对象。在多线程的模式中，考虑到性能和线程安全问题，我们一般选择下面两种比较经典的单例模式，在能提高性能的同时，有保证了线程安全：dubble check instance,static inner class（好用简单安全常用） 
 		- double check instance
 ```java	
-	private static DubbleSingleton ds;
+	private static volatile DubbleSingleton ds;
 	public static DubbleSingleton getDs(){
 		if(ds == null){
 			try {

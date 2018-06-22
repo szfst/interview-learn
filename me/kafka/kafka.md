@@ -1,6 +1,6 @@
 - from begin参数
 - consumer的时候需要groupId：自定义，可以防止重复消费；使用Consumer high level API时，同一Topic的一条消息只能被同一个Consumer Group内的一个Consumer消费，但多个Consumer Group可同时消费这一消息。
-- 防止重复消费：https://www.cnblogs.com/liuwei6/p/6900686.html
+- 防止[重复消费](http://orchome.com/21)：https://www.cnblogs.com/liuwei6/p/6900686.html
 	- 提高partition的数量，从而提高了consumer的并行能力，从而提高数据的消费能力
 	- 对于单partition的消费线程，增加一个固定长度的阻塞队列和工作线程进一步提高并行消费能力
 	- 使用spring-kafka消费机制：一批消息没有消费完成也可以提交offset，从而避免重复消费又进入死循环，其实也是使用阻塞队列，创建新的线程取消费

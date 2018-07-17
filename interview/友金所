@@ -1,2 +1,7 @@
-1、若x是float类变量，x=10/4,则x的值是
+1、若x是float类变量，x=10/4,则x的值是（D）
 A、2 B、2.0 C、2.5 D、编译错误
+2、根据下面的代码，String s=null会抛出NullPointException异常的有（）
+A if(s!=null) & (s.length()>0)
+B if(s!=null) && (s.length()>0)
+C if(s==null) | (s.length()==0)
+C if(s==null) || (s.length()==0)

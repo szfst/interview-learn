@@ -9,7 +9,7 @@
 - 问题集合：https://www.cnblogs.com/paul8339/p/7412512.html
 - 问题集合2：http://orchome.com/kafka/index
 - 如何保证消息的顺序：http://f.dataguru.cn/forum.php?mod=viewthread&tid=723257&page=1 
-保证只要一个分区；如果数据量大的，需要多个分区的，那么保证同一条业务id放到同一个partition里面（通过hash方式）
+保证只要一个分区partition；如果数据量大的，需要多个分区partition的，那么保证同一条业务id放到同一个分区partition里面（通过hash方式）
 - kafka 面试题 ：
 		  kafka节点之间如何复制备份的？
 		  kafka消息是否会丢失？为什么？

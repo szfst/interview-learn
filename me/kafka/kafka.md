@@ -8,7 +8,8 @@
 - 防止[消息丢失](http://orchome.com/21)：同步模式下，确认机制设置为-1，即让消息写入leader和 Follower之后再确认消息发送成功；[异步模式下](http://orchome.com/19)，为防止缓冲区满，可以在配置文件中设置不限制阻塞超时时间，当缓冲区满时让生产者一直处于阻塞状态
 - 问题集合：https://www.cnblogs.com/paul8339/p/7412512.html
 - 问题集合2：http://orchome.com/kafka/index
-- 如何保证消息的顺序：http://f.dataguru.cn/forum.php?mod=viewthread&tid=723257&page=1 保证只要一个分区
+- 如何保证消息的顺序：http://f.dataguru.cn/forum.php?mod=viewthread&tid=723257&page=1 
+保证只要一个分区；如果数据量大的，需要多个分区的，那么保证同一条业务id放到同一个partition里面（通过hash方式）
 - kafka 面试题 ：
 		  kafka节点之间如何复制备份的？
 		  kafka消息是否会丢失？为什么？

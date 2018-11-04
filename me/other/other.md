@@ -1,17 +1,17 @@
-###Ò»¡¢http×´Ì¬Âë£º
-- HttpÐ­ÒéµÄÏìÓ¦ÏûÏ¢£ºÓÉÈý²¿·Ö×é³É£º×´Ì¬ÐÐ¡¢ÏûÏ¢Í·¡¢ÏìÓ¦ÕýÎÄ
-- ÏìÓ¦ÂëÖÖÀà£º
-	- 1XX£ºÌáÊ¾ÐÅÏ¢¡£±íÊ¾ÇëÇóÒÑ¾­½ÓÊÕ¼ÌÐø´¦Àí
-	- 2XX£º³É¹¦£¬±íÊ¾ÇëÇóÒÑ¾­½ÓÊÕ³É¹¦¡£
-	- 3XX£ºÖØ¶¨Ïò¡£ÒªÍê³ÉµÄÇëÇó±ØÐë¾­¹ý½øÒ»²½µÄ²Ù×÷¡£
-	- 4XX£º¿Í»§¶Ë´íÎó¡£¿ÉÄÜÊÇÇëÇóÓï·¨´íÎó»òÕßÇëÇóÎÞ·¨ÊµÏÖ¡£
-	- 5XX£º·þÎñ¶Ë´íÎó¡£·þÎñÆ÷Î´ÄÜ´¦ÀíÇëÇó£¨¿ÉÄÜÄÚ²¿³öÏÖÒì³££©
-- ³£¼ûÏìÓ¦×´Ì¬Âë£º
-	- 200 0K£º±íÊ¾³É¹¦
-	- 400 Bad Request£º´íÎóµÄÇëÇóÓï·¨£¬²»ÄÜ±»·þÎñÆ÷Àí½â¡£
-	- 401 Unauthorized£ºÇëÇóÎ´¾­ÊÚÈ¨¡£
-	- 403 Forbidden£º·þÎñÆ÷ÊÕµ½ÇëÇó£¬µ«ÇëÇó±»·þÎñÆ÷¾Ü¾ø¡£
-	- 404 Not Found£ºÇëÇóµÄ×ÊÔ´²»´æÔÚ¡£
-	- 405 Method Not allowed£ºÇëÇó·½Ê½²»±»ÔÊÐí£¬ÈçÖ»Ö§³ÖgetÇëÇó£¬µ«¿Í»§¶ËÊ¹ÓÃÁËpost¡£
-	- 500 Internal Server Error£º·þÎñÆ÷·¢ËÍ²»¿ÉÔ¤ÆÚµÄ´íÎó¡£
-	- 503 Server Unavailable£º·þÎñÆ÷µ±Ç°²»ÄÜ´¦Àí¿Í»§¶ËÇëÇó¡£Ò»¶ÎÊ±¼äºó¿ÉÄÜ»Ö¸´Õý³£¡£
+### ä¸€ã€httpçŠ¶æ€ç ï¼š
+- Httpåè®®çš„å“åº”æ¶ˆæ¯ï¼šç”±ä¸‰éƒ¨åˆ†ç»„æˆï¼šçŠ¶æ€è¡Œã€æ¶ˆæ¯å¤´ã€å“åº”æ­£æ–‡
+- å“åº”ç ç§ç±»ï¼š
+	- 1XXï¼šæç¤ºä¿¡æ¯ã€‚è¡¨ç¤ºè¯·æ±‚å·²ç»æŽ¥æ”¶ç»§ç»­å¤„ç†
+	- 2XXï¼šæˆåŠŸï¼Œè¡¨ç¤ºè¯·æ±‚å·²ç»æŽ¥æ”¶æˆåŠŸã€‚
+	- 3XXï¼šé‡å®šå‘ã€‚è¦å®Œæˆçš„è¯·æ±‚å¿…é¡»ç»è¿‡è¿›ä¸€æ­¥çš„æ“ä½œã€‚
+	- 4XXï¼šå®¢æˆ·ç«¯é”™è¯¯ã€‚å¯èƒ½æ˜¯è¯·æ±‚è¯­æ³•é”™è¯¯æˆ–è€…è¯·æ±‚æ— æ³•å®žçŽ°ã€‚
+	- 5XXï¼šæœåŠ¡ç«¯é”™è¯¯ã€‚æœåŠ¡å™¨æœªèƒ½å¤„ç†è¯·æ±‚ï¼ˆå¯èƒ½å†…éƒ¨å‡ºçŽ°å¼‚å¸¸ï¼‰
+- å¸¸è§å“åº”çŠ¶æ€ç ï¼š
+	- 200 0Kï¼šè¡¨ç¤ºæˆåŠŸ
+	- 400 Bad Requestï¼šé”™è¯¯çš„è¯·æ±‚è¯­æ³•ï¼Œä¸èƒ½è¢«æœåŠ¡å™¨ç†è§£ã€‚
+	- 401 Unauthorizedï¼šè¯·æ±‚æœªç»æŽˆæƒã€‚
+	- 403 Forbiddenï¼šæœåŠ¡å™¨æ”¶åˆ°è¯·æ±‚ï¼Œä½†è¯·æ±‚è¢«æœåŠ¡å™¨æ‹’ç»ã€‚
+	- 404 Not Foundï¼šè¯·æ±‚çš„èµ„æºä¸å­˜åœ¨ã€‚
+	- 405 Method Not allowedï¼šè¯·æ±‚æ–¹å¼ä¸è¢«å…è®¸ï¼Œå¦‚åªæ”¯æŒgetè¯·æ±‚ï¼Œä½†å®¢æˆ·ç«¯ä½¿ç”¨äº†postã€‚
+	- 500 Internal Server Errorï¼šæœåŠ¡å™¨å‘é€ä¸å¯é¢„æœŸçš„é”™è¯¯ã€‚
+	- 503 Server Unavailableï¼šæœåŠ¡å™¨å½“å‰ä¸èƒ½å¤„ç†å®¢æˆ·ç«¯è¯·æ±‚ã€‚ä¸€æ®µæ—¶é—´åŽå¯èƒ½æ¢å¤æ­£å¸¸ã€‚
